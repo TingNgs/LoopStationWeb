@@ -12,7 +12,11 @@ async function RecordTest(){
     await sleep(3000);
     const audio = await testRecorder.stop();
     console.log(audio);
-    audio.play();
+    while(1)
+    {
+        await audio.play();
+    }
+    
 }
 
 
