@@ -1,5 +1,12 @@
 window.onload = async function(){
-    var stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+}
+var stream
+const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+var audio_context = new AudioContext;
+var testLooper = new Looper(audio_context)
+
+async function RecordTest(){
     var testRecorder = new Recorder(stream);
     testRecorder.start();
     await sleep(3000);
@@ -7,8 +14,5 @@ window.onload = async function(){
     console.log(audio);
     audio.play();
 }
-const sleep = time => new Promise(resolve => setTimeout(resolve, time));
-var audio_context = new AudioContext;
-var testLooper = new Looper(audio_context)
 
 

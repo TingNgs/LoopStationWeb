@@ -18,7 +18,7 @@ class Recorder {
                 audioBlob = new Blob(_audioChunks);
                 audioUrl = URL.createObjectURL(audioBlob);
                 audio = new Audio(audioUrl);
-                function play () { audio.play();}
+                const play = () => audio.play();
                 resolve({
                     audioBlob,
                     audioUrl, 
