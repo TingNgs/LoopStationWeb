@@ -2,7 +2,6 @@ class Recorder {
 
     constructor(stream) {
         _mediaRecorder = new MediaRecorder(stream);
-
         _mediaRecorder.addEventListener("dataavailable", event => {
             _audioChunks.push(event.data);
         });
