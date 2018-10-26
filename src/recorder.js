@@ -2,7 +2,6 @@ class Recorder {
 
     constructor(stream) {
         _mediaRecorder = new MediaRecorder(stream);
-        _audioChunks = [];
 
         _mediaRecorder.addEventListener("dataavailable", event => {
             _audioChunks.push(event.data);
@@ -31,7 +30,7 @@ class Recorder {
     resolve(){ start, stop };
 }
 let _mediaRecorder;
-let _audioChunks;
+let _audioChunks = [];
 let audioBlob;
 let audioUrl;
 let audio;
