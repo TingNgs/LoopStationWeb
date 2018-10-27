@@ -8,14 +8,14 @@ const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 
 async function RecordTest(){
     var testRecorder = new Recorder(stream);
-    testRecorder.start();
+    /*testRecorder.start();
     await sleep(3000);
     const audio = await testRecorder.stop();
     console.log(audio);
     while(1)
     {
         await audio.play();
-    }
+    }*/
     
 }
 
