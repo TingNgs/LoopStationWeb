@@ -41,7 +41,7 @@ class Recorder {
 let _mediaRecorder;
 let _audioChunks = [];
 let _audioBlob;
-let _audioBlob;
+let _audioUrl;
 let _audio;
 let _defual_audio = document.getElementById('defual_audio')
 let _audioTracks;
