@@ -5,6 +5,15 @@ class Recorder {
         _mediaRecorder.addEventListener("dataavailable", event => {
             _audioChunks.push(event.data);
         });
+        
+
+        audioTracks = stream.getAudioTracks();
+        console.log('Using audio device: ' + audioTracks[0].label);
+        stream.oninactive = function() {
+          console.log('Stream ended');
+        };
+        window.stream = stream; // make variable available to browser console
+        defual_audio.srcObject = stream;
     }
     start() {
         _mediaRecorder.start();
@@ -24,6 +33,7 @@ class Recorder {
                 });
             });
             _mediaRecorder.stop();
+            defual_audio.srcObject = null;
         });   
     }
     resolve(){ start, stop };
@@ -33,3 +43,5 @@ let _audioChunks = [];
 let audioBlob;
 let audioUrl;
 let audio;
+let defual_audio = document.getElementById('defual_audio')
+let audioTracks;
