@@ -2,18 +2,18 @@ class Recorder {
 
     constructor(stream) {
         _mediaRecorder = new MediaRecorder(stream);
-        _mediaRecorder.addEventListener("dataavailable", event => {
+        /*_mediaRecorder.addEventListener("dataavailable", event => {
             _audioChunks.push(event.data);
-        });
+        });*/
         
 
-        audioTracks = stream.getAudioTracks();
-        console.log('Using audio device: ' + audioTracks[0].label);
+        _audioTracks = stream.getAudioTracks();
+        console.log('Using audio device: ' + _audioTracks[0].label);
         stream.oninactive = function() {
           console.log('Stream ended');
         };
         window.stream = stream; // make variable available to browser console
-        defual_audio.srcObject = stream;
+        _defual_audio.srcObject = stream;
     }
     start() {
         _mediaRecorder.start();
@@ -22,26 +22,26 @@ class Recorder {
     stop() {
         return new Promise(resolve => {
             _mediaRecorder.addEventListener("stop", () => {
-                audioBlob = new Blob(_audioChunks);
-                audioUrl = URL.createObjectURL(audioBlob);
-                audio = new Audio(audioUrl);
-                const play = () => audio.play();
+                _audioBlob = new Blob(_audioChunks);
+                _audioUrl = URL.createObjectURL(_audioBlob);
+                _audio = new Audio(_audioBlob);
+                const play = () => _audio.play();
                 resolve({
-                    audioBlob,
-                    audioUrl, 
+                    _audioBlob,
+                    _audioBlob, 
                     play
                 });
             });
             _mediaRecorder.stop();
-            defual_audio.srcObject = null;
+            _defual_audio.srcObject = null;
         });   
     }
     resolve(){ start, stop };
 }
 let _mediaRecorder;
 let _audioChunks = [];
-let audioBlob;
-let audioUrl;
-let audio;
-let defual_audio = document.getElementById('defual_audio')
-let audioTracks;
+let _audioBlob;
+let _audioBlob;
+let _audio;
+let _defual_audio = document.getElementById('defual_audio')
+let _audioTracks;
