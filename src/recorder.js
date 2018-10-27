@@ -5,15 +5,6 @@ class Recorder {
         _mediaRecorder.addEventListener("dataavailable", event => {
             _audioChunks.push(event.data);
         });*/
-        
-
-        _audioTracks = stream.getAudioTracks();
-        console.log('Using audio device: ' + _audioTracks[0].label);
-        stream.oninactive = function() {
-          console.log('Stream ended');
-        };
-        window.stream = stream; // make variable available to browser console
-        _defual_audio.srcObject = stream;
     }
     start() {
         _mediaRecorder.start();
@@ -43,5 +34,3 @@ let _audioChunks = [];
 let _audioBlob;
 let _audioUrl;
 let _audio;
-let _defual_audio = document.getElementById('defual_audio')
-let _audioTracks;
