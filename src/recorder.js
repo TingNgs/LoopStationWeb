@@ -1,8 +1,8 @@
 class Recorder {
 
     constructor(stream) {
-       /* _mediaRecorder = new MediaRecorder(stream);
-        _mediaRecorder.addEventListener("dataavailable", event => {
+        _mediaRecorder = new MediaRecorder(stream);
+        /*_mediaRecorder.addEventListener("dataavailable", event => {
             _audioChunks.push(event.data);
         });*/
     }
@@ -11,7 +11,7 @@ class Recorder {
     }
 
     stop() {
-        return new Promise(resolve => {
+        /*return new Promise(resolve => {
             _mediaRecorder.addEventListener("stop", () => {
                 _audioBlob = new Blob(_audioChunks);
                 _audioUrl = URL.createObjectURL(_audioBlob);
@@ -25,7 +25,7 @@ class Recorder {
             });
             _mediaRecorder.stop();
             _defual_audio.srcObject = null;
-        });   
+        });*/
     }
     resolve(){ start, stop };
 }

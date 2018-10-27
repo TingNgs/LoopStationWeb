@@ -10,14 +10,15 @@ async function RecordTest(){
     var testRecorder = new Recorder(stream);
     let _defual_audio = document.getElementById('defual_audio')
     _defual_audio.srcObject = stream;
-    /*testRecorder.start();
+    testRecorder.start();
     await sleep(3000);
+    _defual_audio.pause();
     const audio = await testRecorder.stop();
     console.log(audio);
     while(1)
     {
-        await audio.play();
-    }*/
+        //await audio.play();
+    }
     
 }
 
