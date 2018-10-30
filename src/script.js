@@ -1,11 +1,12 @@
-
 var stream
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 var audio_context;
 var input;
+var analyser;
 //var testLooper = new Looper(audio_context)
 
 async function RecordTest() {
+    document.getElementById('r').innerText = "sd";
     recorder = new Recorder(input);
     recorder.record();
 }
@@ -27,6 +28,8 @@ window.onload = async function () {
         audio: true
     });
     input = audio_context.createMediaStreamSource(stream);
+    analyser = context.createAnalyser();
+    microphone.connect(analyser);
 }
 
 function createDownloadLink() {
