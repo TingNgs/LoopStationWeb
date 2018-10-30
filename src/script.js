@@ -7,7 +7,7 @@ const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 //var testLooper = new Looper(audio_context)
 
 async function RecordTest(){
-    var testRecorder = new Recorder(stream);
+    //var testRecorder = new Recorder(stream);
     let _defual_audio = document.getElementById('defual_audio')
     _defual_audio.srcObject = stream;
     /*testRecorder.start();
