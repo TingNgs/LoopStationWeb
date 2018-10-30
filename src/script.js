@@ -37,11 +37,7 @@ window.onload = function(){
       }
       function createDownloadLink(){
         recorder.exportWAV(function(blob) {
-          var url = URL.createObjectURL(blob);
-          var au = document.createElement('audio');
-          
-          defual_audio.src = url;
-          
+          defual_audio= URL.createObjectURL(blob);
         });
       }
   
