@@ -23,7 +23,9 @@ window.onload = function(){
   
       s.onclick = function(){
         recorder.stop();
-        createDownloadLink();
+        recorder.exportWAV(function(blob) {
+          defual_audio.src = URL.createObjectURL(blob);
+        });
         recorder.clear();
         defual_audio.play();
       };
@@ -36,9 +38,6 @@ window.onload = function(){
         defual_audio.play();
       }
       function createDownloadLink(){
-        recorder.exportWAV(function(blob) {
-          defual_audio= URL.createObjectURL(blob);
-        });
       }
   
     }, function(){
