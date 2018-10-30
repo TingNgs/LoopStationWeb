@@ -25,6 +25,7 @@ window.onload = function(){
         recorder.stop();
         createDownloadLink();
         recorder.clear();
+        defual_audio.play();
       };
   
       p.onclick = function(){
@@ -40,7 +41,7 @@ window.onload = function(){
           var au = document.createElement('audio');
           
           defual_audio.src = url;
-          defual_audio.play();
+          
         });
       }
   
