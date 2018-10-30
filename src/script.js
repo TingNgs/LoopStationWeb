@@ -7,6 +7,8 @@ window.onload = function(){
   
     var s = document.getElementById('s');
     var p = document.getElementById('p');
+    var r = document.getElementById('r');
+    var defual_audio = document.getElementById('defual_audio');
     var timer;
     var context = new AudioContext();
   
@@ -29,12 +31,14 @@ window.onload = function(){
         recorder = new Recorder(microphone);
         recorder.record();
       };
-  
+      r.onclick = function(){
+        defual_audio.play();
+      }
       function createDownloadLink(){
         recorder.exportWAV(function(blob) {
           var url = URL.createObjectURL(blob);
           var au = document.createElement('audio');
-          var defual_audio = document.getElementById('defual_audio');
+          
           defual_audio.src = url;
           defual_audio.play();
         });
