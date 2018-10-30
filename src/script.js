@@ -34,9 +34,9 @@ window.onload = function(){
         recorder.exportWAV(function(blob) {
           var url = URL.createObjectURL(blob);
           var au = document.createElement('audio');
-          au.controls = true;
-          au.src = url;
-          //au.play();
+          var defual_audio = document.getElementById('defual_audio');
+          defual_audio.src = url;
+          defual_audio.play();
         });
       }
   
