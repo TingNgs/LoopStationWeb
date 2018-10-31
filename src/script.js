@@ -42,7 +42,6 @@ window.onload = async function () {
           } else {
             LooperList[clickedButton].looping = !LooperList[clickedButton].looping;
             state_text.innerText = "loop state to";
-            await sleep(3000 - (new Date().getTime() - loopstart))
             if (LooperList[clickedButton].looping) {
               state_text.innerText = "loop start";
               for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++) {
