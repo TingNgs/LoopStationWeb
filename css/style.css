@@ -1,0 +1,12 @@
+.loop {
+    stroke-dasharray: 628.3185307179587;
+    animation: dash 3s linear infinite forwards;
+  } 
+  @keyframes dash {
+    from {
+      stroke-dashoffset: 628.3185307179587;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }

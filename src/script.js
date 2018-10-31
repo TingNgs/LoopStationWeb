@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = async function () {
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   navigator.getUserMedia =
     navigator.getUserMedia || navigator.webkitGetUserMedia;
@@ -6,6 +6,7 @@ window.onload = function() {
   var recorder;
   var recordButtonList = [];
   var LooperList = [];
+  var loopSide = true;
   var p = document.getElementById("p");
   recordButtonList.push(document.getElementById("r1"));
   recordButtonList.push(document.getElementById("r2"));
@@ -18,15 +19,14 @@ window.onload = function() {
   var context = new AudioContext();
   var audioList = [];
 
-  navigator.getUserMedia(
-    {
+  navigator.getUserMedia({
       audio: true
     },
-    function(stream) {
+    function (stream) {
       var microphone = context.createMediaStreamSource(stream);
 
       for (let i = 0; i < recordButtonList.length; i++)
-        recordButtonList[i].onclick = async function() {
+        recordButtonList[i].onclick = async function () {
           let clickedButton;
           for (let j = 0; j < recordButtonList.length; j++)
             if (recordButtonList[j].id == this.id) clickedButton = j;
@@ -35,43 +35,27 @@ window.onload = function() {
             await sleep(3000);
             await LooperList[clickedButton].StopReocrd();
           } else {
+            
             for (
-              let j = 0;
-              j < LooperList[clickedButton].recorderList.length;
-              j++
+              let j = 0; j < LooperList[clickedButton].recorderList.length; j++
             ) {
-              LooperList[clickedButton].recorderList[j].loop = true;
               LooperList[clickedButton].recorderList[j].play();
               console.log("play");
             }
           }
         };
-      /*s.onclick = function(){
-        var defual_audio = document.createElement("AUDIO");
-        defual_audio.controls = true;  
-        recorder.stop();
-        recorder.exportWAV(function(blob) {
-          defual_audio.src = URL.createObjectURL(blob);
-        });
-        defual_audio.play();
-        audioList.push(defual_audio);
-        recorder.clear();
-      };
-  
-      p.onclick = function(){
-        recorder = new Recorder(microphone);
-        recorder.record();
-      };
-      r.onclick = function(){
-        for(i=0;i<audioList.length;i++)
-          audioList[i].play();
-      }
-      function createDownloadLink(){
-      }*/
     },
-    function() {
+    function () {
       console.log("error");
     }
+
   );
+  var tempBeat = document.getElementById('path');
+  tempBeat.setAttribute("class", "loop");
+  while (1) {
+    loopSide = !loopSide;
+    await sleep(3000);
+    console.log(loopSide)
+  }
 };
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
