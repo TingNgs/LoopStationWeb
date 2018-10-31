@@ -58,30 +58,30 @@ window.onload = async function () {
     }
 
   );
-}
-var tempBeat = document.getElementById('path');
-tempBeat.setAttribute("class", "loop");
-setInterval(loopSideChange, 3000);
+  var tempBeat = document.getElementById('path');
+  tempBeat.setAttribute("class", "loop");
+  setInterval(loopSideChange, 3000);
 
-function loopSideChange() {
-  loopSide = !loopSide;
-  loopstart = new Date().getTime()
-  for (let i = 0; i < LooperList.length; i++) {
-    if (LooperList[i].looping == true) {
-      for (
-        let j = 0; j < LooperList[i].recorderList.length; j++
-      ) {
-        LooperList[i].recorderList[j].currentTime = 0;
-      }
-    } else {
-      for (
-        let j = 0; j < LooperList[i].recorderList.length; j++
-      ) {
-        LooperList[i].recorderList[j].pause();
+  function loopSideChange() {
+    loopSide = !loopSide;
+    loopstart = new Date().getTime()
+    for (let i = 0; i < LooperList.length; i++) {
+      if (LooperList[i].looping == true) {
+        for (
+          let j = 0; j < LooperList[i].recorderList.length; j++
+        ) {
+          LooperList[i].recorderList[j].currentTime = 0;
+        }
+      } else {
+        for (
+          let j = 0; j < LooperList[i].recorderList.length; j++
+        ) {
+          LooperList[i].recorderList[j].pause();
+        }
       }
     }
-  }
+  };
+}
 
-};
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
