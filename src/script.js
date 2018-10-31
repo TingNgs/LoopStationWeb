@@ -8,7 +8,7 @@ window.onload = function(){
     var s = document.getElementById('s');
     var p = document.getElementById('p');
     var r = document.getElementById('r');
-    var defual_audio = document.getElementById('defual_audio');
+    var defual_audio = new Audio();
     var timer;
     var context = new AudioContext();
   
@@ -26,8 +26,8 @@ window.onload = function(){
         recorder.exportWAV(function(blob) {
           defual_audio.src = URL.createObjectURL(blob);
         });
-        recorder.clear();
         defual_audio.play();
+        recorder.clear();
       };
   
       p.onclick = function(){
