@@ -8,6 +8,7 @@ window.onload = async function () {
   var LooperList = [];
   var loopSide = true;
   var p = document.getElementById("p");
+  var loopstart;
   recordButtonList.push(document.getElementById("r1"));
   recordButtonList.push(document.getElementById("r2"));
   recordButtonList.push(document.getElementById("r3"));
@@ -31,23 +32,15 @@ window.onload = async function () {
           for (let j = 0; j < recordButtonList.length; j++)
             if (recordButtonList[j].id == this.id) clickedButton = j;
           if (!LooperList[clickedButton].recorded) {
+            await sleep(3000-(new Date().getTime()-loopstart))
             LooperList[clickedButton].RecordAudio(stream);
             await sleep(3000);
-            await LooperList[clickedButton].StopReocrd();
-            for (
-              let j = 0; j < LooperList[clickedButton].recorderList.length; j++
-            ) {
-              LooperList[clickedButton].recorderList[j].play();
-              console.log("play");
-            }
+            LooperList[clickedButton].StopReocrd();
           } else {
-            var tempTF = loopSide;
-            for (
-              let j = 0; j < LooperList[clickedButton].recorderList.length; j++
-            ) {
+            LooperList[clickedButton].looping = !LooperList[clickedButton].looping;
+            await sleep(3000-(new Date().getTime()-loopstart))
+            for (let j = 0; j < LooperList[i].recorderList.length; j++)
               LooperList[clickedButton].recorderList[j].play();
-              console.log("play");
-            }
           }
         };
     },
@@ -58,10 +51,22 @@ window.onload = async function () {
   );
   var tempBeat = document.getElementById('path');
   tempBeat.setAttribute("class", "loop");
-  while (1) {
-    loopSide = !loopSide;
-    await sleep(3000);
-    console.log(loopSide)
+  setInterval(loopSideChange,3000);
+function loopSideChange(){
+  loopSide = !loopSide;
+  loopstart = new Date().getTime()
+  for(let i=0;i<LooperList.length;i++)
+  {
+    if(LooperList[i].looping == true){
+      for (
+        let j = 0; j < LooperList[i].recorderList.length; j++
+      ) {
+        LooperList[i].recorderList[j].currentTime = 0;
+        console.log("play");
+      }
+    }
   }
+}
 };
+
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
