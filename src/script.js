@@ -41,11 +41,15 @@ window.onload = async function () {
             state_text.innerText = "Stop record";
           } else {
             LooperList[clickedButton].looping = !LooperList[clickedButton].looping;
-
-            state_text.innerText = "volume to " + tempVolume;
+            state_text.innerText = "loop state to";
             await sleep(3000 - (new Date().getTime() - loopstart))
-            for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
-            LooperList[clickedButton].recorderList[j].play()
+            if (LooperList[clickedButton].looping) {
+              state_text.innerText = "loop start";
+              for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
+                LooperList[clickedButton].recorderList[j].play()
+            } else {
+              state_text.innerText = "loop stop";
+            }
           }
         };
     },
@@ -67,14 +71,13 @@ window.onload = async function () {
           let j = 0; j < LooperList[i].recorderList.length; j++
         ) {
           LooperList[i].recorderList[j].currentTime = 0;
-          console.log(LooperList[i].recorderList[j].volume)
         }
-      }else
-      {
+      } else {
         for (
           let j = 0; j < LooperList[i].recorderList.length; j++
         ) {
           LooperList[i].recorderList[j].pause();
+        }
       }
     }
   }
