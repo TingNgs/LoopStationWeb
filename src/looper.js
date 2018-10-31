@@ -24,7 +24,6 @@ class Looper
         _recorder.exportWAV(function(blob) {
             temp_audio.src = URL.createObjectURL(blob);
         });
-        temp_audio.play()
         this.recorderList.push(temp_audio);
         _recorder.clear();
         console.log("stop reocrd")

@@ -34,8 +34,14 @@ window.onload = async function () {
             LooperList[clickedButton].RecordAudio(stream);
             await sleep(3000);
             await LooperList[clickedButton].StopReocrd();
+            for (
+              let j = 0; j < LooperList[clickedButton].recorderList.length; j++
+            ) {
+              LooperList[clickedButton].recorderList[j].play();
+              console.log("play");
+            }
           } else {
-            
+            var tempTF = loopSide;
             for (
               let j = 0; j < LooperList[clickedButton].recorderList.length; j++
             ) {
