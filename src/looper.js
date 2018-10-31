@@ -18,7 +18,6 @@ class Looper
     {
         var temp_audio = document.createElement("AUDIO");
         temp_audio.controls = true; 
-        temp_audio.autoplay = true;
         temp_audio.loop = true;
         _recorder.stop();
         await _recorder.exportWAV(function(blob) {

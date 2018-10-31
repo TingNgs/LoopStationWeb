@@ -37,12 +37,16 @@ window.onload = async function () {
             state_text.innerText = "Start record";
             LooperList[clickedButton].RecordAudio(microphone);
             await sleep(3000);
-            LooperList[clickedButton].StopReocrd();
+            await LooperList[clickedButton].StopReocrd();
+            for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
+               LooperList[clickedButton].recorderList[j].play()
             state_text.innerText = "Stop record";
           } else {
             LooperList[clickedButton].looping = !LooperList[clickedButton].looping;
             let tempVolume = 0
             if(LooperList[clickedButton].looping) tempVolume=1;
+            state_text.innerText = "volume to " + tempVolume;
+            await sleep(3000-(new Date().getTime()-loopstart))
             for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
                LooperList[clickedButton].recorderList[j].volume = tempVolume;
           }
