@@ -56,8 +56,8 @@ window.onload = async function () {
     function () {
       console.log("error");
     }
-
-  );
+  
+  );}
   var tempBeat = document.getElementById('path');
   tempBeat.setAttribute("class", "loop");
   setInterval(loopSideChange, 3000);
@@ -80,7 +80,7 @@ window.onload = async function () {
         }
       }
     }
-  }
+  
 };
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
