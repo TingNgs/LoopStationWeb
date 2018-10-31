@@ -41,10 +41,10 @@ window.onload = async function () {
             state_text.innerText = "Stop record";
           } else {
             LooperList[clickedButton].looping = !LooperList[clickedButton].looping;
-            state_text.innerText = "Wait for loop";
-            await sleep(3000-(new Date().getTime()-loopstart))
-            if(!LooperList[clickedButton].looping)
-            state_text.innerText = "stop loop";
+            let tempVolume = 0
+            if(LooperList[clickedButton].looping) tempVolume=1;
+            for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
+               LooperList[clickedButton].recorderList[j].volume = tempVolume;
           }
         };
     },
@@ -66,10 +66,7 @@ function loopSideChange(){
         let j = 0; j < LooperList[i].recorderList.length; j++
       ) {
         LooperList[i].recorderList[j].currentTime = 0;
-        if(LooperList[i].recorderList[j].play())
-        state_text.innerText = "loop";
-        else 
-        state_text.innerText = "fail";
+        console.log(LooperList[i].recorderList[j].volume)
       }
     }
   }
