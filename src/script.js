@@ -9,6 +9,7 @@ window.onload = async function () {
   var loopSide = true;
   var p = document.getElementById("p");
   var loopstart;
+  var state_text = document.getElementById("state_text")
   recordButtonList.push(document.getElementById("r1"));
   recordButtonList.push(document.getElementById("r2"));
   recordButtonList.push(document.getElementById("r3"));
@@ -33,14 +34,19 @@ window.onload = async function () {
             if (recordButtonList[j].id == this.id) clickedButton = j;
           if (!LooperList[clickedButton].recorded) {
             await sleep(3000-(new Date().getTime()-loopstart))
+            state_text.innerText = "Start record";
             LooperList[clickedButton].RecordAudio(microphone);
             await sleep(3000);
             LooperList[clickedButton].StopReocrd();
+            state_text.innerText = "Stop record";
           } else {
             LooperList[clickedButton].looping = !LooperList[clickedButton].looping;
+            state_text.innerText = "Wait for loop";
             await sleep(3000-(new Date().getTime()-loopstart))
-            for (let j = 0; j < LooperList[i].recorderList.length; j++)
-              LooperList[clickedButton].recorderList[j].play();
+            if(LooperList[clickedButton].looping)
+              for (let j = 0; j < LooperList[i].recorderList.length; j++)
+                LooperList[clickedButton].recorderList[j].play();
+                state_text.innerText = "loop";
           }
         };
     },
