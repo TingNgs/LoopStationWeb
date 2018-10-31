@@ -46,7 +46,11 @@ window.onload = async function () {
             if (LooperList[clickedButton].looping) {
               state_text.innerText = "loop start";
               for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
+              {
                 LooperList[clickedButton].recorderList[j].play()
+                console.log(LooperList[clickedButton].recorderList[j])
+              }
+                
             } else {
               state_text.innerText = "loop stop";
             }
