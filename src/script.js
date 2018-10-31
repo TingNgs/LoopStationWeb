@@ -33,22 +33,25 @@ window.onload = async function () {
           for (let j = 0; j < recordButtonList.length; j++)
             if (recordButtonList[j].id == this.id) clickedButton = j;
           if (!LooperList[clickedButton].recorded) {
-            await sleep(3000-(new Date().getTime()-loopstart))
+            await sleep(3000 - (new Date().getTime() - loopstart))
             state_text.innerText = "Start record";
             LooperList[clickedButton].RecordAudio(microphone);
             await sleep(3000);
             await LooperList[clickedButton].StopReocrd();
-            for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
-               LooperList[clickedButton].recorderList[j].play()
             state_text.innerText = "Stop record";
           } else {
             LooperList[clickedButton].looping = !LooperList[clickedButton].looping;
             let tempVolume = 0
-            if(LooperList[clickedButton].looping) tempVolume=1;
+            if (LooperList[clickedButton].looping) {
+              for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
+                LooperList[clickedButton].recorderList[j].play()
+              tempVolume = 1;
+            }
+
             state_text.innerText = "volume to " + tempVolume;
-            await sleep(3000-(new Date().getTime()-loopstart))
+            await sleep(3000 - (new Date().getTime() - loopstart))
             for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
-               LooperList[clickedButton].recorderList[j].volume = tempVolume;
+              LooperList[clickedButton].recorderList[j].volume = tempVolume;
           }
         };
     },
@@ -59,22 +62,22 @@ window.onload = async function () {
   );
   var tempBeat = document.getElementById('path');
   tempBeat.setAttribute("class", "loop");
-  setInterval(loopSideChange,3000);
-function loopSideChange(){
-  loopSide = !loopSide;
-  loopstart = new Date().getTime()
-  for(let i=0;i<LooperList.length;i++)
-  {
-    if(LooperList[i].looping == true){
-      for (
-        let j = 0; j < LooperList[i].recorderList.length; j++
-      ) {
-        LooperList[i].recorderList[j].currentTime = 0;
-        console.log(LooperList[i].recorderList[j].volume)
+  setInterval(loopSideChange, 3000);
+
+  function loopSideChange() {
+    loopSide = !loopSide;
+    loopstart = new Date().getTime()
+    for (let i = 0; i < LooperList.length; i++) {
+      if (LooperList[i].looping == true) {
+        for (
+          let j = 0; j < LooperList[i].recorderList.length; j++
+        ) {
+          LooperList[i].recorderList[j].currentTime = 0;
+          console.log(LooperList[i].recorderList[j].volume)
+        }
       }
     }
   }
-}
 };
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
