@@ -8,7 +8,7 @@ window.onload = async function () {
   var LooperList = [];
   var loopSide = true;
   var p = document.getElementById("p");
-  var loopstart;
+  var loopstart = new Date().getTime();
   var state_text = document.getElementById("state_text")
   recordButtonList.push(document.getElementById("r1"));
   recordButtonList.push(document.getElementById("r2"));
@@ -45,12 +45,11 @@ window.onload = async function () {
             await sleep(3000 - (new Date().getTime() - loopstart))
             if (LooperList[clickedButton].looping) {
               state_text.innerText = "loop start";
-              for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++)
-              {
+              for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++) {
+                LooperList[clickedButton].recorderList[j].load()
                 LooperList[clickedButton].recorderList[j].play()
                 console.log(LooperList[clickedButton].recorderList[j])
               }
-                
             } else {
               state_text.innerText = "loop stop";
             }
