@@ -7,11 +7,10 @@ class Looper
         this.recorderList = [];
         this.looping = false;
     }
-    RecordAudio(stream)
+    RecordAudio(input)
     {
         console.log("start record");
         this.recorded = true;
-        var input = _audio_context.createMediaStreamSource(stream);
         _recorder = new Recorder(input)
         _recorder.record();
     }

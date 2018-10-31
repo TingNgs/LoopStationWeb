@@ -33,7 +33,7 @@ window.onload = async function () {
             if (recordButtonList[j].id == this.id) clickedButton = j;
           if (!LooperList[clickedButton].recorded) {
             await sleep(3000-(new Date().getTime()-loopstart))
-            LooperList[clickedButton].RecordAudio(stream);
+            LooperList[clickedButton].RecordAudio(microphone);
             await sleep(3000);
             LooperList[clickedButton].StopReocrd();
           } else {
