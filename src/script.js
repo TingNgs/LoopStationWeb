@@ -8,7 +8,7 @@ window.onload = async function () {
   var LooperList = [];
   var loopSide = true;
   var p = document.getElementById("p");
-  var loopstart = new Date().getTime();
+  var loopstart;
   var state_text = document.getElementById("state_text")
   recordButtonList.push(document.getElementById("r1"));
   recordButtonList.push(document.getElementById("r2"));
@@ -45,18 +45,16 @@ window.onload = async function () {
             if (LooperList[clickedButton].looping) {
               state_text.innerText = "loop start";
               for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++) {
-                LooperList[clickedButton].recorderList[j].load()
                 LooperList[clickedButton].recorderList[j].play()
-                console.log(LooperList[clickedButton].recorderList[j])
               }
             } else {
-              state_text.innerText = "loop stop";
+              state_text.innerText = "loop stop"
             }
           }
         };
     },
     function () {
-      console.log("error");
+      console.log("error")
     }
 
   );
@@ -65,7 +63,7 @@ window.onload = async function () {
   setInterval(loopSideChange, 3000);
 
   function loopSideChange() {
-    loopSide = !loopSide;
+    loopSide = !loopSide
     loopstart = new Date().getTime()
     for (let i = 0; i < LooperList.length; i++) {
       if (LooperList[i].looping == true) {
@@ -78,11 +76,11 @@ window.onload = async function () {
         for (
           let j = 0; j < LooperList[i].recorderList.length; j++
         ) {
-          LooperList[i].recorderList[j].pause();
+          LooperList[i].recorderList[j].pause()
         }
       }
     }
-  };
+  }
 }
 
 
