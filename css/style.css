@@ -1,12 +1,45 @@
 .loop {
     stroke-dasharray: 628.3185307179587;
     animation: dash 3s linear infinite forwards;
-  } 
-  @keyframes dash {
+}
+@keyframes dash {
     from {
-      stroke-dashoffset: 628.3185307179587;
+        stroke-dashoffset: 628.3185307179587;
     }
     to {
-      stroke-dashoffset: 0;
+        stroke-dashoffset: 0;
     }
-  }
+}
+
+.looper_box {
+    height: 300px;
+    border: 1px black solid;
+}
+.looper_box button {
+    width: 40%;
+    height: 40%;
+}
+.state_box {
+    width: 40%;
+    height: 40%;
+    border: 1px black solid;
+}
+.empty {
+    background-color: rgb(255, 255, 255);
+}
+
+.recorded {
+    background-color: gray;
+}
+
+.looping {
+    background-color: rgb(31, 182, 31);
+}
+
+.recording {
+    background-color: red;
+}
+
+.waiting {
+    background-color: rgba(255, 255, 0, 0.842);
+}
