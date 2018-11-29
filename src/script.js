@@ -3,6 +3,7 @@ window.onload = async function() {
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
     window.URL = window.URL || window.webkitURL;
     var recordButtonList = [];
+    var deleteButtonList = [];
     var stateBoxList = [];
     var LooperList = [];
     var loopSide = true;
@@ -22,6 +23,12 @@ window.onload = async function() {
     stateBoxList.push(document.getElementById('state_box4'));
     stateBoxList.push(document.getElementById('state_box5'));
     stateBoxList.push(document.getElementById('state_box6'));
+    deleteButtonList.push(document.getElementById('delete1'));
+    deleteButtonList.push(document.getElementById('delete2'));
+    deleteButtonList.push(document.getElementById('delete3'));
+    deleteButtonList.push(document.getElementById('delete4'));
+    deleteButtonList.push(document.getElementById('delete5'));
+    deleteButtonList.push(document.getElementById('delete6'));
     console.log(recordButtonList[5].id);
     for (var i = 0; i < 6; i++) LooperList.push(new Looper());
     var context = new AudioContext();
@@ -59,13 +66,13 @@ window.onload = async function() {
                             state_text.innerText = 'loop start';
                             stateBoxList[clickedButton].classList.add('waiting');
                             stateBoxList[clickedButton].classList.remove('recorded');
+                            console.log(loopTime - (new Date().getTime() - loopstart));
                             await sleep(loopTime - (new Date().getTime() - loopstart));
                             stateBoxList[clickedButton].classList.remove('waiting');
                             stateBoxList[clickedButton].classList.add('looping');
                             for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++) {
                                 LooperList[clickedButton].recorderList[j].play();
                                 LooperList[clickedButton].recorderList[j].currentTime = (new Date().getTime() - loopstart) / 1000;
-                                console.log(new Date().getTime() - loopstart);
                             }
                         } else {
                             stateBoxList[clickedButton].classList.add('recorded');
@@ -82,6 +89,19 @@ window.onload = async function() {
             console.log('error');
         }
     );
+    for (let i = 0; i < deleteButtonList.length; i++)
+        deleteButtonList[i].onclick = function() {
+            let clickedButton;
+            for (let j = 0; j < deleteButtonList.length; j++) {
+                if (deleteButtonList[j].id == this.id) clickedButton = j;
+            }
+            LooperList[clickedButton].Reset();
+            stateBoxList[clickedButton].classList.add('empty');
+            stateBoxList[clickedButton].classList.remove('looping');
+            stateBoxList[clickedButton].classList.remove('recording');
+            stateBoxList[clickedButton].classList.remove('waiting');
+            stateBoxList[clickedButton].classList.remove('recorded');
+        };
     var tempBeat = document.getElementById('path');
     tempBeat.setAttribute('class', 'loop');
     setInterval(loopSideChange, loopTime);
