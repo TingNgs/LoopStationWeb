@@ -63,16 +63,19 @@ window.onload = async function() {
                         LooperList[clickedButton].looping = !LooperList[clickedButton].looping;
                         state_text.innerText = 'loop state to';
                         if (LooperList[clickedButton].looping) {
+                            for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++) {
+                                LooperList[clickedButton].recorderList[j].load();
+                            }
                             state_text.innerText = 'loop start';
                             stateBoxList[clickedButton].classList.add('waiting');
                             stateBoxList[clickedButton].classList.remove('recorded');
-                            console.log(loopTime - (new Date().getTime() - loopstart));
                             await sleep(loopTime - (new Date().getTime() - loopstart));
                             stateBoxList[clickedButton].classList.remove('waiting');
                             stateBoxList[clickedButton].classList.add('looping');
                             for (let j = 0; j < LooperList[clickedButton].recorderList.length; j++) {
                                 LooperList[clickedButton].recorderList[j].play();
                                 LooperList[clickedButton].recorderList[j].currentTime = (new Date().getTime() - loopstart) / 1000;
+                                console.log(new Date().getTime() - loopstart);
                             }
                         } else {
                             stateBoxList[clickedButton].classList.add('recorded');
