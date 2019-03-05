@@ -7,8 +7,18 @@ html,body{height: 100%}
     height: 50%;
     width: 100%;
 }
-.mainButton{
-    height: 50%;
-    width: 50%;
-    margin: 0 auto;
+.recorder.empty svg radialGradient stop{
+    stop-color: rgb(90, 90, 90)
+}
+.recorder.recording svg radialGradient stop{
+    stop-color: rgb(255, 0, 0)
+}
+.recorder.recorded svg radialGradient stop{
+    stop-color: rgb(0, 0, 255)
+}
+.recorder.waiting svg radialGradient stop{
+    stop-color: rgb(255, 208, 0)
+}
+.recorder.looping svg radialGradient stop{
+    stop-color: rgb(0, 255, 0)
 }
