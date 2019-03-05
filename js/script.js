@@ -67,8 +67,7 @@ function OnClickRrecorder(x) {
             });
             CheckEndLoop();
         } else {
-            console.log("Recorder " + x + " start looping");
-
+            ChangeMainButtonState(x, 1);
             var timeouttTime = 0;
             if (anyLooping) timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
             anyLooping = true;
@@ -76,6 +75,7 @@ function OnClickRrecorder(x) {
             setTimeout(function () {
                 looperList[x].looping = true;
                 ChangeMainButtonState(x, 4);
+                StartLooping();
             }, timeouttTime);
         }
     } else {
