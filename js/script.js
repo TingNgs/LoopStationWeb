@@ -4,7 +4,7 @@ $(function () {
         bitRate: 320,
         sampleRate: 48000
     });
-    
+    rec.open();
 });
 
 var rec;
