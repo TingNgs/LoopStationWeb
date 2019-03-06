@@ -11,7 +11,6 @@ var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 var rec;
 var anyLooping = false;
 var recording = false;
-var recordingX = 0;
 var loopStartTime;
 var maxDuration = 0;
 var loopFunction; // For setInterval and clear interval
@@ -54,78 +53,90 @@ function LoopFunction() {
 
 function OnClickRrecorder(x) {
     //Main control button
-    let id = "recorder" + x;
+    let id = "recorder" + x; // flood proofing
     if(document.getElementById(id).classList.contains("waiting")) return;
     if (looperList[x].recorded) {
         //Recorded, play or stop loop
-        if (looperList[x].looping) {
-            looperList[x].looping = false;
-            console.log("Recorder " + x + " stop looping");
-            ChangeMainButtonState(x, 3);
-            looperList[x].recorderList.forEach(element => {
-                element.pause();
-            });
-            CheckEndLoop();
-        } else {
-            ChangeMainButtonState(x, 1);
-            var timeouttTime = 0;
-            looperList[x].looping = true;
-            if (anyLooping) timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
-            else StartLooping()
-            anyLooping = true;
-            console.log("Recorder " + x + " start at " + timeouttTime);
-            setTimeout(function () {
-                ChangeMainButtonState(x, 4);
-            }, timeouttTime);
-        }
+        MainButtonLoopControl(x);
     } else {
         //Not recorded, ready to record
         console.log(x);
         if (recording) {
-            ChangeMainButtonState(x, 1);
-            rec.stop(
-                function (blob, duration) {
-                    var audio = document.createElement("AUDIO");
-                    audio.src = URL.createObjectURL(blob);
-                    looperList[x].recorderList.push(audio);
-                    looperList[x].recorded = true;
-                    console.log("New audio duration : " + duration);
-                    var newDuration = false;
-                    if (duration > maxDuration) {
-                        maxDuration = duration;
-                        newDuration = true;
-                    }
-                    if (anyLooping) {
-                        var timeouttTime = 0;
-                        if (!newDuration)
-                            timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
-                        setTimeout(StartLooping, timeouttTime);
-                    }
-                    if(iOS) IosOnLoad(x);
-                    else ChangeMainButtonState(x, 3);
-                    
-                },
-                function (msg) {
-                    console.log("Fail:" + msg);
-                }
-            );
+            MainButtonStopRecord(x);
         } else {
-            var timeouttTime = 1500;
-            rec.open();
-            ChangeMainButtonState(x, 1);
-            if (anyLooping) {
-                timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
-                clearInterval(loopFunction);
-            }
-            console.log("Record start at : " + timeouttTime);
-            setTimeout(function () {
-                rec.start(); //start recorded
-                ChangeMainButtonState(x, 2);
-                if (anyLooping) LoopFunction();
-            }, timeouttTime);
+            MainButtonStartRecord(x);
         }
         recording = !recording;
     }
+}
+
+function MainButtonLoopControl(x){
+    if (looperList[x].looping) {
+        looperList[x].looping = false;
+        console.log("Recorder " + x + " stop looping");
+        ChangeMainButtonState(x, 3);
+        looperList[x].recorderList.forEach(element => {
+            element.pause();
+        });
+        CheckEndLoop();
+    } else {
+        ChangeMainButtonState(x, 1);
+        var timeouttTime = 0;
+        looperList[x].looping = true;
+        if (anyLooping) timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
+        else StartLooping()
+        anyLooping = true;
+        console.log("Recorder " + x + " start at " + timeouttTime);
+        setTimeout(function () {
+            ChangeMainButtonState(x, 4);
+        }, timeouttTime);
+    }
+}
+
+function MainButtonStartRecord(x){
+    var timeouttTime = 1500;
+    rec.open();
+    ChangeMainButtonState(x, 1);
+    if (anyLooping) {
+        timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
+        clearInterval(loopFunction);
+    }
+    console.log("Record start at : " + timeouttTime);
+    setTimeout(function () {
+        rec.start(); //start recorded
+        ChangeMainButtonState(x, 2);
+        if (anyLooping) LoopFunction();
+    }, timeouttTime);
+}
+
+function MainButtonStopRecord(x){
+    ChangeMainButtonState(x, 1);
+    rec.stop(
+        function (blob, duration) {
+            var audio = document.createElement("AUDIO");
+            audio.src = URL.createObjectURL(blob);
+            looperList[x].recorderList.push(audio);
+            looperList[x].recorded = true;
+            console.log("New audio duration : " + duration);
+            var newDuration = false;
+            if (duration > maxDuration) {
+                maxDuration = duration;
+                newDuration = true;
+            }
+            if (anyLooping) {
+                var timeouttTime = 0;
+                if (!newDuration)
+                    timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
+                setTimeout(StartLooping, timeouttTime);
+            }
+            if(iOS) IosOnLoad(x);
+            else ChangeMainButtonState(x, 3);
+            
+        },
+        function (msg) {
+            console.log("Fail:" + msg);
+        }
+    );
 }
 
 function OnClickIosOnLoad() {
