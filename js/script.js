@@ -121,7 +121,7 @@ function OnClickRrecorder(x) {
     }
 }
 
-function IosOnLoad() {
+function OnClickIosOnLoad() {
     for (var i = 0; i < 6; i++) {
         ChangeMainButtonState(i, 1);
     }
