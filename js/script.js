@@ -75,8 +75,8 @@ function MainButtonLoopControl(x) {
         looperList[x].looping = false;
         console.log("Recorder " + x + " stop looping");
         ChangeMainButtonState(x, 3);
-        for (let i = 0; i < looperList[x].recorderList.length; i++)
-            looperList[x].recorderList[i].pause();
+        /*for (let i = 0; i < looperList[x].recorderList.length; i++)
+            looperList[x].recorderList[i].pause();*/
         CheckEndLoop();
     } else {
         ChangeMainButtonState(x, 1);
