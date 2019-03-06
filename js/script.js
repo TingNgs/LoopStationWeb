@@ -7,6 +7,7 @@ $(function () {
     rec.open();
 });
 
+var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 var rec;
 var anyLooping = false;
 var recording = false;
@@ -16,6 +17,8 @@ var maxDuration = 0;
 var loopFunction; // For setInterval and clear interval
 var looperList = [];
 for (var i = 0; i < 6; i++) looperList.push(new Looper());
+
+console.log(iOS);
 
 function StartLooping() {
     loopFunction = setInterval(LoopFunction, maxDuration)
@@ -96,7 +99,9 @@ function OnClickRrecorder(x) {
                             timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
                         setTimeout(StartLooping, timeouttTime);
                     }
-                    ChangeMainButtonState(x, 3);
+                    if(iOS) IosOnLoad(x);
+                    else ChangeMainButtonState(x, 3);
+                    
                 },
                 function (msg) {
                     console.log("Fail:" + msg);
@@ -140,9 +145,25 @@ function OnClickIosOnLoad() {
     setTimeout(
         function () {
             for (var i = 0; i < 6; i++) {
-                if(looperList[i].recorded)ChangeMainButtonState(i, 3);
-                else ChangeMainButtonState(i,0);
+                if (looperList[i].recorded) ChangeMainButtonState(i, 3);
+                else ChangeMainButtonState(i, 0);
             }
+        }, maxDuration + 2000);
+}
+
+function IosOnLoad(i) {
+    ChangeMainButtonState(i, 1);
+    looperList[i].recorderList.forEach(element => {
+        element.muted = true;
+        element.play();
+        setTimeout(
+            function () {
+                element.muted = false;
+            }, maxDuration + 2000);
+    });
+    setTimeout(
+        function () {
+            ChangeMainButtonState(i, 3);
         }, maxDuration + 2000);
 }
 
