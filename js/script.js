@@ -64,6 +64,7 @@ function OnClickRrecorder(x) {
         } else {
             ChangeMainButtonState(x, 1);
             var timeouttTime = 0;
+            looperList[x].looping = true;
             if (anyLooping) timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
             else StartLooping()
             anyLooping = true;
