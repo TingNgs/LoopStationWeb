@@ -5,6 +5,25 @@ $(function () {
         sampleRate: 48000
     });
     rec.open();
+    setTimeout(() => {
+        for (let i = 0; i < 6; i++) {
+
+            var className = "#background_circle" + i;
+            var sektor = new Sektor(className, {
+                size: 240,
+                stroke: 60,
+                arc: true,
+                angle: 0,
+                sectorColor: '#bD2828',
+                circleColor: '#DDD',
+                fillCircle: false
+            });
+            svgBackgroundCircleList.push(sektor);
+        }
+    }, 2000);
+
+
+
 });
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -15,7 +34,10 @@ var loopStartTime;
 var maxDuration = 0;
 var loopFunction; // For setInterval and clear interval
 var looperList = [];
-for (var i = 0; i < 6; i++) looperList.push(new Looper());
+var svgBackgroundCircleList = [];
+for (var i = 0; i < 6; i++) {
+    looperList.push(new Looper());
+}
 
 console.log(iOS);
 
@@ -47,6 +69,8 @@ function LoopFunction() {
                 looperList[i].recorderList[j].play();
                 //console.log(looperList[i].recorderList[j]);
             }
+            svgBackgroundCircleList[i].changeAngle(0);
+            svgBackgroundCircleList[i].animateTo(360, maxDuration);
         }
     }
 }
@@ -153,15 +177,15 @@ function OnClickIosOnLoad() {
         }
         setTimeout(
             function () {
-                    if (looperList[i].recorded) ChangeMainButtonState(i, 3);
-                    else ChangeMainButtonState(i, 0);
+                if (looperList[i].recorded) ChangeMainButtonState(i, 3);
+                else ChangeMainButtonState(i, 0);
             }, maxDuration + 2000);
     }
 }
 
 function IosOnLoad(i) {
     ChangeMainButtonState(i, 1);
-    for(let j=0;j< looperList[i].recorderList.length;j++){
+    for (let j = 0; j < looperList[i].recorderList.length; j++) {
         looperList[i].recorderList[j].muted = true;
         looperList[i].recorderList[j].play();
         setTimeout(

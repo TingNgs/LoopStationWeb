@@ -1,6 +1,8 @@
 <div id="recorder'+i+'" class="recorder empty col-4">
-    <svg version="1.1" class="mainButton" onclick="OnClickRrecorder('+i+')" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px" y="0px" viewBox="0 0 500 200" style="enable-background:new 0 0 500 200;" xml:space="preserve">
+    <div id="background_circle'+i+'" class="background_circle"></div>
+    <svg version="1.1" class="mainButton" onclick="OnClickRrecorder('+i+')" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 200" style="enable-background:new 0 0 500 200;"
+        xml:space="preserve">
         <style type="text/css">
             .st0'+i+' {
                 fill: url(#recorderRadiaGradient'+i+');
@@ -24,5 +26,7 @@
         <circle class="st1" cx="50%" cy="50%" r="48.4" />
         <circle class="st2" cx="50%" cy="50%" r="40.6" />
     </svg>
+
+
     <button onclick="OnClickReset('+i+')">Reset</button>
 </div>
