@@ -4,12 +4,8 @@ $(function () {
         bitRate: 320,
         sampleRate: 48000
     });
-    rec.open(
-        function () {
-            //Open the mic and grant for recorder
-        },
-        function (msg) {}
-    );
+    //Open the mic and grant for recorder
+    rec.open();
 });
 
 var rec;
@@ -108,6 +104,7 @@ function OnClickRrecorder(x) {
             );
         } else {
             var timeouttTime = 1500;
+            rec.reopen();
             ChangeMainButtonState(x, 1);
             if (anyLooping) {
                 timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
