@@ -65,18 +65,18 @@ function OnClickRrecorder(x) {
             ChangeMainButtonState(x, 1);
             var timeouttTime = 0;
             if (anyLooping) timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
+            else StartLooping()
             anyLooping = true;
             console.log("Recorder " + x + " start at " + timeouttTime);
             setTimeout(function () {
-                looperList[x].looping = true;
                 ChangeMainButtonState(x, 4);
-                StartLooping();
             }, timeouttTime);
         }
     } else {
         //Not recorded, ready to record
         console.log(x);
         if (recording) {
+            ChangeMainButtonState(x, 1);
             rec.stop(
                 function (blob, duration) {
                     var audio = document.createElement("AUDIO");
