@@ -26,9 +26,9 @@ function StartLooping() {
 
 function CheckEndLoop() {
     var endLoop = true;
-    looperList.forEach(element => {
-        if (element.looping) endLoop = false;
-    });
+    for (let i = 0; i < looperList.length; i++) {
+        if (looperList[i].looping) endLoop = false;
+    }
     if (endLoop) {
         clearInterval(loopFunction);
         anyLooping = false;
@@ -40,21 +40,21 @@ function LoopFunction() {
     console.log(new Date().getTime() - loopStartTime);
     loopStartTime = new Date().getTime();
     console.log("Loop starting time : " + loopStartTime);
-    looperList.forEach(element => {
-        if (element.looping == true) {
-            element.recorderList.forEach(element => {
-                element.currentTime = 0;
-                element.play();
-                console.log(element);
-            });
+    for (let i = 0; i < looperList.length; i++) {
+        if (looperList[i].looping) {
+            for (let j = 0; j < looperList[i].recorderList.length; j++) {
+                looperList[i].recorderList[j].currentTime = 0;
+                looperList[i].recorderList[j].play();
+                //console.log(looperList[i].recorderList[j]);
+            }
         }
-    });
+    }
 }
 
 function OnClickRrecorder(x) {
     //Main control button
     let id = "recorder" + x; // flood proofing
-    if(document.getElementById(id).classList.contains("waiting")) return;
+    if (document.getElementById(id).classList.contains("waiting")) return;
     if (looperList[x].recorded) {
         //Recorded, play or stop loop
         MainButtonLoopControl(x);
@@ -70,14 +70,13 @@ function OnClickRrecorder(x) {
     }
 }
 
-function MainButtonLoopControl(x){
+function MainButtonLoopControl(x) {
     if (looperList[x].looping) {
         looperList[x].looping = false;
         console.log("Recorder " + x + " stop looping");
         ChangeMainButtonState(x, 3);
-        looperList[x].recorderList.forEach(element => {
-            element.pause();
-        });
+        for (let i = 0; i < looperList[x].recorderList.length; i++)
+            looperList[x].recorderList[i].pause();
         CheckEndLoop();
     } else {
         ChangeMainButtonState(x, 1);
@@ -93,7 +92,7 @@ function MainButtonLoopControl(x){
     }
 }
 
-function MainButtonStartRecord(x){
+function MainButtonStartRecord(x) {
     var timeouttTime = 1500;
     rec.open();
     ChangeMainButtonState(x, 1);
@@ -109,7 +108,7 @@ function MainButtonStartRecord(x){
     }, timeouttTime);
 }
 
-function MainButtonStopRecord(x){
+function MainButtonStopRecord(x) {
     ChangeMainButtonState(x, 1);
     rec.stop(
         function (blob, duration) {
@@ -129,9 +128,9 @@ function MainButtonStopRecord(x){
                     timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
                 setTimeout(StartLooping, timeouttTime);
             }
-            if(iOS) IosOnLoad(x);
+            if (iOS) IosOnLoad(x);
             else ChangeMainButtonState(x, 3);
-            
+
         },
         function (msg) {
             console.log("Fail:" + msg);
@@ -140,40 +139,36 @@ function MainButtonStopRecord(x){
 }
 
 function OnClickIosOnLoad() {
-    for (var i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
         ChangeMainButtonState(i, 1);
-    }
-    looperList.forEach(element => {
-        if (element.recorded) {
-            element.recorderList.forEach(element => {
-                element.muted = true;
-                element.play();
+        if (looperList[i].recorded) {
+            for (let j = 0; j < looperList[i].recorderList.length; j++) {
+                looperList[i].recorderList[j].muted = true;
+                looperList[i].recorderList[j].play();
                 setTimeout(
                     function () {
-                        element.muted = false;
+                        looperList[i].recorderList[j].muted = false;
                     }, maxDuration + 2000);
-            });
-        }
-    });
-    setTimeout(
-        function () {
-            for (var i = 0; i < 6; i++) {
-                if (looperList[i].recorded) ChangeMainButtonState(i, 3);
-                else ChangeMainButtonState(i, 0);
             }
-        }, maxDuration + 2000);
+        }
+        setTimeout(
+            function () {
+                    if (looperList[i].recorded) ChangeMainButtonState(i, 3);
+                    else ChangeMainButtonState(i, 0);
+            }, maxDuration + 2000);
+    }
 }
 
 function IosOnLoad(i) {
     ChangeMainButtonState(i, 1);
-    looperList[i].recorderList.forEach(element => {
-        element.muted = true;
-        element.play();
+    for(let j=0;j< looperList[i].recorderList.length;j++){
+        looperList[i].recorderList[j].muted = true;
+        looperList[i].recorderList[j].play();
         setTimeout(
             function () {
-                element.muted = false;
+                looperList[i].recorderList[j].muted = false;
             }, maxDuration + 2000);
-    });
+    }
     setTimeout(
         function () {
             ChangeMainButtonState(i, 3);
