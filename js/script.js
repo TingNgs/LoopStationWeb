@@ -1,28 +1,13 @@
 $(function () {
     $("#main").load("record_control.html");
-    /*rec = Recorder({
+    rec = Recorder({
         bitRate: 320,
         sampleRate: 48000
     });
-    //Open the mic and grant for recorder
-    rec.open();*/
+    
 });
 
-//webkitURL is deprecated but nevertheless
-URL = window.URL || window.webkitURL;
-
-var gumStream; //stream from getUserMedia()
-var rec; //Recorder.js object
-var input; //MediaStreamAudioSourceNode we'll be recording
-
-// shim for AudioContext when it's not avb. 
-var AudioContext = window.AudioContext || window.webkitAudioContext;
-var audioContext //audio context to help us record
-var constraints = {
-    audio: true,
-    video: false
-}
-
+var rec;
 var anyLooping = false;
 var recording = false;
 var recordingX = 0;
@@ -90,24 +75,9 @@ function OnClickRrecorder(x) {
         }
     } else {
         //Not recorded, ready to record
+        console.log(x);
         if (recording) {
-
-            rec.stop();
-            //stop microphone access
-            gumStream.getAudioTracks()[0].stop();
-            //create the wav blob and pass it on to createDownloadLink
-            
-            var audio = document.createElement("AUDIO");
-             rec.exportWAV((function(blob){
-                audio.src = URL.createObjectURL(blob);
-                looperList[x].recorderList.push(audio);
-                console.log(audio);
-            }));
-            maxDuration = 3000;
-            looperList[x].recorded = true;
-            console.log("New audio duration : " + audio.duration);
-
-            /*rec.stop(
+            rec.stop(
                 function (blob, duration) {
                     var audio = document.createElement("AUDIO");
                     audio.src = URL.createObjectURL(blob);
@@ -130,9 +100,10 @@ function OnClickRrecorder(x) {
                 function (msg) {
                     console.log("Fail:" + msg);
                 }
-            );*/
+            );
         } else {
             var timeouttTime = 1500;
+            rec.open();
             ChangeMainButtonState(x, 1);
             if (anyLooping) {
                 timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
@@ -140,47 +111,13 @@ function OnClickRrecorder(x) {
             }
             console.log("Record start at : " + timeouttTime);
             setTimeout(function () {
-                StartRecord(); //start recorded
+                rec.start(); //start recorded
                 ChangeMainButtonState(x, 2);
                 if (anyLooping) LoopFunction();
             }, timeouttTime);
         }
         recording = !recording;
     }
-}
-
-function StartRecord() {
-    navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
-        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
-        /*
-        	create an audio context after getUserMedia is called
-        	sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-        	the sampleRate defaults to the one set in your OS for your playback device
-        */
-        audioContext = new AudioContext();
-        //update the format 
-        /*  assign to gumStream for later use  */
-        gumStream = stream;
-
-        /* use the stream */
-        input = audioContext.createMediaStreamSource(stream);
-
-        /* 
-        	Create the Recorder object and configure to record mono sound (1 channel)
-        	Recording 2 channels  will double the file size
-        */
-        rec = new Recorder(input, {
-            numChannels: 1
-        })
-
-        //start the recording process
-        rec.record()
-
-        console.log("Recording started");
-
-    }).catch(function (err) {
-        console.log(err)
-    });
 }
 
 function OnClickReset(x) {
