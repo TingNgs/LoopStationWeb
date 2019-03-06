@@ -54,6 +54,8 @@ function LoopFunction() {
 
 function OnClickRrecorder(x) {
     //Main control button
+    let id = "recorder" + x;
+    if(document.getElementById(id).classList.contains("waiting")) return;
     if (looperList[x].recorded) {
         //Recorded, play or stop loop
         if (looperList[x].looping) {
