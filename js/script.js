@@ -121,6 +121,31 @@ function OnClickRrecorder(x) {
     }
 }
 
+function IosOnLoad() {
+    for (var i = 0; i < 6; i++) {
+        ChangeMainButtonState(i, 1);
+    }
+    looperList.forEach(element => {
+        if (element.recorded) {
+            element.recorderList.forEach(element => {
+                element.muted = true;
+                element.play();
+                setTimeout(
+                    function () {
+                        element.muted = false;
+                    }, maxDuration + 2000);
+            });
+        }
+    });
+    setTimeout(
+        function () {
+            for (var i = 0; i < 6; i++) {
+                if(looperList[i].recorded)ChangeMainButtonState(i, 3);
+                else ChangeMainButtonState(i,0);
+            }
+        }, maxDuration + 2000);
+}
+
 function OnClickReset(x) {
     //Reset button for recorder
     looperList[x].Reset();
