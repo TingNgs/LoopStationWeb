@@ -1,48 +1,74 @@
 * {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 html,
 body {
-    height: 100%
+  height: 100%;
 }
 
 #controller,
 #main,
 #record_control,
 #recorder_row {
-    height: 100%;
+  height: 100%;
 }
 
 .recorder {
-    height: 50%;
-    width: 100%;
+  height: 50%;
+  width: 100%;
 }
 
 .recorder.empty svg radialGradient stop {
-    stop-color: rgb(90, 90, 90)
+  stop-color: rgb(90, 90, 90);
 }
 
 .recorder.recording svg radialGradient stop {
-    stop-color: rgb(255, 0, 0)
+  stop-color: rgb(255, 0, 0);
 }
 
 .recorder.recorded svg radialGradient stop {
-    stop-color: rgb(0, 0, 255)
+  stop-color: rgb(0, 0, 255);
 }
 
 .recorder.waiting svg radialGradient stop {
-    stop-color: rgb(255, 208, 0)
+  stop-color: rgb(255, 208, 0);
 }
 
 .recorder.looping svg radialGradient stop {
-    stop-color: rgb(0, 255, 0)
+  stop-color: rgb(0, 255, 0);
 }
 
 .background_circle svg,
 .mainButton {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.st00 {
+  fill: url(#recorderRadiaGradient0);
+}
+.st01 {
+  fill: url(#recorderRadiaGradient1);
+}
+.st02 {
+  fill: url(#recorderRadiaGradient2);
+}
+.st03 {
+  fill: url(#recorderRadiaGradient3);
+}
+.st04 {
+  fill: url(#recorderRadiaGradient4);
+}
+.st05 {
+  fill: url(#recorderRadiaGradient5);
+}
+.st1 {
+  fill: #326291;
+}
+
+.st2 {
+  fill: #303263;
 }

@@ -1,15 +1,15 @@
 class Looper {
-    constructor() {
-        this.recorderList = [];
-        this.recorded = false;
-        this.looping = false;
+  constructor() {
+    this.recorderList = [];
+    this.recorded = false;
+    this.looping = false;
+  }
+  Reset() {
+    for (let i = 0; i < this.recorderList.length; i++) {
+      this.recorderList[i].pause();
     }
-    Reset() {
-        this.recorderList.forEach(element => {
-            element.pause();
-        });
-        this.recorded = false;
-        this.looping = false;
-        this.recorderList = [];
-    }
+    this.recorded = false;
+    this.looping = false;
+    this.recorderList = [];
+  }
 }

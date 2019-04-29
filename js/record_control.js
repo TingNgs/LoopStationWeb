@@ -1,6 +1,1 @@
-$(function () {
-    for (let i = 0; i < 6; i++) {
-        let recorderHTML = '<div id="recorder' + i + '" class="recorder empty col-4"> <div id="background_circle' + i + '" class="background_circle"></div> <svg version="1.1" class="mainButton" onclick="OnClickRrecorder(' + i + ')" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 200" style="enable-background:new 0 0 500 200;" xml:space="preserve"> <style type="text/css"> .st0' + i + ' { fill: url(#recorderRadiaGradient' + i + '); } .st1 { fill: #326291; } .st2 { fill: #303263; } </style> <radialGradient id="recorderRadiaGradient' + i + '" cx="50%" cy="50%" r="68.1604" gradientUnits="userSpaceOnUse"> <stop offset="7.435898e-02" style="stop-opacity:1.152102e-04" /> <stop offset="0.1231" style="stop-opacity:0.2505" /> <stop offset="0.3795" style="stop-opacity:0.6512" /> <stop offset="1" style="stop-opacity:0" /> </radialGradient> <circle class="st0' + i + '" cx="50%" cy="50%" r="68.2" /> <circle class="st1" cx="50%" cy="50%" r="48.4" /> <circle class="st2" cx="50%" cy="50%" r="40.6" /> </svg> <button onclick="OnClickReset(' + i + ')">Reset</button></div>';
-        $('#recorder_row').append(recorderHTML);
-    }
-});
+$(function() {});
