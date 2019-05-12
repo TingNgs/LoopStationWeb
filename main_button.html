@@ -1,0 +1,54 @@
+<div id="background_circle{{ index }}" class="background_circle">
+	<svg class="Sektor" viewBox="-30 -30 300 300">
+		<circle
+			class="Sektor-circle"
+			stroke-width="10"
+			fill="none"
+			stroke="#3d3d3d"
+			cx="120"
+			cy="120"
+			r="115"
+		></circle>
+		<path
+			fill="none"
+			stroke-width="10"
+			d="M120,5 A115,115 1 0 1 120,235 A115,115 1 0 1 120,5 "
+		></path>
+		<rect width="15" height="12" y="-5">
+			<animateMotion
+				dur="5s"
+				path="M120,5 A115,115 1 0 1 120,235 A115,115 1 0 1 120,5 "
+				repeatCount="indefinite"
+				rotate="auto"
+			/>
+		</rect>
+	</svg>
+</div>
+<svg
+	version="1.1"
+	class="mainButton"
+	onclick="OnClickRrecorder({{ index }})"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	x="0px"
+	y="0px"
+	viewBox="0 0 500 200"
+	style="enable-background:new 0 0 500 200;"
+	xml:space="preserve"
+>
+	<radialGradient
+		id="recorderRadiaGradient{{ index }}"
+		cx="50%"
+		cy="50%"
+		r="68.1604"
+		gradientUnits="userSpaceOnUse"
+	>
+		<stop offset="7.435898e-02" style="stop-opacity:1.152102e-04" />
+		<stop offset="0.1231" style="stop-opacity:0.2505" />
+		<stop offset="0.3795" style="stop-opacity:0.6512" />
+		<stop offset="1" style="stop-opacity:0" />
+	</radialGradient>
+	<circle class="st0{{ index }}" cx="50%" cy="50%" r="68.2" />
+	<circle class="st1" cx="50%" cy="50%" r="48.4" />
+	<circle class="st2" cx="50%" cy="50%" r="40.6" />
+</svg>
