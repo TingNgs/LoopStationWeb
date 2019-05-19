@@ -11,15 +11,6 @@ $(function() {
 		sampleRate: 48000
 	});
 	tempRec.open();*/
-
-	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-		audioContext = new AudioContext();
-		gumStream = stream;
-		input = audioContext.createMediaStreamSource(stream);
-		rec = new Recorder(input, { numChannels: 2 });
-		tempRec = new Recorder(input, { numChannels: 2 });
-		console.log('Recording started');
-	});
 });
 
 function SetController() {
@@ -41,7 +32,7 @@ function SetController() {
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 var constraints = { audio: true, video: false };
-var rec;
+var rec = 0;
 var tempRec;
 var anyLooping = false;
 var recording = false;
@@ -91,21 +82,32 @@ function LoopFunction() {
 }
 
 function OnClickRrecorder(x) {
-	//Main control button
-	let id = 'recorder' + x; // flood proofing
-	if (document.getElementById(id).classList.contains('waiting')) return;
-	if (looperList[x].recorded) {
-		//Recorded, play or stop loop
-		MainButtonLoopControl(x);
-	} else {
-		//Not recorded, ready to record
-		if (recording) {
-			MainButtonStopRecord(x);
-		} else {
-			MainButtonStartRecord(x);
-		}
-		recording = !recording;
+	if (rec == 0) {
+		navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+			audioContext = new AudioContext();
+			gumStream = stream;
+			input = audioContext.createMediaStreamSource(stream);
+			rec = new Recorder(input, { numChannels: 2 });
+			tempRec = new Recorder(input, { numChannels: 2 });
+			console.log('Recording started');
+			let id = 'recorder' + x; // flood proofing
+			if (document.getElementById(id).classList.contains('waiting'))
+				return;
+			if (looperList[x].recorded) {
+				//Recorded, play or stop loop
+				MainButtonLoopControl(x);
+			} else {
+				//Not recorded, ready to record
+				if (recording) {
+					MainButtonStopRecord(x);
+				} else {
+					MainButtonStartRecord(x);
+				}
+				recording = !recording;
+			}
+		});
 	}
+	//Main control button
 }
 
 function MainButtonLoopControl(x) {
