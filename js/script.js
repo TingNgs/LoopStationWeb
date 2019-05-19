@@ -1,10 +1,16 @@
 $(function() {
+	$('#function_bar').load('function_bar.html');
 	SetController();
 	rec = Recorder({
 		bitRate: 320,
 		sampleRate: 48000
 	});
 	rec.open();
+	tempRec = Recorder({
+		bitRate: 320,
+		sampleRate: 48000
+	});
+	tempRec.open();
 });
 
 function SetController() {
@@ -18,17 +24,6 @@ function SetController() {
 					let mainButtonHTML = html_string;
 					mainButtonHTML = mainButtonHTML.replace(/{{ index }}/g, i);
 					$('#recorder_top' + i).append(mainButtonHTML);
-					/*var className = '#background_circle' + i;
-					var sektor = new Sektor(className, {
-						size: 240,
-						stroke: 10,
-						arc: true,
-						angle: 0,
-						sectorColor: '#bD2828',
-						circleColor: '#3d3d3d',
-						fillCircle: false
-					});
-					svgBackgroundCircleList.push(sektor);*/
 				});
 			}
 		});
@@ -37,13 +32,15 @@ function SetController() {
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 var rec;
+var tempRec;
 var anyLooping = false;
 var recording = false;
 var loopStartTime;
 var maxDuration = 0;
+var RecordingTime = 3000;
 var loopFunction; // For setInterval and clear interval
 var looperList = [];
-var svgBackgroundCircleList = [];
+
 for (var i = 0; i < 6; i++) {
 	looperList.push(new Looper());
 }
@@ -51,7 +48,9 @@ for (var i = 0; i < 6; i++) {
 console.log(iOS);
 
 function StartLooping() {
-	loopFunction = setInterval(LoopFunction, maxDuration);
+	loopFunction = setInterval(() => {
+		LoopFunction();
+	}, maxDuration);
 	LoopFunction();
 }
 
@@ -61,23 +60,21 @@ function CheckEndLoop() {
 		if (looperList[i].looping) endLoop = false;
 	}
 	if (endLoop) {
-		clearInterval(loopFunction);
 		anyLooping = false;
 	}
 }
 
 function LoopFunction() {
 	loopStartTime = new Date().getTime();
-	for (let i = 0; i < looperList.length; i++) {
+	for (let i = 0; i < 6; i++) {
 		if (looperList[i].looping) {
-			for (let j = 0; j < looperList[i].recorderList.length; j++) {
+			for (let j = 0; i < looperList[j].recorderList.length; j++) {
 				looperList[i].recorderList[j].currentTime = 0;
 				looperList[i].recorderList[j].play();
 				//console.log(looperList[i].recorderList[j]);
 			}
-			svgBackgroundCircleList[i].changeAngle(0);
-			svgBackgroundCircleList[i].animateTo(360, maxDuration);
 		}
+		$('#bg_circle_animate' + i)[0].beginElement();
 	}
 }
 
@@ -102,6 +99,7 @@ function OnClickRrecorder(x) {
 function MainButtonLoopControl(x) {
 	if (looperList[x].looping) {
 		looperList[x].looping = false;
+		clearInterval(loopFunction);
 		ChangeMainButtonState(x, 3);
 		/*for (let i = 0; i < looperList[x].recorderList.length; i++)
             looperList[x].recorderList[i].pause();*/
@@ -116,6 +114,7 @@ function MainButtonLoopControl(x) {
 		anyLooping = true;
 		setTimeout(function() {
 			ChangeMainButtonState(x, 4);
+			StartLooping();
 		}, timeouttTime);
 	}
 }
@@ -126,15 +125,39 @@ function MainButtonStartRecord(x) {
 	ChangeMainButtonState(x, 1);
 	if (anyLooping) {
 		timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
-		clearInterval(loopFunction);
 	}
+	$('#bg_circle_animate' + x)[0].setAttribute(
+		'dur',
+		RecordingTime / 1000 + 's'
+	);
 	setTimeout(function() {
 		rec.start(); //start recorded
+		tempRec.start();
+		$('#bg_circle_animate' + x)[0].beginElement();
 		ChangeMainButtonState(x, 2);
-		if (anyLooping) LoopFunction();
+		setTimeout(() => {
+			StopTempRecord();
+			recording = false;
+		}, RecordingTime / 2);
+		setTimeout(() => {
+			MainButtonStopRecord(x);
+			recording = false;
+		}, RecordingTime);
 	}, timeouttTime);
 }
-
+function StopTempRecord() {
+	tempRec.stop(
+		function(blob, duration) {
+			//var audio = new Audio(URL.createObjectURL(blob));
+			//setTimeout(function() {
+			//	audio.play();
+			//}, RecordingTime / 2);
+		},
+		function(msg) {
+			console.log('Fail:' + msg);
+		}
+	);
+}
 function MainButtonStopRecord(x) {
 	ChangeMainButtonState(x, 1);
 	rec.stop(
@@ -154,13 +177,19 @@ function MainButtonStopRecord(x) {
 			if (!newDuration)
 				timeouttTime =
 					maxDuration - (new Date().getTime() - loopStartTime);
-			setTimeout(function() {
-				anyLooping = true;
-				console.log(looperList[x].recorderList);
-				ChangeMainButtonState(x, 4);
-				StartLooping();
-			}, timeouttTime);
-
+			if (anyLooping == false)
+				setTimeout(function() {
+					StartLooping();
+					anyLooping = true;
+					console.log(looperList[x].recorderList);
+					ChangeMainButtonState(x, 4);
+				}, timeouttTime);
+			else {
+				audio.currentTime = RecordingTime / 2 / 1000;
+				setTimeout(() => {
+					audio.play();
+				}, audio.currentTime);
+			}
 			//if (iOS) IosOnLoad(x);
 			//else
 		},
@@ -205,6 +234,7 @@ function IosOnLoad(i) {
 
 function OnClickReset(x) {
 	//Reset button for recorder
+	if (looperList.looping) clearInterval(loopFunction);
 	looperList[x].Reset();
 	ChangeMainButtonState(x, 0);
 	CheckEndLoop();

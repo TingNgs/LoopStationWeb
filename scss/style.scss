@@ -1,4 +1,5 @@
 @import './_color.scss';
+@import './_function_bar.scss';
 
 * {
 	padding: 0;
@@ -20,7 +21,8 @@ body {
 	padding: 0%;
 }
 #controller_row {
-	padding: 20px;
+	padding: 20px 0;
+	padding-left: 30px;
 	background-color: $bg_color;
 }
 #record_control {
@@ -28,28 +30,11 @@ body {
 	justify-content: center;
 	flex-direction: column;
 }
-#recorder_row {
-	height: 100%;
-	padding: 15px;
-	border-radius: 15px;
+#main {
 	background-color: $controller_bg;
-}
-
-.recorder {
-	&.empty svg radialGradient stop {
-		stop-color: $button-empty;
-	}
-	&.recording svg radialGradient stop {
-		stop-color: $button-recording;
-	}
-	&.recorded svg radialGradient stop {
-		stop-color: $button-recorded;
-	}
-	&.waiting svg radialGradient stop {
-		stop-color: $button-waiting;
-	}
-	&.looping svg radialGradient stop {
-		stop-color: $button-looping;
+	border-radius: 15px;
+	#recorder_row {
+		height: 100%;
 	}
 }
 
@@ -66,40 +51,6 @@ body {
 	width: 100%;
 }
 
-.st00 {
-	fill: url(#recorderRadiaGradient0);
-}
-.st01 {
-	fill: url(#recorderRadiaGradient1);
-}
-.st02 {
-	fill: url(#recorderRadiaGradient2);
-}
-.st03 {
-	fill: url(#recorderRadiaGradient3);
-}
-.st04 {
-	fill: url(#recorderRadiaGradient4);
-}
-.st05 {
-	fill: url(#recorderRadiaGradient5);
-}
-.st1 {
-	fill: $button-st1;
-}
-
-.st2 {
-	fill: $button-st2;
-}
-
-.background_circle {
-	.Sektor-circle {
-		fill: $controller_bg !important;
-	}
-	rect {
-		fill: $sektor_color;
-	}
-	path {
-		stroke: $sektor_bg;
-	}
+.hide {
+	display: none;
 }

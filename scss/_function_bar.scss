@@ -1,0 +1,66 @@
+@import './_color';
+
+#function_bar {
+	width: 100%;
+	height: 100%;
+	background-color: $controller_bg;
+	border-radius: 15px;
+	padding-top: 15px;
+	overflow-y: auto;
+	direction: rtl;
+	&::-webkit-scrollbar-track {
+		background-color: $bg_color;
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar {
+		width: 5px;
+		background-color: $bg_color;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background-image: -webkit-gradient(
+			linear,
+			left bottom,
+			left top,
+			color-stop(0.44, rgb(122, 153, 217)),
+			color-stop(0.72, rgb(73, 125, 189)),
+			color-stop(0.86, rgb(28, 58, 148))
+		);
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+	}
+	li svg {
+		border-radius: 5px;
+		path {
+			fill: $function_button;
+		}
+		g {
+			fill: $function_button;
+		}
+	}
+}
+
+.function {
+	-webkit-animation-name: main_in;
+	animation-name: main_in;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	opacity: 1;
+	&.hide {
+		display: none;
+	}
+}
+
+@keyframes main_in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

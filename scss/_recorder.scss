@@ -1,0 +1,54 @@
+@import './_color.scss';
+.background_circle {
+	.Sektor-circle {
+		fill: $controller_bg !important;
+	}
+	rect {
+		fill: $sektor_color;
+	}
+	path {
+		stroke: $sektor_bg;
+	}
+}
+.recorder {
+	&.empty svg radialGradient stop {
+		stop-color: $button-empty;
+	}
+	&.recording svg radialGradient stop {
+		stop-color: $button-recording;
+	}
+	&.recorded svg radialGradient stop {
+		stop-color: $button-recorded;
+	}
+	&.waiting svg radialGradient stop {
+		stop-color: $button-waiting;
+	}
+	&.looping svg radialGradient stop {
+		stop-color: $button-looping;
+	}
+}
+.st00 {
+	fill: url(#recorderRadiaGradient0);
+}
+.st01 {
+	fill: url(#recorderRadiaGradient1);
+}
+.st02 {
+	fill: url(#recorderRadiaGradient2);
+}
+.st03 {
+	fill: url(#recorderRadiaGradient3);
+}
+.st04 {
+	fill: url(#recorderRadiaGradient4);
+}
+.st05 {
+	fill: url(#recorderRadiaGradient5);
+}
+.st1 {
+	fill: $button-st1;
+}
+
+.st2 {
+	fill: $button-st2;
+}
