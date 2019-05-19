@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 	$('#function_bar').load('function_bar.html');
 	SetController();
 	/*rec = Recorder({
@@ -11,16 +11,46 @@ $(function() {
 		sampleRate: 48000
 	});
 	tempRec.open();*/
+
+	/*navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+		audioContext = new AudioContext();
+		input = audioContext.createMediaStreamSource(stream);
+		rec = new Recorder(input, { numChannels: 2 });
+		tempRec = new Recorder(input, { numChannels: 2 });
+		console.log('Recording started');
+	});*/
+	navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+		audioContext = new AudioContext();
+		/* use the stream */
+		input = audioContext.createMediaStreamSource(stream);
+
+		//get the encoding 
+		encodingType = "mp3";
+
+
+		audioRecorder = new WebAudioRecorder(input, {
+			workerDir: "lib/", // must end with slash
+			encoding: encodingType,
+			numChannels: 2 //2 is the default, mp3 encoding supports only 2
+
+		});
+
+		audioRecorder.onComplete = function (recorder, blob) {
+			createDownloadLink(blob, recorder.encoding);
+		}
+
+	})
+
 });
 
 function SetController() {
-	$('#main').load('record_control.html', function() {
-		$.get('./recorder.html', function(html_string) {
+	$('#main').load('record_control.html', function () {
+		$.get('./recorder.html', function (html_string) {
 			recorderHTML = html_string;
 			for (let i = 0; i < 6; i++) {
 				let tempRecorderHTML = recorderHTML.replace(/{{ index }}/g, i);
 				$('#recorder_row').append(tempRecorderHTML);
-				$.get('./main_button.html', function(html_string) {
+				$.get('./main_button.html', function (html_string) {
 					let mainButtonHTML = html_string;
 					mainButtonHTML = mainButtonHTML.replace(/{{ index }}/g, i);
 					$('#recorder_top' + i).append(mainButtonHTML);
@@ -32,14 +62,18 @@ function SetController() {
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 var constraints = { audio: true, video: false };
-var rec = 0;
+var rec;
 var tempRec;
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+var audioContext; //audio context to help us record
+var mixer, audioRecorder;
 var anyLooping = false;
 var recording = false;
 var loopStartTime;
 var maxDuration = 0;
 var tempAudioDur = 0;
-var RecordingTime = 10000;
+var RecordingTime = 3000;
+var au = document.createElement('audio');
 var loopFunction; // For setInterval and clear interval
 var inputRecorder;
 var looperList = [];
@@ -82,51 +116,40 @@ function LoopFunction() {
 }
 
 function OnClickRrecorder(x) {
-	if (rec == 0) {
-		navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-			audioContext = new AudioContext();
-			gumStream = stream;
-			input = audioContext.createMediaStreamSource(stream);
-			rec = new Recorder(input, { numChannels: 2 });
-			tempRec = new Recorder(input, { numChannels: 2 });
-			console.log('Recording started');
-			let id = 'recorder' + x; // flood proofing
-			if (document.getElementById(id).classList.contains('waiting'))
-				return;
-			if (looperList[x].recorded) {
-				//Recorded, play or stop loop
-				MainButtonLoopControl(x);
-			} else {
-				//Not recorded, ready to record
-				if (recording) {
-					MainButtonStopRecord(x);
-				} else {
-					MainButtonStartRecord(x);
-				}
-				recording = !recording;
-			}
-		});
-	}
 	//Main control button
+	let id = 'recorder' + x; // flood proofing
+	if (document.getElementById(id).classList.contains('waiting')) return;
+	if (looperList[x].recorded) {
+		//Recorded, play or stop loop
+		MainButtonLoopControl(x);
+
+	} else {
+		//Not recorded, ready to record
+		if (recording) {
+			MainButtonStopRecord(x);
+		} else {
+			MainButtonStartRecord(x);
+		}
+		recording = !recording;
+	}
 }
 
 function MainButtonLoopControl(x) {
+
 	if (looperList[x].looping) {
 		looperList[x].looping = false;
 		clearInterval(loopFunction);
 		ChangeMainButtonState(x, 3);
-		/*for (let i = 0; i < looperList[x].recorderList.length; i++)
-            looperList[x].recorderList[i].pause();*/
 		CheckEndLoop();
 	} else {
 		ChangeMainButtonState(x, 1);
-		var timeouttTime = 0;
+		let timeouttTime = 0;
 		looperList[x].looping = true;
 		if (anyLooping)
 			timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
 		else StartLooping();
 		anyLooping = true;
-		setTimeout(function() {
+		setTimeout(function () {
 			ChangeMainButtonState(x, 4);
 			StartLooping();
 		}, timeouttTime);
@@ -134,7 +157,8 @@ function MainButtonLoopControl(x) {
 }
 
 function MainButtonStartRecord(x) {
-	var timeouttTime = 1500;
+
+	let timeouttTime = 1500;
 	ChangeMainButtonState(x, 1);
 	if (anyLooping) {
 		timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
@@ -143,38 +167,53 @@ function MainButtonStartRecord(x) {
 		'dur',
 		RecordingTime / 1000 + 's'
 	);
-	setTimeout(function() {
-		rec.record(); //start recorded
-		tempRec.record();
+	setTimeout(function () {
+		audioRecorder.startRecording();
+		/*rec.record(); //start recorded
+
+		tempRec.record();*/
 		$('#bg_circle_animate' + x)[0].beginElement();
 		ChangeMainButtonState(x, 2);
 		setTimeout(() => {
 			StopTempRecord();
-			recording = false;
 		}, RecordingTime / 2);
-		setTimeout(() => {
+		/*setTimeout(() => {
 			MainButtonStopRecord(x);
 			recording = false;
-		}, RecordingTime);
+		}, RecordingTime);*/
 	}, timeouttTime);
 }
 function StopTempRecord() {
-	tempRec.stop();
-	tempRec.exportWAV(TempRecPlayOnce);
+	/*tempRec.stop();
+	tempRec.exportWAV(TempRecPlayOnce);*/
+	audioRecorder.finishRecording();
 }
+function createDownloadLink(blob, encoding) {
+
+	var url = URL.createObjectURL(blob);
+	au.src = url;
+
+}
+
 function TempRecPlayOnce(blob) {
-	var audio = new Audio(URL.createObjectURL(blob));
-	setTimeout(() => {
+	let audio = document.createElement('AUDIO');
+	audio.src = URL.createObjectURL(blob);
+	/*audio.play();
+	let timeouttTime = RecordingTime / 2;
+	setTimeout(function () {
+		audio.currentTime = 0;
+		audio.play();
 		tempAudioDur = audio.duration;
 		$('#bg_circle_animate' + inputRecorder)[0].beginElement();
-		audio.play();
-	}, RecordingTime / 2);
+
+	}, timeouttTime);*/
 }
 function MainButtonStopRecord(x) {
-	ChangeMainButtonState(x, 1);
+	au.play();
+	/*ChangeMainButtonState(x, 1);
 
 	inputRecorder = x;
-	rec.exportWAV(PushRecordingList);
+	rec.exportWAV(PushRecordingList);*/
 }
 
 function PushRecordingList(blob) {
@@ -194,7 +233,7 @@ function PushRecordingList(blob) {
 	if (!newDuration)
 		timeouttTime = maxDuration - (new Date().getTime() - loopStartTime);
 	if (anyLooping)
-		setTimeout(function() {
+		setTimeout(function () {
 			console.log(looperList[inputRecorder].recorderList);
 			ChangeMainButtonState(inputRecorder, 4);
 		}, timeouttTime);
@@ -215,12 +254,12 @@ function OnClickIosOnLoad() {
 			for (let j = 0; j < looperList[i].recorderList.length; j++) {
 				looperList[i].recorderList[j].muted = true;
 				looperList[i].recorderList[j].play();
-				setTimeout(function() {
+				setTimeout(function () {
 					looperList[i].recorderList[j].muted = false;
 				}, maxDuration + 2000);
 			}
 		}
-		setTimeout(function() {
+		setTimeout(function () {
 			if (looperList[i].recorded) ChangeMainButtonState(i, 3);
 			else ChangeMainButtonState(i, 0);
 		}, maxDuration + 2000);
@@ -232,11 +271,11 @@ function IosOnLoad(i) {
 	for (let j = 0; j < looperList[i].recorderList.length; j++) {
 		looperList[i].recorderList[j].muted = true;
 		looperList[i].recorderList[j].play();
-		setTimeout(function() {
+		setTimeout(function () {
 			looperList[i].recorderList[j].muted = false;
 		}, maxDuration + 2000);
 	}
-	setTimeout(function() {
+	setTimeout(function () {
 		ChangeMainButtonState(i, 3);
 	}, maxDuration + 2000);
 }
