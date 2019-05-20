@@ -11,5 +11,6 @@ class Looper {
     this.recorded = false;
     this.looping = false;
     this.recorderList = [];
+    this.timeZone = 0;
   }
 }
