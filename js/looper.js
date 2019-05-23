@@ -12,5 +12,7 @@ class Looper {
     this.looping = false;
     this.recorderList = [];
     this.timeZone = 0;
+    this.dur = 0;
+    this.tempPlaying = false;
   }
 }
