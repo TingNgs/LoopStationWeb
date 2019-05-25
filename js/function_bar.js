@@ -7,3 +7,5 @@ function FunctionBarOnClick(n) {
 	if (n == 1) $('#timing-function').toggleClass('hide');
 	function_page = n;
 }
+
+
