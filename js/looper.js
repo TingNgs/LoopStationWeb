@@ -14,5 +14,6 @@ class Looper {
     this.timeZone = 0;
     this.dur = 0;
     this.tempPlaying = false;
+    this.ending = false;
   }
 }

@@ -80,20 +80,34 @@ function StartLooping() {
 	}, minDuration);
 }
 function LoopFunction() {
-	playingDur += minDuration;
-	if (playingDur >= maxDuration) playingDur = 0;
+
 	loopStartTime = new Date().getTime();
 	for (let i = 0; i < 6; i++) {
 		if (looperList[i].looping) {
 			if (playingDur % looperList[i].dur == 0) {
-				for (let j = 0; j < looperList[i].recorderList.length; j++) {
-					looperList[i].recorderList[j].audio.currentTime = looperList[i].recorderList[j].startingTime;
+				if (looperList[i].ending) {
+					for (let j = 0; j < looperList[i].recorderList.length; j++) {
+						looperList[i].recorderList[j].audio.pause();
+					}
+					looperList[i].looping = false;
+					looperList[i].ending = false;
+					CheckEndLoop()
+				} else {
+					for (let j = 0; j < looperList[i].recorderList.length; j++) {
+						looperList[i].recorderList[j].audio.currentTime = looperList[i].recorderList[j].startingTime;
+					}
+					$('#bg_circle_animate' + i)[0].setAttribute(
+						'dur',
+						looperList[i].dur / 1000 + 's'
+					)
+					$('#bg_circle_animate' + i)[0].beginElement();
 				}
-				$('#bg_circle_animate' + i)[0].beginElement();
+
 			}
 		}
 	}
-
+	playingDur += minDuration;
+	if (playingDur >= maxDuration) playingDur = 0;
 }
 function CheckEndLoop() {
 	var endLoop = true;
@@ -102,6 +116,7 @@ function CheckEndLoop() {
 	}
 	if (endLoop) {
 		anyLooping = false;
+		clearInterval(loopFunction)
 	}
 }
 
@@ -114,7 +129,6 @@ function OnClickRrecorder(x) {
 	if (looperList[x].recorded) {
 		//Recorded, play or stop loop
 		MainButtonLoopControl(x);
-
 	} else {
 		//Not recorded, ready to record
 		if (recording) {
@@ -127,7 +141,68 @@ function OnClickRrecorder(x) {
 	}
 }
 function MainButtonLoopControl(x) {
+	if (looperList[x].looping) {
+		looperList[x].ending = true;
+	} else {
+		StartLooperLooping(x)
+	}
+}
 
+function StartLooperLooping(x) {
+	let tempTimeout = 0
+	if (anyLooping) {
+		tempTimeout = GetPlayTimeout(looperList[x].dur)
+		$('#bg_circle_animate' + x)[0].setAttribute(
+			'dur',
+			tempTimeout / 1000 + 's'
+		); $('#bg_circle_animate' + x)[0].beginElement();
+
+	}
+
+	for (let j = 0; j < looperList[x].recorderList.length; j++) {
+		looperList[x].recorderList[j].audio.muted = true;
+		looperList[x].recorderList[j].audio.play();
+	}
+	looperList[x].looping = true;
+	setTimeout(() => {
+
+		for (let j = 0; j < looperList[x].recorderList.length; j++) {
+			looperList[x].recorderList[j].audio.muted = false;
+		}
+		if (!anyLooping) {
+			anyLooping = true
+			playingDur = 0;
+			LoopFunction();
+			StartLooping();
+		}
+	}, tempTimeout);
+}
+
+
+//Calculate the timeout time if any looping before record
+function GetPlayTimeout(playDur) {
+	let tempMax = 0;
+	let maxIndex = 0;
+	let timeout;
+	for (let i = 0; i < 6; i++) {
+		if (looperList[i].looping) {
+			if (looperList[i].dur >= tempMax) {
+				tempMax = looperList[i].dur;
+				maxIndex = i
+			}
+		}
+	}
+	if (looperList[maxIndex].tempPlaying) {
+		if (tempAudio2.muted) timeout = tempMax - (tempAudio.currentTime) * 1000
+		else timeout = (tempMax / 2) - (tempAudio2.currentTime) * 1000
+	}
+	else {
+		timeout = tempMax - ((looperList[maxIndex].recorderList[0].audio.currentTime - looperList[maxIndex].recorderList[0].startingTime) * 1000);
+	}
+	while (timeout - playDur > 0) {
+		timeout -= playDur;
+	}
+	return timeout;
 }
 
 function MainButtonStartRecord(x) {
@@ -238,6 +313,8 @@ function PlayRecording(x) {
 		looperList[x].tempPlaying = false;
 	}, RecordingTime * 2)
 }
+
+
 
 
 //Calculate the timeout time if any looping before record
