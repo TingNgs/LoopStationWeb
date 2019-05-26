@@ -137,6 +137,7 @@ function OnClickRrecorder(x) {
 			recording = true;
 			inputRecorder = x;
 			MainButtonStartRecord(x);
+			tempAudio = document.createElement('audio'); tempAudio2 = document.createElement('audio'); recordingAudio = document.createElement('audio');
 		}
 	}
 }
@@ -253,17 +254,17 @@ function SetCircleTime(timeouttTime, x) {
 function StopRecording(x) {
 	//Stop record of each audio
 	setTimeout(() => {
-		tempAudio = document.createElement('audio')
+
 		StopRecord(tempRec, TempRecPlayOnce);
 	}, RecordingTime / 2);
 	setTimeout(() => {
-		tempAudio2 = document.createElement('audio');
+
 		StopRecord(tempRec2, TempRec2PlayOnce);
 		looperList[x].recorded = true;
 		looperList[x].looping = true;
 	}, RecordingTime);
 	setTimeout(function () {
-		recordingAudio = document.createElement('audio');
+
 		StopRecord(rec, PushRecordingList);
 		recording = false;
 	}, RecordingTime + 1000);
