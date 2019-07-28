@@ -10,9 +10,61 @@
 		stroke: $sektor_bg;
 	}
 }
+
+#main {
+	#instrument {
+		height: 0;
+		width: 100%;
+	}
+	#record_control {
+		width: 100%;
+		height: 100%;
+		#recorder_row {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			.recorder {
+				width: 33%;
+				height: 50%;
+			}
+		}
+	}
+	&.instrument {
+		#instrument {
+			height: 60%;
+		}
+		#record_control {
+			height: 40%;
+			#recorder_row {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				.recorder {
+					width: 16.66%;
+					height: 100%;
+				}
+			}
+		}
+	}
+}
+
+#piano_container {
+	display: flex;
+	flex-direction: column;
+}
+
 .recorder {
-	&.empty svg radialGradient stop {
-		stop-color: $button-empty;
+	&.empty {
+		.background_circle svg rect {
+			display: none;
+		}
+		svg radialGradient stop {
+			stop-color: $button-empty;
+		}
 	}
 	&.recording svg radialGradient stop {
 		stop-color: $button-recording;

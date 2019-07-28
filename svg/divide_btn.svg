@@ -1,0 +1,9 @@
+<svg viewBox="-40 -30 320 320" width="100%" xmlns="http://www.w3.org/2000/svg"
+				xmlns:xlink="http://www.w3.org/1999/xlink" >
+				<path xmlns="http://www.w3.org/2000/svg" class="st2"
+					d="M16,102h192c8.8,0,16,7.2,16,16s-7.2,16-16,16H16c-8.8,0-16-7.2-16-16S7.2,102,16,102z" fill="rgb(201, 201, 201)"/>
+				<g xmlns="http://www.w3.org/2000/svg" fill="rgb(201, 201, 201)">
+					<path class="st2" d="M96,38h32v32H96V38z" />
+					<path class="st2" d="M96,166h32v32H96V166z" />
+				</g>
+			</svg>

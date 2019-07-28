@@ -1,5 +1,15 @@
-<div id="recorder{{ index }}" class="recorder empty col-4">
-	<div id="recorder_top{{ index }}" class="controller_reocorder_top"></div>
+<div
+	id="recorder{{ index }}"
+	class="recorder empty"
+	ondrop="drop(event,{{ index }})"
+	ondragover="allowDrop(event)"
+>
+	<div
+		id="recorder_top{{ index }}"
+		class="controller_reocorder_top"
+		draggable="true"
+		ondragstart="drag(event,{{ index }})"
+	></div>
 
 	<button onclick="OnClickReset({{ index }})">Reset</button>
 </div>

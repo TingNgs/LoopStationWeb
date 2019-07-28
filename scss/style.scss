@@ -1,6 +1,8 @@
 @import './_color.scss';
 @import './_function_bar.scss';
 @import './_recorder.scss';
+@import './_piano.scss';
+
 * {
 	padding: 0;
 	margin: 0;
@@ -37,11 +39,15 @@ body {
 		height: 100%;
 	}
 }
-
+.recorder {
+	background-color: rgba($color: #000000, $alpha: 0);
+}
 .controller_reocorder_top {
 	position: relative;
-	width: 100%;
+	margin: 0 auto;
+	width: 50%;
 	height: 70%;
+	background-color: rgba($color: #000000, $alpha: 0);
 }
 
 .background_circle svg,
@@ -49,6 +55,8 @@ body {
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	z-index: 1;
+	background-color: rgba($color: #000000, $alpha: 0);
 }
 
 .hide {
