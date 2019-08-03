@@ -8,7 +8,6 @@ class Looper {
 		this.dur = 0;
 		this.tempPlaying = false;
 		this.ending = false;
-		this.instrument = false;
 	}
 	Reset() {
 		this.recorded = false;
@@ -19,6 +18,5 @@ class Looper {
 		this.dur = 0;
 		this.tempPlaying = false;
 		this.ending = false;
-		this.instrument = false;
 	}
 }

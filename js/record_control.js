@@ -66,11 +66,11 @@ function MainButtonStartRecord(x) {
 function StartListening() {
 	startListenTime = new Date().getTime();
 	listIndex = looperList[inputRecorder].recorderList.length;
-	looperList[inputRecorder].instrument = true;
 	looperList[inputRecorder].recorded = true;
 	looperList[inputRecorder].recorderList.push({
 		audioList: [],
-		startingTime: 1
+		startingTime: 1,
+		instrument: true
 	});
 	if (RecordingTime > maxDuration) {
 		maxDuration = RecordingTime;
@@ -229,7 +229,8 @@ function PushRecordingList(blob) {
 	recordingAudio.play();
 	looperList[inputRecorder].recorderList.push({
 		audio: recordingAudio,
-		startingTime: 1
+		startingTime: 1,
+		instrument: false
 	});
 }
 
@@ -251,7 +252,7 @@ function drop(ev, n) {
 	ChangeMainButtonState(n, RECORDER_STATE.RECORDED);
 	if (looperList[n].recorded && looperList[dragLooper].recorded) {
 		if (looperList[n].dur == looperList[dragLooper].dur) {
-			looperList[n].startingLoop = true;
+			if (looperList[n].looping) looperList[n].startingLoop = true;
 			for (
 				let i = 0;
 				i < looperList[dragLooper].recorderList.length;
