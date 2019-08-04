@@ -1,7 +1,7 @@
 $(function () {
     let keyNum = display_keys.length;
     for (let i = 0; i < keyNum; i++) {
-        $('#audio_list').append('<audio class="piaon_audio" controls src="./pianosound_mp3/' + display_keys[i].num + '.mp3" type="audio/mp3" />');
+        $('#audio_list').append('<audio class="piaon_audio" controls src="./audio/pianoAudio/' + display_keys[i].num + '.mp3" type="audio/mp3" />');
     }
 })
 
