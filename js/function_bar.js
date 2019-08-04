@@ -1,4 +1,5 @@
 var page = 2;
+var pageLoad = [false];
 function FunctionBarOnClick(n) {
 	$('#main-function').addClass('hide');
 	$('#back-function').addClass('hide');
@@ -42,6 +43,9 @@ function SetController() {
 }
 
 async function SetPiano() {
+	if (!pageLoad[0]) {
+		$('#loading_spinner').removeClass('hide');
+	}
 	$('#main').addClass('instrument');
 	await $('#instrument').empty();
 	await $('#instrument').append('<div id="piano_container"></div>');
@@ -49,7 +53,23 @@ async function SetPiano() {
 	await RenderPianoKeySet();
 	PianoAudioList = await document.getElementsByClassName('piaon_audio');
 	PianoKeys = await document.getElementsByClassName('key');
+	let listLength = PianoAudioList.length;
+
 	for (let i = 0; i < PianoKeys.length; i++) {
+		if (!pageLoad[0]) {
+			PianoAudioList[i].onended = () => {
+				PianoAudioList[i].muted = false;
+				PianoAudioList[i].onended = null;
+				listLength--;
+				if (!listLength) {
+					console.log('finish');
+					$('#loading_spinner').addClass('hide');
+					pageLoad[0] = true;
+				}
+			};
+			PianoAudioList[i].muted = true;
+			PianoAudioList[i].play();
+		}
 		PianoKeys[i].addEventListener('mousedown', (e, index) => {
 			PianoAudioList[i].currentTime = 0;
 			PianoAudioList[i].play();

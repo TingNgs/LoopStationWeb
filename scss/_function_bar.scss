@@ -51,14 +51,11 @@
 	-webkit-animation-duration: 1s;
 	animation-duration: 1s;
 	opacity: 1;
-	&.hide {
-		display: none;
-	}
 }
 
-#textid{
+#textid {
 	fill: $sektor_color;
-	font-family : fantasy;
+	font-family: fantasy;
 }
 
 @keyframes main_in {
