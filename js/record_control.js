@@ -234,7 +234,18 @@ function PushRecordingList(blob) {
 	});
 }
 
-function OnClickReset(x) {
+function OnClickSetting(x) {
+	$('#recorder_setting').removeClass('hide');
+	$('#recorder' + x).addClass('setting');
+	settingRecorder = x;
+}
+
+function OnClickSettingCross() {
+	$('#recorder_setting').addClass('hide');
+	$('#recorder' + settingRecorder).removeClass('setting');
+}
+
+function OnClickReset(x = settingRecorder) {
 	//Reset button for recorder
 	if (looperList.looping) clearInterval(loopFunction);
 	looperList[x].Reset();

@@ -41,13 +41,28 @@ body {
 }
 .recorder {
 	background-color: rgba($color: #000000, $alpha: 0);
-}
-.controller_reocorder_top {
-	position: relative;
-	margin: 0 auto;
-	width: 50%;
-	height: 70%;
-	background-color: rgba($color: #000000, $alpha: 0);
+	.controller_reocorder_top {
+		position: relative;
+		margin: 0 auto;
+		width: 50%;
+		height: 70%;
+		background-color: rgba($color: #000000, $alpha: 0);
+	}
+	&.setting {
+		.controller_reocorder_top {
+			position: fixed;
+			z-index: 30;
+			height: 100%;
+			width: 30%;
+			max-height: 60vh;
+			top: 50%;
+			transform: translate(0, -50%);
+			left: 7.5%;
+		}
+		button {
+			display: none;
+		}
+	}
 }
 
 .background_circle svg,
@@ -63,7 +78,7 @@ body {
 	display: none !important;
 }
 
-.lds-ring {
+.fixed_center {
 	position: fixed;
 	z-index: 20;
 	top: 0;

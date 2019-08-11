@@ -40,6 +40,7 @@ var loopFunction; // For setInterval and clear interval
 var inputRecorder;
 var looperList = [];
 var dragLooper;
+var settingRecorder;
 
 var timingText;
 

@@ -62,7 +62,6 @@ async function SetPiano() {
 				PianoAudioList[i].onended = null;
 				listLength--;
 				if (!listLength) {
-					console.log('finish');
 					$('#loading_spinner').addClass('hide');
 					pageLoad[0] = true;
 				}

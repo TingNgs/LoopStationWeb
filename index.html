@@ -17,7 +17,25 @@
 
 	<body>
 		<div id="controller" class="container-fluid">
-			<div id="loading_spinner" class="lds-ring hide">
+			<div id="recorder_setting" class="fixed_center hide">
+				<div class="recorder_setting_bg">
+					<div class="recorder_setting_container">
+						<div class="setting_top_button_container">
+							<span
+								class="recorder_setting_button"
+								onclick="OnClickReset()"
+								>RESET</span
+							>
+							<span
+								class="recorder_setting_button"
+								onclick="OnClickSettingCross()"
+								>CLOSE</span
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="loading_spinner" class="lds-ring fixed_center hide">
 				<div></div>
 				<div></div>
 				<div></div>

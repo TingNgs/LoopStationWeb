@@ -104,3 +104,37 @@
 .st2 {
 	fill: $button-st2;
 }
+
+.recorder_setting_bg {
+	height: 80%;
+	width: 90%;
+	background-color: $controller_bg;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: row-reverse;
+	position: relative;
+}
+.recorder_setting_container {
+	height: 100%;
+	width: 60%;
+	overflow: auto;
+	.setting_top_button_container {
+		height: 15%;
+		width: 100%;
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+	}
+}
+
+.recorder_setting_button {
+	height: 60%;
+	width: 20%;
+	border-radius: 5px;
+	background-color: $button-st2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-weight: bold;
+}
