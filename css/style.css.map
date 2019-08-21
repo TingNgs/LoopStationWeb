@@ -8,7 +8,8 @@
         "../scss/_color.scss",
         "../scss/_recorder.scss",
         "../scss/_color.scss",
-        "../scss/_piano.scss"
+        "../scss/_piano.scss",
+        "../scss/_drum.scss"
     ],
     "names": [],
     "file": "style.css"
