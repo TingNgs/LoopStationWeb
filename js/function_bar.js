@@ -27,12 +27,12 @@ function FunctionBarOnClick(n) {
 }
 
 function InitController() {
-	$.get('./recorder.html', function(html_string) {
+	$.get('./recorder.html', function (html_string) {
 		recorderHTML = html_string;
 		for (let i = 0; i < 6; i++) {
 			let tempRecorderHTML = recorderHTML.replace(/{{ index }}/g, i);
 			$('#recorder_row').append(tempRecorderHTML);
-			$.get('./main_button.html', function(html_string) {
+			$.get('./main_button.html', function (html_string) {
 				let mainButtonHTML = html_string;
 				mainButtonHTML = mainButtonHTML.replace(/{{ index }}/g, i);
 				$('#recorder_top' + i).append(mainButtonHTML);
@@ -99,6 +99,7 @@ async function SetDrum() {
 
 	DrumAudioList = await document.getElementsByClassName('drum_audio');
 	DrumKeys = await document.getElementsByClassName('drum');
+
 	let listLength = DrumAudioList.length;
 
 	for (let i = 0; i < DrumKeys.length; i++) {
@@ -117,6 +118,7 @@ async function SetDrum() {
 		}
 		DrumKeys[i].addEventListener('mousedown', (e, index) => {
 			DrumAudioList[i].currentTime = 0;
+			$(this).css("background-color", "red");
 			DrumAudioList[i].play();
 			if (recording) {
 				let time = new Date().getTime() - startListenTime;
@@ -125,6 +127,9 @@ async function SetDrum() {
 					listIndex
 				].audioList.push({ time: time, audio: audio });
 			}
+		});
+		DrumKeys[i].addEventListener('mouseup', (e, index) => {
+			$(this).css("background-color", "blue");
 		});
 	}
 }
