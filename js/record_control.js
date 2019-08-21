@@ -24,8 +24,6 @@ function OnClickRrecorder(x) {
 		inputRecorder = x;
 		MainButtonStartRecord(x);
 		looperList[x].dur = RecordingTime;
-		tempAudio = document.createElement('audio');
-		tempAudio2 = document.createElement('audio');
 		recordingAudio = document.createElement('audio');
 	}
 }
@@ -50,9 +48,6 @@ function MainButtonStartRecord(x) {
 				maxDuration = RecordingTime;
 				console.log('Max update  ' + maxDuration);
 			}
-			setTimeout(() => {
-				tempRec2.record();
-			}, RecordingTime * 0.5);
 			StopRecording(x);
 			PlayRecording(x);
 		}, timeouttTime);
@@ -113,15 +108,16 @@ function SetCircleTime(timeouttTime, x) {
 function StopRecording(x) {
 	//Stop record of each audio
 	setTimeout(() => {
-		StopRecord(tempRec, TempRecPlayOnce);
-	}, RecordingTime / 2);
-	setTimeout(() => {
-		StopRecord(tempRec2, TempRec2PlayOnce);
+		tempRec.stop();
+		tempRec.getBuffer(getTempBufferCallback);
+		tempRec.clear();
 		looperList[x].recorded = true;
 		looperList[x].looping = true;
 	}, RecordingTime);
 	setTimeout(function() {
-		StopRecord(rec, PushRecordingList);
+		rec.stop();
+		rec.exportWAV(PushRecordingList);
+		rec.clear();
 		recording = false;
 	}, RecordingTime + 1000);
 }
@@ -130,9 +126,7 @@ function PlayRecording(x) {
 	//Play the first half audio
 	setTimeout(() => {
 		ChangeMainButtonState(x, RECORDER_STATE.LOOPING);
-		tempAudio.currentTime = 0;
 		$('#bg_circle_animate' + x)[0].beginElement();
-		tempAudio.muted = false;
 		looperList[x].tempPlaying = true;
 		if (anyLooping) {
 			if (RecordingTime < minDuration) {
@@ -150,14 +144,6 @@ function PlayRecording(x) {
 			if (playingDur >= maxDuration) playingDur = 0;
 		}
 	}, RecordingTime);
-
-	//Play the last half audio
-	setTimeout(() => {
-		tempAudio2.currentTime = 0;
-		tempAudio2.muted = false;
-		tempAudio.muted = true;
-		tempAudio2.loop = false;
-	}, RecordingTime * 1.5);
 
 	//Play the full audio
 	setTimeout(() => {
@@ -205,23 +191,21 @@ function GetRecordTimeout() {
 	}
 	return timeout;
 }
-function StopRecord(recorder, cb) {
-	recorder.stop();
-	recorder.exportWAV(cb);
-	recorder.clear();
+
+function getTempBufferCallback(buffers) {
+	var newSource = audioContext.createBufferSource();
+	var newBuffer = audioContext.createBuffer(
+		2,
+		buffers[0].length,
+		audioContext.sampleRate
+	);
+	newBuffer.getChannelData(0).set(buffers[0]);
+	newBuffer.getChannelData(1).set(buffers[1]);
+	newSource.buffer = newBuffer;
+	newSource.connect(audioContext.destination);
+	newSource.start(0);
 }
-function TempRec2PlayOnce(blob) {
-	tempAudio2.src = URL.createObjectURL(blob);
-	tempAudio2.muted = true;
-	tempAudio2.loop = true;
-	tempAudio2.play();
-}
-function TempRecPlayOnce(blob) {
-	tempAudio.src = URL.createObjectURL(blob);
-	tempAudio.muted = true;
-	tempAudio.loop = true;
-	tempAudio.play();
-}
+
 function PushRecordingList(blob) {
 	recordingAudio.src = URL.createObjectURL(blob);
 	recordingAudio.muted = true;
@@ -234,10 +218,34 @@ function PushRecordingList(blob) {
 	});
 }
 
-function OnClickSetting(x) {
+async function OnClickSetting(x) {
 	$('#recorder_setting').removeClass('hide');
 	$('#recorder' + x).addClass('setting');
 	settingRecorder = x;
+	$('#setting_record_container').empty();
+	let widthValue = (looperList[x].dur / (looperList[x].dur + 2000)) * 100;
+	wavefromStyle.innerHTML =
+		'.slider::-webkit-slider-thumb { width: ' + widthValue + '%; }';
+	looperList[x].recorderList.forEach(async (element, index) => {
+		if (element.instrument) {
+		} else {
+			await $('#setting_record_container').append(
+				"<div id='recordedAudio" + index + "' class='record_waveform'/>"
+			);
+			$('.slider::-webkit-slider-thumb').css('width', '60px');
+			$('#recordedAudio' + index).append(
+				'<input type="range" min="0" max="200" value="100" class="slider" id="myRange">'
+			);
+			let wavesurfer = WaveSurfer.create({
+				container: '#recordedAudio' + index,
+				barWidth: 2,
+				barHeight: 4,
+				barGap: null,
+				waveColor: '#FFF'
+			});
+			wavesurfer.load(element.audio.src);
+		}
+	});
 }
 
 function OnClickSettingCross() {

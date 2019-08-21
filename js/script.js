@@ -42,6 +42,7 @@ var looperList = [];
 var dragLooper;
 var settingRecorder;
 
+var wavefromStyle = document.querySelector('[data="waveform_data"]');
 var timingText;
 
 var RECORDER_STATE = {
