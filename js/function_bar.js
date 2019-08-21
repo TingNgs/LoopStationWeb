@@ -110,7 +110,7 @@ async function SetDrum() {
 				listLength--;
 				if (!listLength) {
 					$('#loading_spinner').addClass('hide');
-					pageLoad[0] = true;
+					pageLoad[1] = true;
 				}
 			};
 			DrumAudioList[i].muted = true;
