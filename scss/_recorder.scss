@@ -137,10 +137,13 @@
 	align-items: center;
 	color: white;
 	font-weight: bold;
+	cursor: pointer;
 }
 
 .record_waveform {
+	overflow: hidden;
 	position: relative;
+	wave_container,
 	wave,
 	canvas {
 		pointer-events: none;
@@ -164,7 +167,17 @@
 		appearance: none;
 
 		height: 128px;
-		background: rgba(128, 255, 185, 0.5);
+		background: rgba(128, 255, 185, 0);
 		cursor: pointer;
+	}
+	.wave_container {
+		position: relative;
+	}
+	.display_area {
+		height: 100%;
+		position: absolute;
+		background-color: rgba(128, 255, 185, 0.5);
+		left: 50%;
+		transform: translate(-50%, 0%);
 	}
 }

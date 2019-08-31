@@ -5,7 +5,11 @@ async function OnClickSetting(x) {
 	$('#setting_record_container').empty();
 	let widthValue = (looperList[x].dur / (looperList[x].dur + 2000)) * 100;
 	wavefromStyle.innerHTML =
-		'.slider::-webkit-slider-thumb { width: ' + widthValue + '%; }';
+		'.slider::-webkit-slider-thumb { width: ' +
+		widthValue +
+		'%; } .display_area{width:' +
+		widthValue +
+		'%;}';
 	looperList[x].recorderList.forEach(async (element, index) => {
 		if (element.instrument) {
 		} else {
@@ -18,16 +22,17 @@ async function OnClickSetting(x) {
 }
 
 function loadRecorderSetting(index, element) {
-	$('.slider::-webkit-slider-thumb').css('width', '60px');
 	$('#recordedAudio' + index).append(
 		'<input type="range" min="0" max="200" value="' +
 			element.startingTime * 100 +
-			'" class="slider" id="myRange" oninput="startingTimeOnChange(this,' +
+			'" class="slider" oninput="startingTimeOnChange(this,' +
 			index +
-			')">'
+			')"><div class="display_area"/><div id="wave_container' +
+			index +
+			'" class="wave_container">'
 	);
 	let wavesurfer = WaveSurfer.create({
-		container: '#recordedAudio' + index,
+		container: '#wave_container' + index,
 		barWidth: 2,
 		barHeight: 4,
 		barGap: null,
@@ -37,7 +42,12 @@ function loadRecorderSetting(index, element) {
 }
 
 function startingTimeOnChange(e, x) {
-	looperList[settingRecorder].recorderList[x].startingTime = e.value / 100;
+	looperList[settingRecorder].recorderList[x].startingTime =
+		2 - e.value / 100;
+	let newLeft = (((e.value - 100) * 10) / (looperList[x].dur + 2000)) * 100;
+	console.log();
+	$('#wave_container' + x).css('left', newLeft + '%');
+	//console.log(looperList[settingRecorder].recorderList[x].startingTime);
 }
 
 function OnClickSettingCross() {
