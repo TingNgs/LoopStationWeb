@@ -30,7 +30,6 @@ function LoopFunction() {
 					ChangeMainButtonState(i, RECORDER_STATE.RECORDED);
 					CheckEndLoop();
 				} else {
-					console.log(i, looperList[i].recorderList.length);
 					for (
 						let j = 0;
 						j < looperList[i].recorderList.length;
@@ -92,7 +91,6 @@ function LoopFunction() {
 	}
 	playingDur += minDuration;
 	if (playingDur >= maxDuration) playingDur = 0;
-	console.log(playingDur);
 }
 function MainButtonLoopControl(x) {
 	if (looperList[x].looping) {

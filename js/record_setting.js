@@ -11,7 +11,12 @@ async function OnClickSetting(x) {
 		widthValue +
 		'%;}';
 	looperList[x].recorderList.forEach(async (element, index) => {
+		console.log(element);
 		if (element.instrument) {
+			await $('#setting_record_container').append(
+				"<div id='recordedAudio" + index + "' class='record_waveform'/>"
+			);
+			loadInstrumentSetting(index, element);
 		} else {
 			await $('#setting_record_container').append(
 				"<div id='recordedAudio" + index + "' class='record_waveform'/>"
@@ -21,16 +26,22 @@ async function OnClickSetting(x) {
 	});
 }
 
+function loadInstrumentSetting(index, element) {
+	renderWaveContainer(index, element);
+	element.audioList.forEach(audio => {
+		let left =
+			(audio.time / (looperList[settingRecorder].dur + 2000)) * 100;
+		$('#wave_container' + index).append(
+			'<div class="setting_instrument_box" style="left: ' +
+				left +
+				'%;" />'
+		);
+		audio.time;
+	});
+}
+
 function loadRecorderSetting(index, element) {
-	$('#recordedAudio' + index).append(
-		'<input type="range" min="0" max="200" value="' +
-			element.startingTime * 100 +
-			'" class="slider" oninput="startingTimeOnChange(this,' +
-			index +
-			')"><div class="display_area"/><div id="wave_container' +
-			index +
-			'" class="wave_container">'
-	);
+	renderWaveContainer(index, element);
 	let wavesurfer = WaveSurfer.create({
 		container: '#wave_container' + index,
 		barWidth: 2,
@@ -41,11 +52,26 @@ function loadRecorderSetting(index, element) {
 	wavesurfer.load(element.audio.src);
 }
 
+function renderWaveContainer(index, element) {
+	$('#recordedAudio' + index).append(
+		'<input type="range" min="0" max="200" value="' +
+			element.startingTime * 100 +
+			'" class="slider" oninput="startingTimeOnChange(this,' +
+			index +
+			')"><div class="display_area"/><div id="wave_container' +
+			index +
+			'" class="wave_container">'
+	);
+	console.log(200 - element.startingTime * 100);
+	startingTimeOnChange({ value: 200 - element.startingTime * 100 }, index);
+}
+
 function startingTimeOnChange(e, x) {
 	looperList[settingRecorder].recorderList[x].startingTime =
 		2 - e.value / 100;
-	let newLeft = (((e.value - 100) * 10) / (looperList[x].dur + 2000)) * 100;
-	console.log();
+	let newLeft =
+		(((e.value - 100) * 10) / (looperList[settingRecorder].dur + 2000)) *
+		100;
 	$('#wave_container' + x).css('left', newLeft + '%');
 	//console.log(looperList[settingRecorder].recorderList[x].startingTime);
 }
