@@ -1,11 +1,10 @@
 $(function() {
 	let drumNum = display_drum.length;
 	for (let i = 0; i < drumNum; i++) {
-		$('#audio_list').append(
-			'<audio class="drum_audio" controls src="./audio/drumAudio/' +
-				display_drum[i].drum +
-				'.wav" type="audio/wav" />'
-		);
+		let audio = new Howl({
+			src: ['../audio/drumAudio/' + display_drum[i].drum + '.wav']
+		});
+		DrumAudioList.push(audio);
 	}
 });
 
@@ -22,6 +21,7 @@ function drumKeyDown(e) {
 					listIndex
 				].audioList.push({ time: time, audio: audio });
 			}
+			break;
 		}
 	}
 }
@@ -41,11 +41,29 @@ function RenderDrumSet() {
 	let drumNum = display_drum.length;
 	for (let i = 0; i < drumNum; i++) {
 		$('#drum-pad').append(
-			'<div class="drum_container"><div class="drum"><div class="text">' +
+			'<div class="drum_container"><div class="drum" onmousedown="DrumOnMouseDown(' +
+				i +
+				')"><div class="text">' +
 				display_drum[i].key +
 				'<br />' +
 				display_drum[i].name +
 				'</div></div></div>'
 		);
+	}
+}
+
+function DrumOnMouseDown(i) {
+	DrumAudioList[i].currentTime = 0;
+	DrumAudioList[i].load();
+	DrumAudioList[i].play();
+	if (recording) {
+		let time = new Date().getTime() - startListenTime;
+		let audio = new Howl({
+			src: ['../audio/drumAudio/' + display_drum[i].drum + '.wav']
+		});
+		looperList[inputRecorder].recorderList[listIndex].audioList.push({
+			time: time,
+			audio: audio
+		});
 	}
 }

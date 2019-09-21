@@ -58,36 +58,13 @@ async function SetPiano() {
 	await $('#instrument').append('<div id="piano_container"></div>');
 	await $('#piano_container').append('<div id="piano_keyboard"></div>');
 	await RenderPianoKeySet();
-	PianoAudioList = await document.getElementsByClassName('piaon_audio');
 	let PianoKeys = await document.getElementsByClassName('key');
-	let listLength = PianoAudioList.length;
-	$('#piano_keyboard').scrollLeft(1700);
-	for (let i = 0; i < PianoKeys.length; i++) {
-		if (!pageLoad[0]) {
-			PianoAudioList[i].onended = () => {
-				PianoAudioList[i].muted = false;
-				PianoAudioList[i].onended = null;
-				listLength--;
-				if (!listLength) {
-					$('#loading_spinner').addClass('hide');
-					pageLoad[0] = true;
-				}
-			};
-			PianoAudioList[i].muted = true;
-			PianoAudioList[i].play();
-		}
-		PianoKeys[i].addEventListener('mousedown', (e, index) => {
-			PianoAudioList[i].currentTime = 0;
-			PianoAudioList[i].play();
-			if (recording) {
-				let time = new Date().getTime() - startListenTime;
-				let audio = new Audio(PianoAudioList[i].src);
-				looperList[inputRecorder].recorderList[
-					listIndex
-				].audioList.push({ time: time, audio: audio });
-			}
-		});
-	}
+	listLength = PianoAudioList.length;
+
+	$('#piano_keyboard').scrollLeft(
+		$('#piano_keyboard').prop('scrollWidth') / 3
+	);
+	$('#loading_spinner').addClass('hide');
 }
 
 async function SetDrum() {
@@ -99,36 +76,6 @@ async function SetDrum() {
 	await $('#instrument').append('<div id="drum-machine"></div>');
 	await $('#drum-machine').append('<div id="drum-pad"></div>');
 	await RenderDrumSet();
-
-	DrumAudioList = await document.getElementsByClassName('drum_audio');
-	DrumKeys = await document.getElementsByClassName('drum');
-	let listLength = DrumAudioList.length;
-	for (let i = 0; i < DrumKeys.length; i++) {
-		if (!pageLoad[1]) {
-			DrumAudioList[i].onended = () => {
-				DrumAudioList[i].muted = false;
-				DrumAudioList[i].onended = null;
-				listLength--;
-				if (!listLength) {
-					$('#loading_spinner').addClass('hide');
-					pageLoad[1] = true;
-				}
-			};
-			DrumAudioList[i].muted = true;
-			DrumAudioList[i].play();
-		}
-		DrumKeys[i].addEventListener('mousedown', (e, index) => {
-			DrumAudioList[i].currentTime = 0;
-			$(this).css('background-color', 'red');
-			DrumAudioList[i].play();
-			if (recording) {
-				let time = new Date().getTime() - startListenTime;
-				let audio = new Audio(DrumAudioList[i].src);
-				looperList[inputRecorder].recorderList[
-					listIndex
-				].audioList.push({ time: time, audio: audio });
-			}
-		});
-	}
+	$('#loading_spinner').addClass('hide');
 	document.addEventListener('keydown', drumKeyDown);
 }

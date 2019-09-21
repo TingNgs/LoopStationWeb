@@ -44,6 +44,7 @@ var settingRecorder;
 
 var wavefromStyle = document.querySelector('[data="waveform_data"]');
 var timingText;
+var listLength = 0;
 
 var RECORDER_STATE = {
 	EMPTY: 0,
