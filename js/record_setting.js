@@ -49,7 +49,7 @@ function loadRecorderSetting(index, element) {
 		barGap: null,
 		waveColor: '#FFF'
 	});
-	wavesurfer.load(element.audio.src);
+	wavesurfer.load(element.audio._src);
 }
 
 function renderWaveContainer(index, element) {
@@ -62,7 +62,6 @@ function renderWaveContainer(index, element) {
 			index +
 			'" class="wave_container">'
 	);
-	console.log(200 - element.startingTime * 100);
 	startingTimeOnChange({ value: 200 - element.startingTime * 100 }, index);
 }
 

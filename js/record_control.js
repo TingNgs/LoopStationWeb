@@ -147,6 +147,12 @@ function PlayRecording(x) {
 	//Play the full audio
 	setTimeout(() => {
 		looperList[x].tempPlaying = false;
+		for (var i = 0; i < looperList[x].recorderList.length; i++) {
+			looperList[x].recorderList[i].audio.seek(
+				looperList[x].recorderList[i].startingTime
+			);
+			looperList[x].recorderList[i].audio.mute(false);
+		}
 	}, RecordingTime * 2);
 }
 
@@ -203,8 +209,11 @@ function PushRecordingList(blob) {
 	recordingAudio = new Howl({
 		src: [URL.createObjectURL(blob)],
 		format: ['wav'],
-		loop: true
+		loop: true,
+		autoplay: true,
+		mute: true
 	});
+	recordingAudio.play();
 	looperList[inputRecorder].startingLoop = true;
 	looperList[inputRecorder].recorderList.push({
 		audio: recordingAudio,

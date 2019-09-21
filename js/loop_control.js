@@ -21,7 +21,6 @@ function LoopFunction() {
 						j++
 					) {
 						if (!looperList[i].recorderList[j].instrument) {
-							looperList[i].recorderList[j].muted = true;
 							looperList[i].recorderList[j].audio.pause();
 						}
 					}
@@ -79,8 +78,9 @@ function LoopFunction() {
 							j < looperList[i].recorderList.length;
 							j++
 						) {
+							console.log(looperList[i].recorderList[j].audio);
 							if (!looperList[i].recorderList[j].instrument) {
-								looperList[i].recorderList[j].audio.play();
+								looperList[i].recorderList[j].audio.mute(false);
 							}
 						}
 					}
@@ -100,7 +100,7 @@ function MainButtonLoopControl(x) {
 			looperList[x].startingLoop = true;
 			for (let j = 0; j < looperList[x].recorderList.length; j++) {
 				if (!looperList[x].recorderList[j].instrument) {
-					looperList[x].recorderList[j].audio.muted = true;
+					looperList[x].recorderList[j].audio.mute(true);
 					looperList[x].recorderList[j].audio.play();
 				}
 			}
