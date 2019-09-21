@@ -16,7 +16,9 @@ function drumKeyDown(e) {
 			DrumAudioList[i].play();
 			if (recording) {
 				let time = new Date().getTime() - startListenTime;
-				let audio = new Audio(DrumAudioList[i].src);
+				let audio = new Howl({
+					src: ['../audio/drumAudio/' + display_drum[i].drum + '.wav']
+				});
 				looperList[inputRecorder].recorderList[
 					listIndex
 				].audioList.push({ time: time, audio: audio });

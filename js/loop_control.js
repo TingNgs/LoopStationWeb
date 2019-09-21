@@ -58,7 +58,7 @@ function LoopFunction() {
 									setTimeout(() => {
 										looperList[i].recorderList[j].audioList[
 											k
-										].audio.currentTime = 0;
+										].audio.seek(0);
 										looperList[i].recorderList[j].audioList[
 											k
 										].audio.play();
@@ -66,8 +66,9 @@ function LoopFunction() {
 								}
 							}
 						} else {
-							looperList[i].recorderList[j].audio.currentTime =
-								looperList[i].recorderList[j].startingTime;
+							looperList[i].recorderList[j].audio.seek(
+								looperList[i].recorderList[j].startingTime
+							);
 						}
 					}
 					if (looperList[i].startingLoop) {
@@ -79,9 +80,7 @@ function LoopFunction() {
 							j++
 						) {
 							if (!looperList[i].recorderList[j].instrument) {
-								looperList[i].recorderList[
-									j
-								].audio.muted = false;
+								looperList[i].recorderList[j].audio.play();
 							}
 						}
 					}
@@ -138,12 +137,11 @@ function GetPlayTimeout(playDur) {
 		}
 	}
 	if (looperList[maxIndex].tempPlaying) {
-		if (tempAudio2.muted) timeout = tempMax - tempAudio.currentTime * 1000;
-		else timeout = tempMax / 2 - tempAudio2.currentTime * 1000;
+		timeout = tempMax - tempAudio.currentTime * 1000;
 	} else {
 		timeout =
 			tempMax -
-			(looperList[maxIndex].recorderList[0].audio.currentTime -
+			(looperList[maxIndex].recorderList[0].audio.seek() -
 				looperList[maxIndex].recorderList[0].startingTime) *
 				1000;
 	}

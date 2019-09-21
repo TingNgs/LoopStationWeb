@@ -24,7 +24,6 @@ function OnClickRrecorder(x) {
 		inputRecorder = x;
 		MainButtonStartRecord(x);
 		looperList[x].dur = RecordingTime;
-		recordingAudio = document.createElement('audio');
 	}
 }
 
@@ -147,11 +146,6 @@ function PlayRecording(x) {
 
 	//Play the full audio
 	setTimeout(() => {
-		for (var i = 0; i < looperList[x].recorderList.length; i++) {
-			looperList[x].recorderList[i].audio.currentTime =
-				looperList[x].recorderList[i].startingTime;
-			looperList[x].recorderList[i].audio.muted = false;
-		}
 		looperList[x].tempPlaying = false;
 	}, RecordingTime * 2);
 }
@@ -166,7 +160,6 @@ function GetRecordTimeout() {
 		if (looperList[i].looping) {
 			if (looperList[i].dur > RecordingTime) isLoopingShorter = false;
 			if (looperList[i].dur >= tempMax) {
-				console.log(i, looperList[i].dur);
 				tempMax = looperList[i].dur;
 				maxIndex = i;
 			}
@@ -207,10 +200,12 @@ function getTempBufferCallback(buffers) {
 }
 
 function PushRecordingList(blob) {
-	recordingAudio.src = URL.createObjectURL(blob);
-	recordingAudio.muted = true;
-	recordingAudio.loop = true;
-	recordingAudio.play();
+	recordingAudio = new Howl({
+		src: [URL.createObjectURL(blob)],
+		format: ['wav'],
+		loop: true
+	});
+	looperList[inputRecorder].startingLoop = true;
 	looperList[inputRecorder].recorderList.push({
 		audio: recordingAudio,
 		startingTime: 1,
