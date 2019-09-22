@@ -48,7 +48,7 @@ function loadInstrumentSetting(index, element) {
 			let left =
 				(audio.time / (looperList[settingRecorder].dur + 2000)) * 100;
 			let keyBar =
-				display_keys[audio.index].num < 39
+				display_keys[audio.index].num < 40
 					? '<div class="setting_piano_key_left"/>'
 					: '<div class="setting_piano_key_right"/>';
 			let levelBar = '';
