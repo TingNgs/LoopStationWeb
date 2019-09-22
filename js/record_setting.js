@@ -51,11 +51,28 @@ function loadInstrumentSetting(index, element) {
 				display_keys[audio.index].num < 39
 					? '<div class="setting_piano_key_left"/>'
 					: '<div class="setting_piano_key_right"/>';
-			let centerBar =
-				display_keys[audio.index].num == 40 &&
-				display_keys[audio.index].num == 41
-					? '<div class="setting_piano_key_center"/>'
-					: '';
+			let levelBar = '';
+			switch (display_keys[audio.index].num) {
+				case 40:
+				case 41:
+				case 61:
+				case 62:
+				case 20:
+					levelBar = '<div class="setting_piano_key_center"/>';
+					break;
+				case 63:
+					levelBar = '<div class="setting_piano_key_bottom"/>';
+					break;
+				case 16:
+				case 17:
+					levelBar =
+						'<div class="setting_piano_key_top"/><div class="setting_piano_key_center"/>';
+					break;
+				case 18:
+				case 19:
+					levelBar = '<div class="setting_piano_key_top"/>';
+					break;
+			}
 			$('#wave_container' + index).append(
 				'<div class="setting_piano_key" style="left: ' +
 					left +
@@ -64,7 +81,7 @@ function loadInstrumentSetting(index, element) {
 					'px;" >' +
 					addSign +
 					keyBar +
-					centerBar +
+					levelBar +
 					'</div>'
 			);
 		});

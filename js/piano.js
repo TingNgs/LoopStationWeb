@@ -22,9 +22,9 @@ var display_keys = [
 	// { num: 10, key: 41, type: 'black' },
 	// { num: 11, key: 42, type: 'white' },
 	// { num: 12, key: 43, type: 'black' },
-	{ num: 13, key: 44, type: 'white', top: 124 },
-	{ num: 14, key: 45, type: 'black', top: 124 },
-	{ num: 15, key: 46, type: 'white', top: 120 },
+	// { num: 13, key: 44, type: 'white', top: 124 },
+	// { num: 14, key: 45, type: 'black', top: 124 },
+	// { num: 15, key: 46, type: 'white', top: 120 },
 
 	{ num: 16, key: 47, type: 'white', top: 116 },
 	{ num: 17, key: 48, type: 'black', top: 116 },
@@ -74,14 +74,14 @@ var display_keys = [
 	{ num: 58, key: 89, type: 'black', top: 20 },
 	{ num: 59, key: 90, type: 'white', top: 16 },
 	{ num: 60, key: 91, type: 'black', top: 16 },
-	{ num: 61, key: 92, type: 'white', top: 14 },
-	{ num: 62, key: 93, type: 'black', top: 14 },
-	{ num: 63, key: 94, type: 'white', top: 10 },
+	{ num: 61, key: 92, type: 'white', top: 12 },
+	{ num: 62, key: 93, type: 'black', top: 12 },
+	{ num: 63, key: 94, type: 'white', top: 8 }
 
-	{ num: 64, key: 95, type: 'white', top: 6 },
-	{ num: 65, key: 96, type: 'black', top: 6 },
-	{ num: 66, key: 97, type: 'white', top: 2 },
-	{ num: 67, key: 98, type: 'black', top: 2 }
+	// { num: 64, key: 95, type: 'white', top: 6 },
+	// { num: 65, key: 96, type: 'black', top: 6 },
+	// { num: 66, key: 97, type: 'white', top: 2 },
+	// { num: 67, key: 98, type: 'black', top: 2 }
 	// { num: 68, key: 99, type: 'white' },
 	// { num: 69, key: 100, type: 'white' },
 	// { num: 70, key: 101, type: 'black' },
