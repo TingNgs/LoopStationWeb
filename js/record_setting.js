@@ -52,7 +52,8 @@ function loadInstrumentSetting(index, element) {
 					? '<div class="setting_piano_key_left"/>'
 					: '<div class="setting_piano_key_right"/>';
 			let centerBar =
-				display_keys[audio.index].num == 40
+				display_keys[audio.index].num == 40 &&
+				display_keys[audio.index].num == 41
 					? '<div class="setting_piano_key_center"/>'
 					: '';
 			$('#wave_container' + index).append(
