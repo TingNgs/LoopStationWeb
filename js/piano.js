@@ -2,7 +2,7 @@ $(() => {
 	let keyNum = display_keys.length;
 	for (let i = 0; i < keyNum; i++) {
 		let audio = new Howl({
-			src: ['../audio/pianoAudio/' + (i + 1) + '.mp3']
+			src: ['./audio/pianoAudio/' + (i + 1) + '.mp3']
 		});
 		PianoAudioList.push(audio);
 	}
@@ -142,7 +142,7 @@ function PianoKeyOnMouseDown(i) {
 	if (recording) {
 		let time = new Date().getTime() - startListenTime;
 		let audio = new Howl({
-			src: ['../audio/pianoAudio/' + (i + 1) + '.mp3']
+			src: ['./audio/pianoAudio/' + (i + 1) + '.mp3']
 		});
 		looperList[inputRecorder].recorderList[listIndex].audioList.push({
 			time: time,

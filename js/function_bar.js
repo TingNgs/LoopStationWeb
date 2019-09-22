@@ -1,6 +1,15 @@
 var page = 2;
 var pageLoad = [false, false];
 function FunctionBarOnClick(n) {
+	if (n == -1) {
+		_toggleFullScreen();
+		$('#full-screen-exit').addClass('hide');
+		$('#full-screen-entry').removeClass('hide');
+	} else if (n == -2) {
+		_toggleFullScreen();
+		$('#full-screen-entry').addClass('hide');
+		$('#full-screen-exit').removeClass('hide');
+	}
 	$('#main-function').addClass('hide');
 	$('#back-function').addClass('hide');
 	$('#timing-function').addClass('hide');

@@ -8,6 +8,12 @@
 	padding-top: 15px;
 	overflow-y: auto;
 	direction: rtl;
+	img {
+		width: 70%;
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 30px;
+	}
 	&::-webkit-scrollbar-track {
 		background-color: $bg_color;
 		border-radius: 10px;
