@@ -136,7 +136,7 @@ function RenderPianoKeySet() {
 }
 
 function PianoKeyOnMouseDown(i) {
-	PianoAudioList[i].currentTime = 0;
+	PianoAudioList[i].seek(0);
 	PianoAudioList[i].load();
 	PianoAudioList[i].play();
 	if (recording) {

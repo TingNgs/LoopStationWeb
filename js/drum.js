@@ -12,7 +12,7 @@ function drumKeyDown(e) {
 	let drumNum = display_drum.length;
 	for (let i = 0; i < drumNum; i++) {
 		if (e.keyCode === display_drum[i].code) {
-			DrumAudioList[i].currentTime = 0;
+			DrumAudioList[i].seek(0);
 			DrumAudioList[i].play();
 			if (recording) {
 				let time = new Date().getTime() - startListenTime;
@@ -55,7 +55,7 @@ function RenderDrumSet() {
 }
 
 function DrumOnMouseDown(i) {
-	DrumAudioList[i].currentTime = 0;
+	DrumAudioList[i].seek(0);
 	DrumAudioList[i].load();
 	DrumAudioList[i].play();
 	if (recording) {
