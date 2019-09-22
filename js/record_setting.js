@@ -11,7 +11,6 @@ async function OnClickSetting(x) {
 		widthValue +
 		'%;}';
 	looperList[x].recorderList.forEach(async (element, index) => {
-		console.log(element);
 		if (element.instrument) {
 			await $('#setting_record_container').append(
 				"<div id='recordedAudio" + index + "' class='record_waveform'/>"
@@ -28,16 +27,57 @@ async function OnClickSetting(x) {
 
 function loadInstrumentSetting(index, element) {
 	renderWaveContainer(index, element);
-	element.audioList.forEach(audio => {
-		let left =
-			(audio.time / (looperList[settingRecorder].dur + 2000)) * 100;
-		$('#wave_container' + index).append(
-			'<div class="setting_instrument_box" style="left: ' +
-				left +
-				'%;" />'
+	if (element.instrument == 'Piano') {
+		$('#recordedAudio' + index).append(
+			'<div id="notation_lines_container' + index + '"></div>'
 		);
-		audio.time;
-	});
+		for (i = 0; i < 10; i++) {
+			let add = i > 4 ? 8 : 0;
+			$('#notation_lines_container' + index).append(
+				'<div class="notation_line" style="top:' +
+					(24 + i * 8 + add) +
+					'px;"></div>'
+			);
+		}
+		element.audioList.forEach(audio => {
+			let addSign =
+				display_keys[audio.index].type == 'black'
+					? "<div class='setting_piano_key_black'>#</div>"
+					: '';
+
+			let left =
+				(audio.time / (looperList[settingRecorder].dur + 2000)) * 100;
+			let keyBar =
+				display_keys[audio.index].num < 39
+					? '<div class="setting_piano_key_left"/>'
+					: '<div class="setting_piano_key_right"/>';
+			let centerBar =
+				display_keys[audio.index].num == 40
+					? '<div class="setting_piano_key_center"/>'
+					: '';
+			$('#wave_container' + index).append(
+				'<div class="setting_piano_key" style="left: ' +
+					left +
+					'%; top:' +
+					display_keys[audio.index].top +
+					'px;" >' +
+					addSign +
+					keyBar +
+					centerBar +
+					'</div>'
+			);
+		});
+	} else {
+		element.audioList.forEach(audio => {
+			let left =
+				(audio.time / (looperList[settingRecorder].dur + 2000)) * 100;
+			$('#wave_container' + index).append(
+				'<div class="setting_instrument_box" style="left: ' +
+					left +
+					'%;" />'
+			);
+		});
+	}
 }
 
 function loadRecorderSetting(index, element) {

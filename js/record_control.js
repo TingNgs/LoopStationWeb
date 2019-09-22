@@ -61,10 +61,11 @@ function StartListening() {
 	startListenTime = new Date().getTime();
 	listIndex = looperList[inputRecorder].recorderList.length;
 	looperList[inputRecorder].recorded = true;
+	let instrument = GetInstrumentType();
 	looperList[inputRecorder].recorderList.push({
 		audioList: [],
 		startingTime: 1,
-		instrument: true
+		instrument
 	});
 	if (RecordingTime > maxDuration) {
 		maxDuration = RecordingTime;

@@ -188,4 +188,43 @@
 		height: 128px;
 		background-color: rgb(32, 54, 54);
 	}
+	.setting_piano_key {
+		position: absolute;
+		width: 12px;
+		height: 10px;
+		border-radius: 99px;
+		background-color: rgb(32, 54, 54);
+		.setting_piano_key_black {
+			height: 100%;
+			line-height: 10px;
+			margin-left: 12px;
+		}
+		.setting_piano_key_left {
+			position: absolute;
+			height: 30px;
+			left: 0;
+			top: 5px;
+			border-left: 2px solid rgb(32, 54, 54);
+		}
+		.setting_piano_key_right {
+			position: absolute;
+			height: 30px;
+			right: 0;
+			bottom: 5px;
+			border-right: 2px solid rgb(32, 54, 54);
+		}
+		.setting_piano_key_center {
+			width: 18px;
+			left: -3px;
+			bottom: 4px;
+			border-bottom: 2px solid #203636;
+			position: absolute;
+		}
+	}
+
+	.notation_line {
+		width: 100%;
+		position: absolute;
+		border-bottom: 1px solid black;
+	}
 }

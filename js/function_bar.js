@@ -38,6 +38,11 @@ function FunctionBarOnClick(n) {
 	}
 }
 
+function GetInstrumentType() {
+	if (page == 3) return 'Piano';
+	else if (page === 4) return 'Drum';
+}
+
 function InitController() {
 	$.get('./recorder.html', function(html_string) {
 		recorderHTML = html_string;
