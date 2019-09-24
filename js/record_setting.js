@@ -66,7 +66,7 @@ function loadInstrumentSetting(index, element) {
 				case 16:
 				case 17:
 					levelBar =
-						'<div class="setting_piano_key_top"/><div class="setting_piano_key_center"/>';
+						'<div class="setting_piano_key_top-5px"/><div class="setting_piano_key_center"/>';
 					break;
 				case 18:
 				case 19:

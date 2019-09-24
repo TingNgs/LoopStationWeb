@@ -215,21 +215,27 @@
 		}
 		.setting_piano_key_center,
 		.setting_piano_key_bottom,
-		.setting_piano_key_top {
+		.setting_piano_key_top,
+		.setting_piano_key_top-5px {
 			width: 18px;
 			left: -3px;
 
 			border-bottom: 2px solid #203636;
 			position: absolute;
 		}
+
 		.setting_piano_key_center {
 			bottom: 4px;
 		}
 		.setting_piano_key_bottom {
-			bottom: 0px;
+			bottom: -1px;
 		}
+
 		.setting_piano_key_top {
-			top: 0px;
+			top: -1px;
+		}
+		.setting_piano_key_top-5px {
+			top: -4px;
 		}
 	}
 
