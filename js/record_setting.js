@@ -2,6 +2,10 @@ async function OnClickSetting(x) {
 	$('#recorder_setting').removeClass('hide');
 	$('#recorder' + x).addClass('setting');
 	settingRecorder = x;
+	loadSettingPage(x);
+}
+
+function loadSettingPage(x) {
 	$('#setting_record_container').empty();
 	let widthValue = (looperList[x].dur / (looperList[x].dur + 2000)) * 100;
 	wavefromStyle.innerHTML =
@@ -13,15 +17,26 @@ async function OnClickSetting(x) {
 	looperList[x].recorderList.forEach(async (element, index) => {
 		if (element.instrument) {
 			await $('#setting_record_container').append(
-				"<div id='recordedAudio" + index + "' class='record_waveform'/>"
+				"<div id='setting_audio_container" +
+					index +
+					"' class='setting_audio_container'><div id='recordedAudio" +
+					index +
+					"' class='record_waveform'/></div>"
 			);
 			loadInstrumentSetting(index, element);
 		} else {
 			await $('#setting_record_container').append(
-				"<div id='recordedAudio" + index + "' class='record_waveform'/>"
+				"<div id='setting_audio_container" +
+					index +
+					"' class='setting_audio_container'><div id='recordedAudio" +
+					index +
+					"' class='record_waveform'/></div>"
 			);
 			loadRecorderSetting(index, element);
 		}
+		$('#setting_audio_container' + index).append(
+			'<div class="setting_control_button_container"><div class="setting_control_button"></div><div class="setting_control_button"></div><div class="setting_control_button"></div><div class="setting_control_button"></div></div>'
+		);
 	});
 }
 
@@ -89,7 +104,7 @@ function loadInstrumentSetting(index, element) {
 		element.audioList.forEach(audio => {
 			let left =
 				(audio.time / (looperList[settingRecorder].dur + 2000)) * 100;
-			$('#wave_container' + index).append(
+			$('#recordedAudio' + index).append(
 				'<div class="setting_instrument_box" style="left: ' +
 					left +
 					'%;" />'

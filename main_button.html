@@ -1,29 +1,5 @@
 <div id="background_circle{{ index }}" class="background_circle">
-	<svg class="Sektor" viewBox="-30 -30 300 300">
-		<circle
-			class="Sektor-circle"
-			stroke-width="10"
-			fill="none"
-			stroke="#3d3d3d"
-			cx="120"
-			cy="120"
-			r="115"
-		></circle>
-		<path
-			fill="none"
-			stroke-width="10"
-			d="M120,5 A115,115 1 0 1 120,235 A115,115 1 0 1 120,5 "
-		></path>
-		<rect width="15" height="12" y="-5">
-			<animateMotion
-				id="bg_circle_animate{{ index }}"
-				fill="freeze"
-				path="M120,5 A115,115 1 0 1 120,235 A115,115 1 0 1 120,5 "
-				rotate="auto"
-				repeatCount="indefinite"
-			/>
-		</rect>
-	</svg>
+	<div id='bg_circle_line{{ index }}' class="line"><div/></div>
 </div>
 <svg
 	version="1.1"

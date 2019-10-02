@@ -1,13 +1,32 @@
 @import './_color.scss';
 .background_circle {
-	.Sektor-circle {
-		fill: $controller_bg !important;
+	border-radius: 100%;
+	border: 2px $sektor_bg solid;
+	width: 70%;
+	padding-bottom: 70%;
+	display: flex;
+	position: relative;
+	box-sizing: border-box;
+	.line {
+		left: 50%;
+		height: 50%;
+		width: 1px;
+		transform-origin: bottom;
+		position: absolute;
+		// animation: circleAnimate 4s linear infinite;
+		div {
+			width: 10px;
+			height: 8px;
+			background: $sektor_color;
+		}
 	}
-	rect {
-		fill: $sektor_color;
+}
+@keyframes circleAnimate {
+	0% {
+		transform: rotate(0deg);
 	}
-	path {
-		stroke: $sektor_bg;
+	100% {
+		transform: rotate(360deg);
 	}
 }
 
@@ -140,7 +159,27 @@
 	cursor: pointer;
 }
 
+.setting_audio_container {
+	width: 100%;
+	display: flex;
+}
+
+.setting_control_button_container {
+	height: 128px;
+	width: 128px;
+	display: flex;
+	flex-wrap: wrap;
+	.setting_control_button {
+		width: 50%;
+		height: 50%;
+		background-color: aqua;
+		border: 1px solid black;
+		box-sizing: border-box;
+	}
+}
+
 .record_waveform {
+	flex-grow: 1;
 	overflow: hidden;
 	position: relative;
 	wave_container,
