@@ -6,6 +6,8 @@ function StartLooping() {
 }
 function LoopFunction() {
 	if (playingDur == 0) loopStartTime = new Date().getTime();
+	playingDur += minDuration;
+	if (playingDur >= maxDuration) playingDur = 0;
 	for (let i = 0; i < 6; i++) {
 		if (looperList[i].recorded && playingDur % looperList[i].dur == 0) {
 			setAnimation(i, looperList[i].dur / 1000);
@@ -74,7 +76,6 @@ function LoopFunction() {
 							j < looperList[i].recorderList.length;
 							j++
 						) {
-							console.log(looperList[i].recorderList[j].audio);
 							if (!looperList[i].recorderList[j].instrument) {
 								looperList[i].recorderList[j].audio.mute(false);
 							}
@@ -84,8 +85,6 @@ function LoopFunction() {
 			}
 		}
 	}
-	playingDur += minDuration;
-	if (playingDur >= maxDuration) playingDur = 0;
 }
 function MainButtonLoopControl(x) {
 	if (looperList[x].looping) {
