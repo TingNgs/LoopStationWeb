@@ -153,9 +153,19 @@ function OnClickSettingCross() {
 	$('#recorder' + settingRecorder).removeClass('setting');
 }
 
-function OnClickReset(x = settingRecorder) {
+function SettingOnClickReset() {
+	$('#setting_record_container').empty();
+	OnClickReset(settingRecorder);
+}
+
+function OnClickReset(x) {
 	//Reset button for recorder
-	if (looperList.looping) clearInterval(loopFunction);
+	for (let j = 0; j < looperList[x].recorderList.length; j++) {
+		if (!looperList[x].recorderList[j].instrument) {
+			looperList[x].recorderList[j].audio.pause();
+		}
+	}
+	stopAnimation(x);
 	looperList[x].Reset();
 	ChangeMainButtonState(x, RECORDER_STATE.EMPTY);
 	CheckEndLoop();

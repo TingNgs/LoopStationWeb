@@ -165,8 +165,9 @@ function GetRecordTimeout() {
 		}
 	}
 	if (looperList[maxIndex].tempPlaying) {
-		if (tempAudio2.muted) timeout = tempMax - tempAudio.currentTime * 1000;
-		else timeout = tempMax / 2 - tempAudio2.currentTime * 1000;
+		timeout =
+			tempMax -
+			(tempAudio.context.currentTime - tempAudio.startedAt) * 1000;
 		if (timeout < 1000) timeout += tempMax;
 	} else {
 		timeout = tempMax - (new Date().getTime() - loopStartTime);
@@ -185,7 +186,7 @@ function GetRecordTimeout() {
 }
 
 function getTempBufferCallback(buffers) {
-	var newSource = audioContext.createBufferSource();
+	tempAudio = audioContext.createBufferSource();
 	var newBuffer = audioContext.createBuffer(
 		2,
 		buffers[0].length,
@@ -193,9 +194,10 @@ function getTempBufferCallback(buffers) {
 	);
 	newBuffer.getChannelData(0).set(buffers[0]);
 	newBuffer.getChannelData(1).set(buffers[1]);
-	newSource.buffer = newBuffer;
-	newSource.connect(audioContext.destination);
-	newSource.start(0);
+	tempAudio.buffer = newBuffer;
+	tempAudio.connect(audioContext.destination);
+	tempAudio.startedAt = tempAudio.context.currentTime;
+	tempAudio.start(0);
 }
 
 function PushRecordingList(blob) {
