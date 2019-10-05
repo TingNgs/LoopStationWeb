@@ -8,11 +8,7 @@ function LoopFunction() {
 	if (playingDur == 0) loopStartTime = new Date().getTime();
 	for (let i = 0; i < 6; i++) {
 		if (looperList[i].recorded && playingDur % looperList[i].dur == 0) {
-			$('#bg_circle_animate' + i)[0].setAttribute(
-				'dur',
-				looperList[i].dur / 1000 + 's'
-			);
-			$('#bg_circle_animate' + i)[0].beginElementAt(0);
+			setAnimation(i, looperList[i].dur / 1000);
 			if (looperList[i].looping) {
 				if (looperList[i].ending) {
 					for (

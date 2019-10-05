@@ -187,8 +187,7 @@ function drop(ev, n) {
 			}
 			looperList[dragLooper].Reset();
 			ChangeMainButtonState(dragLooper, RECORDER_STATE.EMPTY);
-			$('#bg_circle_animate' + dragLooper)[0].endElement();
-			console.log($('#bg_circle_animate' + dragLooper));
+			stopAnimation(dragLooper);
 		}
 	}
 }

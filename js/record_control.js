@@ -89,18 +89,10 @@ function StartListening() {
 }
 
 function SetCircleTime(timeouttTime, x) {
-	$('#bg_circle_animate' + x)[0].setAttribute(
-		'dur',
-		timeouttTime / 1000 + 's'
-	);
-	$('#bg_circle_animate' + x)[0].beginElement();
+	setAnimation(x, timeouttTime / 1000);
 
 	setTimeout(() => {
-		$('#bg_circle_animate' + x)[0].setAttribute(
-			'dur',
-			RecordingTime / 1000 + 's'
-		);
-		$('#bg_circle_animate' + x)[0].beginElement();
+		setAnimation(x, RecordingTime / 1000);
 		ChangeMainButtonState(x, RECORDER_STATE.RECORDING);
 	}, timeouttTime);
 }
@@ -126,7 +118,7 @@ function PlayRecording(x) {
 	//Play the first half audio
 	setTimeout(() => {
 		ChangeMainButtonState(x, RECORDER_STATE.LOOPING);
-		$('#bg_circle_animate' + x)[0].beginElement();
+		setAnimation(x, RecordingTime / 1000);
 		looperList[x].tempPlaying = true;
 		if (anyLooping) {
 			if (RecordingTime < minDuration) {

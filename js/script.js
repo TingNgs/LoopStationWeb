@@ -137,3 +137,20 @@ function ChangeMainButtonState(x, n) {
 	if (n == 3) document.getElementById(id).classList.add('recorded');
 	if (n == 4) document.getElementById(id).classList.add('looping');
 }
+
+async function setAnimation(x, time) {
+	$('#bg_circle_line' + x + '.line').css('animation', '');
+	let element = document.getElementById('bg_circle_line' + x);
+	element.classList.remove('line');
+	void element.offsetWidth;
+	element.classList.add('line');
+	$('#bg_circle_line' + x + '.line').css(
+		'animation',
+		'circleAnimate ' + time + 's linear infinite'
+	);
+}
+function stopAnimation(x) {
+	$('#bg_circle_line' + x).css('animation', '');
+	let element = document.getElementById('bg_circle_line' + x);
+	element.classList.remove('line');
+}
