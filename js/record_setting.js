@@ -187,6 +187,14 @@ function CopyRecording(x, index) {
 	loadSettingAudio(looperList[x].recorderList[newIndex], newIndex);
 }
 
+function DeleteRecording(x, index) {
+	if (!looperList[x].recorderList[index].instrument) {
+		looperList[x].recorderList[index].audio.stop();
+	}
+	looperList[x].recorderList.splice(index, 1);
+	loadSettingPage(x);
+}
+
 function SettingOnClickReset() {
 	$('#setting_record_container').empty();
 	OnClickReset(settingRecorder);
@@ -212,7 +220,7 @@ function drag(ev, n) {
 }
 function drop(ev, n) {
 	ev.preventDefault();
-	ChangeMainButtonState(n, RECORDER_STATE.RECORDED);
+	// ChangeMainButtonState(n, RECORDER_STATE.RECORDED);
 	if (looperList[n].recorded && looperList[dragLooper].recorded) {
 		if (looperList[n].dur == looperList[dragLooper].dur) {
 			if (looperList[n].looping) looperList[n].startingLoop = true;
