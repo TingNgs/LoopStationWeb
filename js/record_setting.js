@@ -14,30 +14,38 @@ function loadSettingPage(x) {
 		'%; } .display_area{width:' +
 		widthValue +
 		'%;}';
-	looperList[x].recorderList.forEach(async (element, index) => {
-		if (element.instrument) {
-			await $('#setting_record_container').append(
-				"<div id='setting_audio_container" +
-					index +
-					"' class='setting_audio_container'><div id='recordedAudio" +
-					index +
-					"' class='record_waveform'/></div>"
-			);
-			loadInstrumentSetting(index, element);
-		} else {
-			await $('#setting_record_container').append(
-				"<div id='setting_audio_container" +
-					index +
-					"' class='setting_audio_container'><div id='recordedAudio" +
-					index +
-					"' class='record_waveform'/></div>"
-			);
-			loadRecorderSetting(index, element);
-		}
-		$('#setting_audio_container' + index).append(
-			'<div class="setting_control_button_container"><div class="setting_control_button"></div><div class="setting_control_button"></div><div class="setting_control_button"></div><div class="setting_control_button"></div></div>'
+	looperList[x].recorderList.forEach(loadSettingAudio);
+}
+
+async function loadSettingAudio(element, index) {
+	if (element.instrument) {
+		await $('#setting_record_container').append(
+			"<div id='setting_audio_container" +
+				index +
+				"' class='setting_audio_container'><div id='recordedAudio" +
+				index +
+				"' class='record_waveform'/></div>"
 		);
-	});
+		loadInstrumentSetting(index, element);
+	} else {
+		await $('#setting_record_container').append(
+			"<div id='setting_audio_container" +
+				index +
+				"' class='setting_audio_container'><div id='recordedAudio" +
+				index +
+				"' class='record_waveform'/></div>"
+		);
+		loadRecorderSetting(index, element);
+	}
+
+	let settingButton =
+		`<div class="setting_control_button" onclick="CopyRecording(${settingRecorder},${index})">COPY</div>` +
+		`<div class="setting_control_button" onclick="DeleteRecording(${settingRecorder},${index})">DELETE</div>` +
+		`<div class="setting_control_button" onclick="DownloadRecording(${settingRecorder},${index})">DOWNLOAD</div>` +
+		`<div class="setting_control_button" onclick="MuteRecording(${settingRecorder},${index})">MUTE</div></div>`;
+	$('#setting_audio_container' + index).append(
+		'<div class="setting_control_button_container">' + settingButton
+	);
 }
 
 function loadInstrumentSetting(index, element) {
@@ -104,7 +112,7 @@ function loadInstrumentSetting(index, element) {
 		element.audioList.forEach(audio => {
 			let left =
 				(audio.time / (looperList[settingRecorder].dur + 2000)) * 100;
-			$('#recordedAudio' + index).append(
+			$('#wave_container' + index).append(
 				'<div class="setting_instrument_box" style="left: ' +
 					left +
 					'%;" />'
@@ -126,8 +134,13 @@ function loadRecorderSetting(index, element) {
 }
 
 function renderWaveContainer(index, element) {
+	console.log(looperList[settingRecorder].dur);
 	$('#recordedAudio' + index).append(
-		'<input type="range" min="0" max="200" value="' +
+		'<input type="range" min="' +
+			-looperList[settingRecorder].dur / 10 +
+			'" max="' +
+			(looperList[settingRecorder].dur / 10 + 200) +
+			'" value="' +
 			element.startingTime * 100 +
 			'" class="slider" oninput="startingTimeOnChange(this,' +
 			index +
@@ -145,12 +158,36 @@ function startingTimeOnChange(e, x) {
 		(((e.value - 100) * 10) / (looperList[settingRecorder].dur + 2000)) *
 		100;
 	$('#wave_container' + x).css('left', newLeft + '%');
+	console.log(2 - e.value / 100);
 	//console.log(looperList[settingRecorder].recorderList[x].startingTime);
 }
 
 function OnClickSettingCross() {
 	$('#recorder_setting').addClass('hide');
 	$('#recorder' + settingRecorder).removeClass('setting');
+}
+
+function CopyRecording(x, index) {
+	let tempRecording = { ...looperList[x].recorderList[index] };
+	if (tempRecording.instrument) {
+	} else {
+		let src = tempRecording.audio._src;
+		tempRecording.audio = new Howl({
+			src: [src],
+			format: ['wav'],
+			autoplay: true,
+			mute: true,
+			loop: true
+		});
+		tempRecording.audio.on('end', () => {
+			tempRecording.audio.mute(true);
+		});
+	}
+	let newIndex = looperList[x].recorderList.push(tempRecording) - 1;
+	if (looperList[x].looping) {
+		looperList[x].startingLoop = true;
+	}
+	loadSettingAudio(looperList[x].recorderList[newIndex], newIndex);
 }
 
 function SettingOnClickReset() {

@@ -63,9 +63,40 @@ function LoopFunction() {
 								}
 							}
 						} else {
-							looperList[i].recorderList[j].audio.seek(
-								looperList[i].recorderList[j].startingTime
-							);
+							if (
+								looperList[i].recorderList[j].startingTime < 0
+							) {
+								if (
+									looperList[i].recorderList[j]
+										.startingTime !=
+									-looperList[i].dur / 1000
+								) {
+									let timeout =
+										looperList[i].recorderList[j]
+											.startingTime * 1000;
+									setTimeout(() => {
+										looperList[i].recorderList[
+											j
+										].audio.mute(false);
+										looperList[i].recorderList[
+											j
+										].audio.seek(0);
+										setTimeout(() => {
+											looperList[i].recorderList[
+												j
+											].audio.mute(true);
+										}, looperList[i].dur + timeout);
+									}, -timeout);
+								}
+							} else if (
+								looperList[i].recorderList[j].startingTime !=
+								looperList[i].dur / 1000 + 2
+							) {
+								looperList[i].recorderList[j].audio.mute(false);
+								looperList[i].recorderList[j].audio.seek(
+									looperList[i].recorderList[j].startingTime
+								);
+							}
 						}
 					}
 					if (looperList[i].startingLoop) {

@@ -4,6 +4,7 @@ $(() => {
 		let audio = new Howl({
 			src: ['./audio/pianoAudio/' + display_keys[i].num + '.mp3']
 		});
+
 		PianoAudioList.push(audio);
 	}
 });
@@ -144,6 +145,7 @@ function PianoKeyOnMouseDown(i) {
 		let audio = new Howl({
 			src: ['./audio/pianoAudio/' + display_keys[i].num + '.mp3']
 		});
+
 		looperList[inputRecorder].recorderList[listIndex].audioList.push({
 			time: time,
 			audio: audio,

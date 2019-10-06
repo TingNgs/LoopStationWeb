@@ -83,7 +83,6 @@ function StartListening() {
 		}
 		setTimeout(() => {
 			recording = false;
-			console.log(looperList[inputRecorder].recorderList);
 		}, 1000);
 	}, RecordingTime + 1000);
 }
@@ -210,6 +209,9 @@ function PushRecordingList(blob) {
 		loop: true,
 		autoplay: true,
 		mute: true
+	});
+	recordingAudio.on('end', () => {
+		recordingAudio.mute(true);
 	});
 	recordingAudio.play();
 	looperList[inputRecorder].startingLoop = true;
