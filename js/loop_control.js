@@ -27,6 +27,7 @@ function LoopFunction() {
 					ChangeMainButtonState(i, RECORDER_STATE.RECORDED);
 					CheckEndLoop();
 				} else {
+					ChangeMainButtonState(i, RECORDER_STATE.LOOPING);
 					for (
 						let j = 0;
 						j < looperList[i].recorderList.length;
@@ -114,7 +115,6 @@ function MainButtonLoopControl(x) {
 	} else {
 		looperList[x].looping = true;
 		if (!looperList[x].instrument) {
-			looperList[x].startingLoop = true;
 			for (let j = 0; j < looperList[x].recorderList.length; j++) {
 				if (!looperList[x].recorderList[j].instrument) {
 					looperList[x].recorderList[j].audio.mute(true);

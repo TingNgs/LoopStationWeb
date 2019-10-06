@@ -239,6 +239,17 @@ function MuteRecording(x, index) {
 	}
 }
 
+function DownloadRecording(x, index) {
+	if (!looperList[x].recorderList[index].instrument) {
+		var a = document.createElement('a');
+		var url = looperList[x].recorderList[index].audio._src;
+		var filename = 'myfile.wav';
+		a.href = url;
+		a.download = filename;
+		a.click();
+	}
+}
+
 function SettingOnClickReset() {
 	$('#setting_record_container').empty();
 	OnClickReset(settingRecorder);
