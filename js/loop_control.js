@@ -77,7 +77,9 @@ function LoopFunction() {
 									setTimeout(() => {
 										looperList[i].recorderList[
 											j
-										].audio.mute(false);
+										].audio.mute(
+											looperList[i].recorderList[j].muted
+										);
 										looperList[i].recorderList[
 											j
 										].audio.seek(0);
@@ -92,23 +94,12 @@ function LoopFunction() {
 								looperList[i].recorderList[j].startingTime !=
 								looperList[i].dur / 1000 + 2
 							) {
-								looperList[i].recorderList[j].audio.mute(false);
+								looperList[i].recorderList[j].audio.mute(
+									looperList[i].recorderList[j].muted
+								);
 								looperList[i].recorderList[j].audio.seek(
 									looperList[i].recorderList[j].startingTime
 								);
-							}
-						}
-					}
-					if (looperList[i].startingLoop) {
-						looperList[i].startingLoop = false;
-						ChangeMainButtonState(i, RECORDER_STATE.LOOPING);
-						for (
-							let j = 0;
-							j < looperList[i].recorderList.length;
-							j++
-						) {
-							if (!looperList[i].recorderList[j].instrument) {
-								looperList[i].recorderList[j].audio.mute(false);
 							}
 						}
 					}

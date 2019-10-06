@@ -65,7 +65,8 @@ function StartListening() {
 	looperList[inputRecorder].recorderList.push({
 		audioList: [],
 		startingTime: 1,
-		instrument
+		instrument,
+		muted: false
 	});
 	if (RecordingTime > maxDuration) {
 		maxDuration = RecordingTime;
@@ -218,7 +219,8 @@ function PushRecordingList(blob) {
 	looperList[inputRecorder].recorderList.push({
 		audio: recordingAudio,
 		startingTime: 1,
-		instrument: false
+		instrument: false,
+		muted: false
 	});
 	if (inputRecorder == settingRecorder) {
 		loadSettingPage(settingRecorder);

@@ -192,7 +192,35 @@ function DeleteRecording(x, index) {
 		looperList[x].recorderList[index].audio.stop();
 	}
 	looperList[x].recorderList.splice(index, 1);
+	if (looperList[x].recorderList.length === 0) {
+		OnClickReset(x);
+	}
 	loadSettingPage(x);
+}
+
+function MuteRecording(x, index) {
+	looperList[x].recorderList[index].muted = !looperList[x].recorderList[index]
+		.muted;
+	if (looperList[x].recorderList[index].instrument) {
+		for (
+			let i = 0;
+			i < looperList[x].recorderList[index].audioList.length;
+			i++
+		) {
+			looperList[x].recorderList[index].audioList[i].audio.mute(
+				looperList[x].recorderList[index].muted
+			);
+		}
+	} else {
+		if (
+			looperList[x].recorderList[index].muted ||
+			looperList[x].recorderList[index].startingTime >= 0
+		) {
+			looperList[x].recorderList[index].audio.mute(
+				looperList[x].recorderList[index].muted
+			);
+		}
+	}
 }
 
 function SettingOnClickReset() {
