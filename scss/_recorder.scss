@@ -172,10 +172,17 @@
 	.setting_control_button {
 		width: 50%;
 		height: 50%;
-		background-color: aqua;
-		border: 1px solid black;
+
+		border: 1px solid rgb(201, 201, 201);
 		box-sizing: border-box;
 		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img {
+			width: 75%;
+			height: 75%;
+		}
 	}
 }
 

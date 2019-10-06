@@ -1,3 +1,9 @@
+const COPY_ICON = './svg/copy.svg';
+const DELETE_ICON = './svg/delete.svg';
+const DOWNLOAD_ICON = './svg/download.svg';
+const MUTE_ICON = './svg/mute.svg';
+const MUTED_ICON = './svg/MUTED.svg';
+
 async function OnClickSetting(x) {
 	$('#recorder_setting').removeClass('hide');
 	$('#recorder' + x).addClass('setting');
@@ -39,12 +45,16 @@ async function loadSettingAudio(element, index) {
 	}
 
 	let settingButton =
-		`<div class="setting_control_button" onclick="CopyRecording(${settingRecorder},${index})">COPY</div>` +
-		`<div class="setting_control_button" onclick="DeleteRecording(${settingRecorder},${index})">DELETE</div>` +
-		`<div class="setting_control_button" onclick="DownloadRecording(${settingRecorder},${index})">DOWNLOAD</div>` +
-		`<div class="setting_control_button" onclick="MuteRecording(${settingRecorder},${index})">MUTE</div></div>`;
+		`<div class="setting_control_button" onclick="CopyRecording(${settingRecorder},${index})"><img src="${COPY_ICON}"/></div>` +
+		`<div class="setting_control_button" onclick="DeleteRecording(${settingRecorder},${index})"><img src="${DELETE_ICON}"/></div>` +
+		`<div class="setting_control_button" onclick="DownloadRecording(${settingRecorder},${index})"><img src="${DOWNLOAD_ICON}"/></div>` +
+		`<div id='setting_mute_icon${index}' class="setting_control_button" onclick="MuteRecording(${settingRecorder},${index})"><img src="${
+			looperList[settingRecorder].recorderList[index].muted
+				? MUTED_ICON
+				: MUTE_ICON
+		}"/></div>`;
 	$('#setting_audio_container' + index).append(
-		'<div class="setting_control_button_container">' + settingButton
+		`<div class="setting_control_button_container">${settingButton}</div>`
 	);
 }
 
@@ -201,6 +211,12 @@ function DeleteRecording(x, index) {
 function MuteRecording(x, index) {
 	looperList[x].recorderList[index].muted = !looperList[x].recorderList[index]
 		.muted;
+	$(`#setting_mute_icon${index}`).empty();
+	$(`#setting_mute_icon${index}`).append(
+		`<img src="${
+			looperList[x].recorderList[index].muted ? MUTED_ICON : MUTE_ICON
+		}"/>`
+	);
 	if (looperList[x].recorderList[index].instrument) {
 		for (
 			let i = 0;
