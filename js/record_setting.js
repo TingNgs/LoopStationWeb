@@ -134,7 +134,6 @@ function loadRecorderSetting(index, element) {
 }
 
 function renderWaveContainer(index, element) {
-	console.log(looperList[settingRecorder].dur);
 	$('#recordedAudio' + index).append(
 		'<input type="range" min="' +
 			-looperList[settingRecorder].dur / 10 +
@@ -158,8 +157,6 @@ function startingTimeOnChange(e, x) {
 		(((e.value - 100) * 10) / (looperList[settingRecorder].dur + 2000)) *
 		100;
 	$('#wave_container' + x).css('left', newLeft + '%');
-	console.log(2 - e.value / 100);
-	//console.log(looperList[settingRecorder].recorderList[x].startingTime);
 }
 
 function OnClickSettingCross() {

@@ -220,4 +220,7 @@ function PushRecordingList(blob) {
 		startingTime: 1,
 		instrument: false
 	});
+	if (inputRecorder == settingRecorder) {
+		loadSettingPage(settingRecorder);
+	}
 }
