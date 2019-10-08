@@ -230,9 +230,12 @@
 	.setting_instrument_box {
 		position: absolute;
 		top: 0;
-		width: 10px;
+		width: 20px;
 		height: 128px;
-		background-color: rgb(32, 54, 54);
+		display: flex;
+		img {
+			width: 100%;
+		}
 	}
 	.setting_piano_key {
 		position: absolute;

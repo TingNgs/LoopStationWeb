@@ -3,6 +3,7 @@ const DELETE_ICON = './svg/delete.svg';
 const DOWNLOAD_ICON = './svg/download.svg';
 const MUTE_ICON = './svg/mute.svg';
 const MUTED_ICON = './svg/MUTED.svg';
+const DRUM_ICON = './svg/drum.svg';
 
 async function OnClickSetting(x) {
 	$('#recorder_setting').removeClass('hide');
@@ -123,9 +124,7 @@ function loadInstrumentSetting(index, element) {
 			let left =
 				(audio.time / (looperList[settingRecorder].dur + 2000)) * 100;
 			$('#wave_container' + index).append(
-				'<div class="setting_instrument_box" style="left: ' +
-					left +
-					'%;" />'
+				`<div class="setting_instrument_box" style="left:${left}%;"> <img src="${DRUM_ICON}"/> </div>`
 			);
 		});
 	}
