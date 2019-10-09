@@ -1,37 +1,37 @@
 #drum-machine {
-    width: 100%;
-    height: 100%;
-    position: relative;
+	width: 100%;
+	height: 100%;
+	position: relative;
 
-    #drum-pad {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-wrap: wrap;
+	#drum-pad {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-wrap: wrap;
 
-        .drum_container {
-            width: 25%;
-            height: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+		.drum_container {
+			width: 25%;
+			height: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
-            .drum {
-                width: 40%;
-                padding-bottom: 30%;
-                background-color: $button-st2;
-                color: white;
-                border-radius: 10%;
-
-                .text {
-                    font-size: 15px;
-                    text-align: center;
-                    position: relative;
-                    top: 95px;
-                }
-            }
-
-
-        }
-    }
+			.drum {
+				width: 40%;
+				padding-bottom: 40%;
+				background-color: $button-st2;
+				color: white;
+				border-radius: 10%;
+				position: relative;
+				.text {
+					position: absolute;
+					top: 60%;
+					left: 50%;
+					transform: translate(-50%, -60%);
+					font-size: 15px;
+					text-align: center;
+				}
+			}
+		}
+	}
 }
