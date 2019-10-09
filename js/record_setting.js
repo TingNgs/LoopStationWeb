@@ -144,17 +144,10 @@ function loadRecorderSetting(index, element) {
 
 function renderWaveContainer(index, element) {
 	$('#recordedAudio' + index).append(
-		'<input type="range" min="' +
-			-looperList[settingRecorder].dur / 10 +
-			'" max="' +
-			(looperList[settingRecorder].dur / 10 + 200) +
-			'" value="' +
-			element.startingTime * 100 +
-			'" class="slider" oninput="startingTimeOnChange(this,' +
-			index +
-			')"><div class="display_area"/><div id="wave_container' +
-			index +
-			'" class="wave_container">'
+		`<input type="range" min="${-looperList[settingRecorder].dur /
+			10}" max="${looperList[settingRecorder].dur / 10 +
+			200}" value="${element.startingTime *
+			100}" class="slider" oninput="startingTimeOnChange(this,${index})"><div class="display_area"/><div id="wave_container${index}" class="wave_container">`
 	);
 	startingTimeOnChange({ value: 200 - element.startingTime * 100 }, index);
 }

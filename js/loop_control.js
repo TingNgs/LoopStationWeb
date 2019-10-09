@@ -64,6 +64,9 @@ function LoopFunction() {
 								}
 							}
 						} else {
+							console.log(
+								looperList[i].recorderList[j].startingTime
+							);
 							if (
 								looperList[i].recorderList[j].startingTime < 0
 							) {
