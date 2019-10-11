@@ -7,6 +7,7 @@ const DRUM_ICON = './svg/drum.svg';
 
 async function OnClickSetting(x) {
 	$('#recorder_setting').removeClass('hide');
+	$('#record_control').addClass('setting');
 	$('#recorder' + x).addClass('setting');
 	settingRecorder = x;
 	loadSettingPage(x);
@@ -31,7 +32,7 @@ async function loadSettingAudio(element, index) {
 				index +
 				"' class='setting_audio_container'><div id='recordedAudio" +
 				index +
-				"' class='record_waveform'/></div>"
+				"' class='record_waveform' )'/></div>"
 		);
 		loadInstrumentSetting(index, element);
 	} else {
@@ -53,7 +54,8 @@ async function loadSettingAudio(element, index) {
 			looperList[settingRecorder].recorderList[index].muted
 				? MUTED_ICON
 				: MUTE_ICON
-		}"/></div>`;
+		}"/></div>` +
+		`<div id='setting_drag_button${index}' class="setting_drag_button" draggable='true' ondragstart="drag(event,${index},true)" ondragend="dragAudioEnd(event, ${index})" ><img src="${DOWNLOAD_ICON}"/></div>`;
 	$('#setting_audio_container' + index).append(
 		`<div class="setting_control_button_container">${settingButton}</div>`
 	);
@@ -165,6 +167,7 @@ function startingTimeOnChange(e, x) {
 function OnClickSettingCross() {
 	$('#recorder_setting').addClass('hide');
 	$('#recorder' + settingRecorder).removeClass('setting');
+	$('#record_control').removeClass('setting');
 }
 
 function CopyRecording(x, index) {
@@ -261,10 +264,15 @@ function OnClickReset(x) {
 	CheckEndLoop();
 }
 
-function drag(ev, n) {
-	ChangeMainButtonState(n, RECORDER_STATE.LOOPING);
-	ev.dataTransfer.setData('text', ev.target.id);
-	dragLooper = n;
+function drag(ev, n, isDragAudio) {
+	ev.dataTransfer.setData('text/plain', ev.target.id);
+	dragAudio = isDragAudio;
+	dragIndex = n;
+}
+
+function dragAudioEnd(ev, n) {
+	console.log('end');
+	dragAudio = false;
 }
 function drop(ev, n) {
 	ev.preventDefault();
@@ -272,51 +280,91 @@ function drop(ev, n) {
 		showAlert("You can't drag and drop audio while recording");
 		return;
 	}
-	if (n === dragLooper) return;
-	if (looperList[n].recorded && looperList[dragLooper].recorded) {
-		if (looperList[n].dur == looperList[dragLooper].dur) {
-			if (looperList[n].looping) looperList[n].startingLoop = true;
-			for (
-				let i = 0;
-				i < looperList[dragLooper].recorderList.length;
-				i++
-			) {
-				//looperList[dragLooper].recorderList[i].audio.pause();
-				let order =
-					looperList[n].recorderList.push(
-						looperList[dragLooper].recorderList[i]
-					) - 1;
-				//looperList[n].recorderList[order].audio.muted = true;
-				//looperList[n].recorderList[order].audio.play();
+	if (dragAudio) {
+		if (n === settingRecorder) return;
+		if (looperList[n].recorded) {
+			if (looperList[n].dur == looperList[settingRecorder].dur) {
+				let tempAudio =
+					looperList[settingRecorder].recorderList[dragIndex];
+				looperList[settingRecorder].recorderList.splice(dragIndex, 1);
+				looperList[n].recorderList.push(tempAudio);
+			} else {
+				showAlert('You can only merge two looper with same duration');
+				return;
 			}
-			looperList[dragLooper].Reset();
-			ChangeMainButtonState(dragLooper, RECORDER_STATE.EMPTY);
-			stopAnimation(dragLooper);
 		} else {
-			showAlert('You can only merge two looper with same duration');
+			looperList[n].recorded = looperList[settingRecorder].recorded;
+			looperList[n].startingLoop =
+				looperList[settingRecorder].startingLoop;
+			looperList[n].looping = looperList[settingRecorder].looping;
+			looperList[n].timeZone = looperList[settingRecorder].timeZone;
+			looperList[n].dur = looperList[settingRecorder].dur;
+			looperList[n].tempPlaying = looperList[settingRecorder].tempPlaying;
+			looperList[n].ending = looperList[settingRecorder].ending;
+			let tempAudio = looperList[settingRecorder].recorderList[dragIndex];
+			looperList[settingRecorder].recorderList.splice(dragIndex, 1);
+			looperList[n].recorderList.push(tempAudio);
+
+			let state = looperList[n].looping
+				? RECORDER_STATE.LOOPING
+				: looperList[n].recorded
+				? RECORDER_STATE.RECORDED
+				: RECORDER_STATE.EMPTY;
+			ChangeMainButtonState(n, state);
+		}
+		loadSettingPage(settingRecorder);
+		if (looperList[settingRecorder].recorderList.length === 0) {
+			looperList[settingRecorder].Reset();
+			ChangeMainButtonState(settingRecorder, RECORDER_STATE.EMPTY);
+			stopAnimation(settingRecorder);
 		}
 	} else {
-		looperList[n].recorded = looperList[dragLooper].recorded;
-		looperList[n].startingLoop = looperList[dragLooper].startingLoop;
-		looperList[n].looping = looperList[dragLooper].looping;
-		looperList[n].recorderList = [...looperList[dragLooper].recorderList];
-		looperList[n].timeZone = looperList[dragLooper].timeZone;
-		looperList[n].dur = looperList[dragLooper].dur;
-		looperList[n].tempPlaying = looperList[dragLooper].tempPlaying;
-		looperList[n].ending = looperList[dragLooper].ending;
+		if (n === dragIndex) return;
+		if (looperList[n].recorded && looperList[dragIndex].recorded) {
+			if (looperList[n].dur == looperList[dragIndex].dur) {
+				for (
+					let i = 0;
+					i < looperList[dragIndex].recorderList.length;
+					i++
+				) {
+					looperList[n].recorderList.push(
+						looperList[dragIndex].recorderList[i]
+					) - 1;
+				}
+				looperList[dragIndex].Reset();
+				ChangeMainButtonState(dragIndex, RECORDER_STATE.EMPTY);
+				stopAnimation(dragIndex);
+			} else {
+				showAlert('You can only merge two looper with same duration');
+				return;
+			}
+		} else {
+			looperList[n].recorded = looperList[dragIndex].recorded;
+			looperList[n].startingLoop = looperList[dragIndex].startingLoop;
+			looperList[n].looping = looperList[dragIndex].looping;
+			looperList[n].recorderList = [
+				...looperList[dragIndex].recorderList
+			];
+			looperList[n].timeZone = looperList[dragIndex].timeZone;
+			looperList[n].dur = looperList[dragIndex].dur;
+			looperList[n].tempPlaying = looperList[dragIndex].tempPlaying;
+			looperList[n].ending = looperList[dragIndex].ending;
 
-		let state = looperList[n].looping
-			? RECORDER_STATE.LOOPING
-			: looperList[n].recorded
-			? RECORDER_STATE.RECORDED
-			: RECORDER_STATE.EMPTY;
+			let state = looperList[n].looping
+				? RECORDER_STATE.LOOPING
+				: looperList[n].recorded
+				? RECORDER_STATE.RECORDED
+				: RECORDER_STATE.EMPTY;
 
-		looperList[dragLooper].Reset();
+			looperList[dragIndex].Reset();
 
-		ChangeMainButtonState(dragLooper, RECORDER_STATE.EMPTY);
-		ChangeMainButtonState(n, state);
-		stopAnimation(dragLooper);
-		// ChangeMainButtonState(n, RECORDER_STATE.RECORDED);
+			ChangeMainButtonState(dragIndex, RECORDER_STATE.EMPTY);
+			ChangeMainButtonState(n, state);
+			stopAnimation(dragIndex);
+		}
+		if (settingRecorder == dragIndex) {
+			loadSettingPage(settingRecorder);
+		}
 	}
 }
 function allowDrop(ev) {

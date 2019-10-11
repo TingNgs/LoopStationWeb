@@ -21,6 +21,10 @@
 		}
 	}
 }
+.recorder.setting .background_circle {
+	width: 50%;
+	padding-bottom: 50%;
+}
 @keyframes circleAnimate {
 	0% {
 		transform: rotate(0deg);
@@ -38,6 +42,17 @@
 	#record_control {
 		width: 100%;
 		height: 100%;
+		&.setting {
+			position: absolute;
+			bottom: 12%;
+			width: 30%;
+			height: 30%;
+			z-index: 20;
+			left: 0;
+			button {
+				display: none;
+			}
+		}
 		#recorder_row {
 			width: 100%;
 			height: 100%;
@@ -137,23 +152,20 @@
 	height: 100%;
 	width: 60%;
 	overflow: auto;
-	padding: 5%;
+	padding: 30px;
 }
 .setting_top_button_container {
-	position: absolute;
-	bottom: 15%;
-	left: 7.5%;
-	height: 20%;
-	width: 30%;
+	height: fit-content;
+	width: 100%;
 	display: flex;
 	z-index: 2;
 	justify-content: space-evenly;
+	margin-bottom: 30px;
 }
 .recorder_setting_button {
 	height: fit-content;
-	padding: 10px;
-	margin-top: auto;
-	width: 20% 0;
+	padding: 10px 0;
+	width: 20%;
 	border-radius: 5px;
 	background-color: $button-st2;
 	display: flex;
@@ -179,6 +191,16 @@
 	display: flex;
 	flex-wrap: wrap;
 	margin-left: 10px;
+	position: relative;
+	.setting_drag_button {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 30%;
+		height: 30%;
+		border-radius: 99%;
+	}
 	.setting_control_button {
 		width: 50%;
 		height: 50%;

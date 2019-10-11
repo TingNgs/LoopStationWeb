@@ -105,8 +105,9 @@ var listIndex;
 var loopFunction; // For setInterval and clear interval
 var inputRecorder;
 var looperList = [];
-var dragLooper;
+var dragIndex;
 var settingRecorder;
+var dragAudio = false;
 
 var wavefromStyle = document.querySelector('[data="waveform_data"]');
 var timingText;
