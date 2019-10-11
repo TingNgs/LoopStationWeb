@@ -1,6 +1,10 @@
 var page = 2;
 var pageLoad = [false, false];
 function FunctionBarOnClick(n) {
+	if (n === 2 || n === 3 || n === 4) {
+		showAlert('You change page while recording');
+		return;
+	}
 	if (n == -1) {
 		_toggleFullScreen();
 		$('#full-screen-exit').addClass('hide');

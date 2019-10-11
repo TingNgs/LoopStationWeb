@@ -23,6 +23,9 @@
 				color: white;
 				border-radius: 10%;
 				position: relative;
+				&:active {
+					background-color: $button-st1;
+				}
 				.text {
 					position: absolute;
 					top: 60%;

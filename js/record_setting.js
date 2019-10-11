@@ -267,6 +267,7 @@ function drag(ev, n) {
 }
 function drop(ev, n) {
 	ev.preventDefault();
+	if (n === dragLooper) return;
 	if (looperList[n].recorded && looperList[dragLooper].recorded) {
 		if (looperList[n].dur == looperList[dragLooper].dur) {
 			if (looperList[n].looping) looperList[n].startingLoop = true;
@@ -290,6 +291,26 @@ function drop(ev, n) {
 			showAlert('You can only merge two looper with same duration');
 		}
 	} else {
+		looperList[n].recorded = looperList[dragLooper].recorded;
+		looperList[n].startingLoop = looperList[dragLooper].startingLoop;
+		looperList[n].looping = looperList[dragLooper].looping;
+		looperList[n].recorderList = [...looperList[dragLooper].recorderList];
+		looperList[n].timeZone = looperList[dragLooper].timeZone;
+		looperList[n].dur = looperList[dragLooper].dur;
+		looperList[n].tempPlaying = looperList[dragLooper].tempPlaying;
+		looperList[n].ending = looperList[dragLooper].ending;
+
+		let state = looperList[n].looping
+			? RECORDER_STATE.LOOPING
+			: looperList[n].recorded
+			? RECORDER_STATE.RECORDED
+			: RECORDER_STATE.EMPTY;
+
+		looperList[dragLooper].Reset();
+
+		ChangeMainButtonState(dragLooper, RECORDER_STATE.EMPTY);
+		ChangeMainButtonState(n, state);
+		stopAnimation(dragLooper);
 		// ChangeMainButtonState(n, RECORDER_STATE.RECORDED);
 	}
 }

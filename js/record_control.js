@@ -1,4 +1,7 @@
 function OnClickTimingFunction(n) {
+	if (recording) {
+		showAlert("You can't set time while recording");
+	}
 	let temp;
 	if (n == 0) temp = RecordingTime + 100;
 	if (n == 1) temp = RecordingTime - 100;
@@ -20,10 +23,14 @@ function OnClickRrecorder(x) {
 		MainButtonLoopControl(x);
 	} else {
 		//Not recorded, ready to record
-		recording = true;
-		inputRecorder = x;
-		MainButtonStartRecord(x);
-		looperList[x].dur = RecordingTime;
+		if (recording) {
+			showAlert("You can't record two audio at the same time");
+		} else {
+			recording = true;
+			inputRecorder = x;
+			MainButtonStartRecord(x);
+			looperList[x].dur = RecordingTime;
+		}
 	}
 }
 
