@@ -154,3 +154,13 @@ function stopAnimation(x) {
 	let element = document.getElementById('bg_circle_line' + x);
 	element.classList.remove('line');
 }
+
+function hideAlert() {
+	$('#alert').addClass('hide');
+}
+
+function showAlert(alertMessage) {
+	$('#alert').html(alertMessage);
+	$('#alert').removeClass('hide');
+	setTimeout(hideAlert, 3000);
+}

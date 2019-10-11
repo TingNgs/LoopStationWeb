@@ -128,12 +128,11 @@ function PlayRecording(x) {
 					LoopFunction();
 					StartLooping();
 				}, RecordingTime);
+			} else {
+				playingDur = 0;
 			}
 		} else {
 			if (RecordingTime < minDuration) minDuration = RecordingTime;
-			else {
-				playingDur = 0;
-			}
 			StartLooping();
 			playingDur += minDuration;
 			if (playingDur >= maxDuration) playingDur = 0;

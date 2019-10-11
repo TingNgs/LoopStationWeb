@@ -267,7 +267,6 @@ function drag(ev, n) {
 }
 function drop(ev, n) {
 	ev.preventDefault();
-	// ChangeMainButtonState(n, RECORDER_STATE.RECORDED);
 	if (looperList[n].recorded && looperList[dragLooper].recorded) {
 		if (looperList[n].dur == looperList[dragLooper].dur) {
 			if (looperList[n].looping) looperList[n].startingLoop = true;
@@ -287,7 +286,11 @@ function drop(ev, n) {
 			looperList[dragLooper].Reset();
 			ChangeMainButtonState(dragLooper, RECORDER_STATE.EMPTY);
 			stopAnimation(dragLooper);
+		} else {
+			showAlert('You can only merge two looper with same duration');
 		}
+	} else {
+		// ChangeMainButtonState(n, RECORDER_STATE.RECORDED);
 	}
 }
 function allowDrop(ev) {
