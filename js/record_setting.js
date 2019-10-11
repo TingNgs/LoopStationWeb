@@ -137,7 +137,8 @@ function loadRecorderSetting(index, element) {
 		barWidth: 2,
 		barHeight: 4,
 		barGap: null,
-		waveColor: '#FFF'
+		waveColor: '#FFF',
+		height: 100
 	});
 	wavesurfer.load(element.audio._src);
 }

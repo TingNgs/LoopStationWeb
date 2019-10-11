@@ -26,20 +26,20 @@
 		<div id="controller" class="container-fluid">
 			<div id="alert" class="hide"></div>
 			<div id="recorder_setting" class="fixed_center hide">
+				<div class="setting_top_button_container">
+					<span
+						class="recorder_setting_button"
+						onclick="SettingOnClickReset()"
+						>RESET</span
+					>
+					<span
+						class="recorder_setting_button"
+						onclick="OnClickSettingCross()"
+						>CLOSE</span
+					>
+				</div>
 				<div class="recorder_setting_bg">
 					<div class="recorder_setting_container">
-						<div class="setting_top_button_container">
-							<span
-								class="recorder_setting_button"
-								onclick="SettingOnClickReset()"
-								>RESET</span
-							>
-							<span
-								class="recorder_setting_button"
-								onclick="OnClickSettingCross()"
-								>CLOSE</span
-							>
-						</div>
 						<div id="setting_record_container"></div>
 					</div>
 				</div>

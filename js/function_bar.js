@@ -1,8 +1,8 @@
 var page = 2;
 var pageLoad = [false, false];
 function FunctionBarOnClick(n) {
-	if (n === 2 || n === 3 || n === 4) {
-		showAlert('You change page while recording');
+	if ((n === 2 || n === 3 || n === 4) && recording) {
+		showAlert("You can't change page while recording");
 		return;
 	}
 	if (n == -1) {

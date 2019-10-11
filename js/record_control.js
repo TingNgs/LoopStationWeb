@@ -1,6 +1,7 @@
 function OnClickTimingFunction(n) {
 	if (recording) {
 		showAlert("You can't set time while recording");
+		return;
 	}
 	let temp;
 	if (n == 0) temp = RecordingTime + 100;
@@ -118,6 +119,7 @@ function StopRecording(x) {
 		rec.exportWAV(PushRecordingList);
 		rec.clear();
 		recording = false;
+		console.log('asd');
 	}, RecordingTime + 1000);
 }
 
