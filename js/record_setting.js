@@ -138,7 +138,7 @@ function loadRecorderSetting(index, element) {
 		barHeight: 4,
 		barGap: null,
 		waveColor: '#FFF',
-		height: 100
+		height: 128
 	});
 	wavesurfer.load(element.audio._src);
 }
@@ -268,6 +268,10 @@ function drag(ev, n) {
 }
 function drop(ev, n) {
 	ev.preventDefault();
+	if (recording) {
+		showAlert("You can't drag and drop audio while recording");
+		return;
+	}
 	if (n === dragLooper) return;
 	if (looperList[n].recorded && looperList[dragLooper].recorded) {
 		if (looperList[n].dur == looperList[dragLooper].dur) {
