@@ -44,11 +44,12 @@ body {
 	.recorder_button_container {
 		flex-grow: 1;
 		display: flex;
-		align-items: top;
+		align-items: flex-end;
 		justify-content: space-around;
+		flex-wrap: wrap-reverse;
 		.main_screen_button {
 			height: fit-content;
-			width: 5%;
+
 			display: inline-block;
 			display: flex;
 			justify-content: center;
@@ -57,8 +58,8 @@ body {
 			font-size: 1.2em;
 			color: $function_button;
 			img {
-				width: 100%;
-
+				max-width: 5%;
+				min-width: 0.8em;
 				margin-right: 10px;
 			}
 		}
