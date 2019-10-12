@@ -1,5 +1,15 @@
 @import './_color.scss';
 
+$cb1_set: $cb1;
+$cb2_set: $cb2;
+$cb3_set: $cb3;
+$cb4_set: $cb4;
+
+/*$cb1_set: $cb1_1;
+$cb2_set: $cb2_1;
+$cb3_set: $cb3_1;
+$cb4_set: $cb4_1;*/
+
 .background_circle {
 	position: relative;
 	width: 70%;
@@ -56,19 +66,18 @@
 		width: 15px;
 		height: 15px;
 		border-radius: 50%;
-		background: #00b0ff;
+		background: $cb1_set;
 		animation: boxS 1.5s linear infinite;
 	}
 	@keyframes boxS {
 		50% {
-			box-shadow: 1px 0 10px rgba(0, 176, 255, 0.5),
-				-1px 0 10px rgba(0, 176, 255, 0.5),
-				0 1px 10px rgba(0, 176, 255, 0.5),
-				0 -1px 10px rgba(0, 176, 255, 0.5);
+			box-shadow: 1px 0 10px rgba($cb1_set, 0.5),
+				-1px 0 10px rgba($cb1_set, 0.5), 0 1px 10px rgba($cb1_set, 0.5),
+				0 -1px 10px rgba($cb1_set, 0.5);
 			/* box-shadow: 0 0 10px rgba(0, 176, 255, .5); */
 		}
 		100% {
-			box-shadow: 0 0 0 rgba(0, 176, 255, 0.5);
+			box-shadow: 0 0 0 rgba($cb1_set, 0.5);
 		}
 	}
 	.background_box {
@@ -79,25 +88,19 @@
 	}
 	.b1 {
 		border-radius: 100% 0 0 0/ 100% 0 0 0;
-		background: linear-gradient(rgba(0, 176, 255, 1), rgba(88, 94, 255, 1));
+		background: linear-gradient($cb1_set, $cb2_set);
 	}
 	.b2 {
 		border-radius: 0 100% 0 0/ 0 100% 0 0;
-		background: linear-gradient(transparent, rgba(78, 32, 136, 1));
+		background: linear-gradient(transparent, $cb4_set);
 	}
 	.b3 {
 		border-radius: 0 0 0 100%/ 0 0 0 100%;
-		background: linear-gradient(
-			rgba(88, 94, 255, 1),
-			rgba(106, 26, 174, 1)
-		);
+		background: linear-gradient($cb2_set, $cb3_set);
 	}
 	.b4 {
 		border-radius: 0 0 100% 0/ 0 0 100% 0;
-		background: linear-gradient(
-			rgba(78, 32, 136, 1),
-			rgba(106, 26, 174, 1)
-		);
+		background: linear-gradient($cb4_set, $cb3_set);
 	}
 	.background {
 		position: absolute;
