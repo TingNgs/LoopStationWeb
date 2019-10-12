@@ -44,17 +44,17 @@ body {
 	.recorder_button_container {
 		flex-grow: 1;
 		display: flex;
-		align-items: center;
+		align-items: top;
 		justify-content: space-around;
 		.main_screen_button {
 			height: fit-content;
-			width: 8%;
+			width: 5%;
 			display: inline-block;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			cursor: pointer;
-			font-size: 1.5em;
+			font-size: 1.2em;
 			color: $function_button;
 			img {
 				width: 100%;
