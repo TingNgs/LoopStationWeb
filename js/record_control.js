@@ -80,15 +80,26 @@ function StartListening() {
 		maxDuration = RecordingTime;
 		console.log('Max update  ' + maxDuration);
 	}
-	if (RecordingTime < minDuration) {
-		minDuration = RecordingTime;
-	}
 	looperList[inputRecorder].looping = true;
 	setTimeout(function() {
 		ChangeMainButtonState(inputRecorder, RECORDER_STATE.LOOPING);
 		if (!anyLooping) {
+			if (RecordingTime < minDuration) {
+				minDuration = RecordingTime;
+			}
 			LoopFunction();
 			StartLooping();
+		} else {
+			if (RecordingTime < minDuration) {
+				minDuration = RecordingTime;
+				setTimeout(() => {
+					clearInterval(loopFunction);
+					LoopFunction();
+					StartLooping();
+				}, RecordingTime);
+			} else {
+				playingDur = 0;
+			}
 		}
 		setTimeout(() => {
 			recording = false;

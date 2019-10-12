@@ -1,53 +1,62 @@
-<div id="fullscreen-function" class="function">
-	<ul>
-		<li id="full-screen-exit" class="hide" onclick="FunctionBarOnClick(-1)">
-			<img src="./svg/full-screen-exit.svg" alt="" />
-		</li>
-		<li id="full-screen-entry" onclick="FunctionBarOnClick(-2)">
-			<img src="./svg/switch-to-full-screen-button.svg" alt="" />
-		</li>
-	</ul>
-</div>
-<div id="back-function" class="function hide">
-	<ul>
-		<li onclick="FunctionBarOnClick(0)">
-			<img src="./svg/back_btn.svg" alt="" />
-		</li>
-	</ul>
-</div>
+<div id="function_bar_container">
+	<div id="fullscreen-function" class="function">
+		<ul>
+			<li
+				id="full-screen-exit"
+				class="hide"
+				onclick="FunctionBarOnClick(-1)"
+			>
+				<img src="./svg/full-screen-exit.svg" alt="" />
+			</li>
+			<li id="full-screen-entry" onclick="FunctionBarOnClick(-2)">
+				<img src="./svg/switch-to-full-screen-button.svg" alt="" />
+			</li>
+		</ul>
+	</div>
+	<div id="back-function" class="function hide">
+		<ul>
+			<li onclick="FunctionBarOnClick(0)">
+				<img src="./svg/back_btn.svg" alt="" />
+			</li>
+		</ul>
+	</div>
 
-<div id="main-function" class="function">
-	<ul>
-		<li onclick="FunctionBarOnClick(1)">
-			<img src="./svg/time_btn.svg" alt="" />
-		</li>
-		<li onclick="FunctionBarOnClick(2)">
-			<img src="./svg/braille-six-dots.svg" alt="" />
-		</li>
-		<li onclick="FunctionBarOnClick(3)">
-			<img src="./svg/piano.svg" alt="" />
-		</li>
-		<li onclick="FunctionBarOnClick(4)">
-			<img src="./svg/drum-set.svg" alt="" />
-		</li>
-	</ul>
-</div>
-<svg viewBox="-25 -25 40 40" width="100%">
-	<text id="textid" x="0" y="0">5</text>
-</svg>
-<div id="timing-function" class="function hide">
-	<ul>
-		<li onclick="OnClickTimingFunction(2)">
-			<img src="./svg/times_btn.svg" alt="" />
-		</li>
-		<li onclick="OnClickTimingFunction(3)">
-			<img src="./svg/divide_btn.svg" alt="" />
-		</li>
-		<li onclick="OnClickTimingFunction(0)">
-			<img src="./svg/plus.svg" alt="" />
-		</li>
-		<li onclick="OnClickTimingFunction(1)">
-			<img src="./svg/subtract.svg" alt="" />
-		</li>
-	</ul>
+	<div id="main-function" class="function">
+		<ul>
+			<li onclick="FunctionBarOnClick(1)">
+				<img src="./svg/time_btn.svg" alt="" />
+			</li>
+			<li onclick="FunctionBarOnClick(2)">
+				<img src="./svg/braille-six-dots.svg" alt="" />
+			</li>
+			<li onclick="FunctionBarOnClick(3)">
+				<img src="./svg/piano.svg" alt="" />
+			</li>
+			<li onclick="FunctionBarOnClick(4)">
+				<img src="./svg/drum-set.svg" alt="" />
+			</li>
+		</ul>
+	</div>
+	<div class="time_text">
+		<svg viewBox="-25 -15 40 40" width="100%">
+			<text id="textid" x="0" y="0">5</text>
+		</svg>
+	</div>
+
+	<div id="timing-function" class="function hide">
+		<ul>
+			<li onclick="OnClickTimingFunction(2)">
+				<img src="./svg/times_btn.svg" alt="" />
+			</li>
+			<li onclick="OnClickTimingFunction(3)">
+				<img src="./svg/divide_btn.svg" alt="" />
+			</li>
+			<li onclick="OnClickTimingFunction(0)">
+				<img src="./svg/plus.svg" alt="" />
+			</li>
+			<li onclick="OnClickTimingFunction(1)">
+				<img src="./svg/subtract.svg" alt="" />
+			</li>
+		</ul>
+	</div>
 </div>

@@ -5,11 +5,15 @@ function StartLooping() {
 	}, minDuration);
 }
 function LoopFunction() {
-	if (playingDur == 0) loopStartTime = new Date().getTime();
+	if (playingDur == 0) {
+		loopStartTime = new Date().getTime();
+	}
+
 	playingDur += minDuration;
 	if (playingDur >= maxDuration) playingDur = 0;
 	for (let i = 0; i < 6; i++) {
 		if (looperList[i].recorded && playingDur % looperList[i].dur == 0) {
+			console.log(playingDur);
 			setAnimation(i, looperList[i].dur / 1000);
 			if (looperList[i].looping) {
 				if (looperList[i].ending) {
@@ -64,9 +68,6 @@ function LoopFunction() {
 								}
 							}
 						} else {
-							console.log(
-								looperList[i].recorderList[j].startingTime
-							);
 							if (
 								looperList[i].recorderList[j].startingTime < 0
 							) {

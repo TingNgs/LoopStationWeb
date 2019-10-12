@@ -219,6 +219,38 @@
 				}
 			}
 		}
+		#record_control.setting {
+			height: 30%;
+			#recorder_row {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				.recorder {
+					width: 33%;
+					height: 50%;
+					.background_circle {
+						width: 100%;
+						padding-bottom: 100%;
+						.box {
+							width: 5px;
+							height: 5px;
+							top: 0px;
+							left: 5px;
+						}
+					}
+					&.setting {
+						.box {
+							width: 15px;
+							height: 15px;
+							top: -5px;
+							left: 0px;
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
