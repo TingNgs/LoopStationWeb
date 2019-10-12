@@ -4,6 +4,7 @@ const DOWNLOAD_ICON = './svg/download.svg';
 const MUTE_ICON = './svg/mute.svg';
 const MUTED_ICON = './svg/MUTED.svg';
 const DRUM_ICON = './svg/drum.svg';
+const DRAG_ICON = './svg/drag.svg';
 
 async function OnClickSetting(x) {
 	$('#recorder_setting').removeClass('hide');
@@ -55,7 +56,7 @@ async function loadSettingAudio(element, index) {
 				? MUTED_ICON
 				: MUTE_ICON
 		}"/></div>` +
-		`<div id='setting_drag_button${index}' class="setting_drag_button" draggable='true' ondragstart="drag(event,${index},true)" ondragend="dragAudioEnd(event, ${index})" ><img src="${DOWNLOAD_ICON}"/></div>`;
+		`<div id='setting_drag_button${index}' class="setting_drag_button" draggable='true' ondragstart="drag(event,${index},true)" ondragend="dragAudioEnd(event, ${index})" ><img src="${DRAG_ICON}"/></div>`;
 	$('#setting_audio_container' + index).append(
 		`<div class="setting_control_button_container">${settingButton}</div>`
 	);

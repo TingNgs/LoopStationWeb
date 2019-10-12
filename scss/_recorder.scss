@@ -99,20 +99,79 @@
 		svg radialGradient stop {
 			stop-color: $button-empty;
 		}
+		.st1 {
+			fill: $button-st1;
+		}
+		.st2 {
+			fill: $button-st2;
+		}
 	}
-	&.recording svg radialGradient stop {
-		stop-color: $button-recording;
+	&.recording {
+		svg {
+			circle.st_shawdow {
+				transform-origin: center;
+				animation: scaling 1.5s ease-in-out infinite;
+			}
+			radialGradient stop {
+				stop-color: $button-recording;
+			}
+		}
+		.st1 {
+			fill: $button-st1;
+		}
+		.st2 {
+			fill: $button-st2;
+		}
 	}
-	&.recorded svg radialGradient stop {
-		stop-color: $button-recorded;
+	&.recorded {
+		svg {
+			radialGradient stop {
+				stop-color: $button-recorded;
+			}
+		}
+		.st1 {
+			fill: $button-st1;
+		}
+		.st2 {
+			fill: $button-st2;
+		}
 	}
-	&.waiting svg radialGradient stop {
-		stop-color: $button-waiting;
+	&.waiting {
+		svg radialGradient stop {
+			stop-color: $button-waiting;
+		}
+		.st1 {
+			fill: $button-st1;
+		}
+		.st2 {
+			fill: $button-st2;
+		}
 	}
-	&.looping svg radialGradient stop {
-		stop-color: $button-looping;
+	&.looping {
+		svg radialGradient stop {
+			stop-color: $button-looping;
+		}
+		.st1 {
+			fill: $button-st1;
+		}
+		.st2 {
+			fill: $button-st2;
+		}
 	}
 }
+
+@keyframes scaling {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
 .st00 {
 	fill: url(#recorderRadiaGradient0);
 }
@@ -130,13 +189,6 @@
 }
 .st05 {
 	fill: url(#recorderRadiaGradient5);
-}
-.st1 {
-	fill: $button-st1;
-}
-
-.st2 {
-	fill: $button-st2;
 }
 
 .recorder_setting_bg {
@@ -200,6 +252,15 @@
 		width: 30%;
 		height: 30%;
 		border-radius: 99%;
+		border: 1px solid rgb(201, 201, 201);
+		background-color: $controller_bg;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img {
+			width: 60%;
+			height: 60%;
+		}
 	}
 	.setting_control_button {
 		width: 50%;
