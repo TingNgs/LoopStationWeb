@@ -50,13 +50,12 @@ async function loadSettingAudio(element, index) {
 	let settingButton =
 		`<div class="setting_control_button" onclick="CopyRecording(${settingRecorder},${index})"><img src="${COPY_ICON}"/></div>` +
 		`<div class="setting_control_button" onclick="DeleteRecording(${settingRecorder},${index})"><img src="${DELETE_ICON}"/></div>` +
-		`<div class="setting_control_button" onclick="DownloadRecording(${settingRecorder},${index})"><img src="${DOWNLOAD_ICON}"/></div>` +
+		`<div class="setting_control_button" id='dragAudio'  draggable='true' ondragstart="drag(event,${index},true)" ondragend="dragAudioEnd(event, ${index})"><img  src="${DRAG_ICON}"/></div>` +
 		`<div id='setting_mute_icon${index}' class="setting_control_button" onclick="MuteRecording(${settingRecorder},${index})"><img src="${
 			looperList[settingRecorder].recorderList[index].muted
 				? MUTED_ICON
 				: MUTE_ICON
-		}"/></div>` +
-		`<div id='setting_drag_button${index}' class="setting_drag_button" draggable='true' ondragstart="drag(event,${index},true)" ondragend="dragAudioEnd(event, ${index})" ><img src="${DRAG_ICON}"/></div>`;
+		}"/></div>`;
 	$('#setting_audio_container' + index).append(
 		`<div class="setting_control_button_container">${settingButton}</div>`
 	);

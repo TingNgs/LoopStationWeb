@@ -416,24 +416,6 @@ $cb4_set: $cb4_1;*/
 	flex-wrap: wrap;
 	margin-left: 10px;
 	position: relative;
-	.setting_drag_button {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: 30%;
-		height: 30%;
-		border-radius: 99%;
-		border: 1px solid rgb(201, 201, 201);
-		background-color: $controller_bg;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		img {
-			width: 60%;
-			height: 60%;
-		}
-	}
 	.setting_control_button {
 		width: 50%;
 		height: 50%;
@@ -443,9 +425,13 @@ $cb4_set: $cb4_1;*/
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
 		img {
 			width: 60%;
 			height: 60%;
+			user-select: none;
+			margin: 0 auto;
+			pointer-events: none;
 		}
 	}
 }
