@@ -152,8 +152,6 @@ function setAnimation(x, time) {
 }
 function stopAnimation(x) {
 	$('#background_circle_content' + x).css('animation', '');
-	let element = document.getElementById('background_circle_content' + x);
-	element.classList.remove('content_box');
 }
 
 function hideAlert() {

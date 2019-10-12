@@ -19,7 +19,7 @@ function LoopFunction() {
 						j++
 					) {
 						if (!looperList[i].recorderList[j].instrument) {
-							looperList[i].recorderList[j].audio.pause();
+							looperList[i].recorderList[j].audio.stop();
 						}
 					}
 					looperList[i].looping = false;
@@ -139,6 +139,9 @@ function CheckEndLoop() {
 	}
 	if (endLoop) {
 		anyLooping = false;
+		for (let i = 0; i < looperList.length; i++) {
+			stopAnimation(i);
+		}
 		clearInterval(loopFunction);
 	}
 }

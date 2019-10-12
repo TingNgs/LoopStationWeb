@@ -19,7 +19,7 @@
 		height: 100%;
 		border-radius: 50%;
 		/* border: 5px solid transparent; */
-
+		background: $controller_bg;
 		// animation: rotateS 4s linear infinite;
 	}
 	@keyframes rotateB {
@@ -128,10 +128,6 @@
 	}
 }
 
-.recorder.setting .background_circle {
-	width: 50%;
-	padding-bottom: 50%;
-}
 @keyframes circleAnimate {
 	0% {
 		transform: rotate(0deg);
@@ -156,6 +152,29 @@
 			height: 30%;
 			z-index: 20;
 			left: 0;
+			.recorder {
+				.background_circle {
+					width: 100%;
+					padding-bottom: 100%;
+					.box {
+						width: 5px;
+						height: 5px;
+						top: 0px;
+						left: 5px;
+					}
+				}
+				&.setting .background_circle {
+					width: 70%;
+					padding-bottom: 70%;
+					.box {
+						width: 15px;
+						height: 15px;
+						top: -5px;
+						left: 0px;
+					}
+				}
+			}
+
 			button {
 				display: none;
 			}
@@ -187,6 +206,16 @@
 				.recorder {
 					width: 16.66%;
 					height: 100%;
+					.background_circle {
+						width: 100%;
+						padding-bottom: 100%;
+						.box {
+							width: 5px;
+							height: 5px;
+							top: 0px;
+							left: 5px;
+						}
+					}
 				}
 			}
 		}
