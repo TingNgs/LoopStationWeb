@@ -459,6 +459,7 @@ $cb4_set: $cb4_1;*/
 	canvas {
 		pointer-events: none;
 		width: 100% !important;
+		border: none !important;
 	}
 
 	.slider {
@@ -471,12 +472,13 @@ $cb4_set: $cb4_1;*/
 		height: 100%;
 		background: none;
 		outline: none;
+		border: none;
 	}
 
 	.slider::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-
+		border: none;
 		height: $wave_height;
 		background: rgba(128, 255, 185, 0);
 		cursor: pointer;
