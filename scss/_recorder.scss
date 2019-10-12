@@ -285,10 +285,10 @@
 			}
 		}
 		.st1 {
-			fill: $button-st1;
+			fill: $button-st1-active;
 		}
 		.st2 {
-			fill: $button-st2;
+			fill: $button-st2-active;
 		}
 	}
 	&.recorded {
@@ -298,10 +298,10 @@
 			}
 		}
 		.st1 {
-			fill: $button-st1;
+			fill: $button-st1-active;
 		}
 		.st2 {
-			fill: $button-st2;
+			fill: $button-st2-active;
 		}
 	}
 	&.waiting {
@@ -309,10 +309,10 @@
 			stop-color: $button-waiting;
 		}
 		.st1 {
-			fill: $button-st1;
+			fill: $button-st1-active;
 		}
 		.st2 {
-			fill: $button-st2;
+			fill: $button-st2-active;
 		}
 	}
 	&.looping {
@@ -320,10 +320,10 @@
 			stop-color: $button-looping;
 		}
 		.st1 {
-			fill: $button-st1;
+			fill: $button-st1-active;
 		}
 		.st2 {
-			fill: $button-st2;
+			fill: $button-st2-active;
 		}
 	}
 }
