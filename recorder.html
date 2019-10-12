@@ -10,7 +10,12 @@
 		draggable="true"
 		ondragstart="drag(event,{{ index }},false)"
 	></div>
-
-	<button onclick="OnClickReset({{ index }})">Reset</button>
-	<button onclick="OnClickSetting({{ index }})">Setting</button>
+	<div class="recorder_button_container">
+		<span class="main_screen_button" onclick="OnClickReset({{ index }})">
+			<img src="./svg/reset.svg" alt="" />Reset
+		</span>
+		<span class="main_screen_button" onclick="OnClickSetting({{ index }})">
+			<img src="./svg/setting.svg" alt="" />Setting
+		</span>
+	</div>
 </div>

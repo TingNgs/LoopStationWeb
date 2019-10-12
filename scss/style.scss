@@ -39,6 +39,30 @@ body {
 	}
 }
 .recorder {
+	display: flex;
+	flex-direction: column;
+	.recorder_button_container {
+		flex-grow: 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		.main_screen_button {
+			height: fit-content;
+			width: 8%;
+			display: inline-block;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			font-size: 1.5em;
+			color: $function_button;
+			img {
+				width: 100%;
+
+				margin-right: 10px;
+			}
+		}
+	}
 	background-color: rgba($color: #000000, $alpha: 0);
 	.controller_reocorder_top {
 		position: relative;
