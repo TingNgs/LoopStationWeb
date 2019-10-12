@@ -139,21 +139,21 @@ function ChangeMainButtonState(x, n) {
 	if (n == 4) document.getElementById(id).classList.add('looping');
 }
 
-async function setAnimation(x, time) {
-	$('#bg_circle_line' + x + '.line').css('animation', '');
-	let element = document.getElementById('bg_circle_line' + x);
-	element.classList.remove('line');
+function setAnimation(x, time) {
+	$('#background_circle_content' + x + '.content_box').css('animation', '');
+	let element = document.getElementById('background_circle_content' + x);
+	element.classList.remove('content_box');
 	void element.offsetWidth;
-	element.classList.add('line');
-	$('#bg_circle_line' + x + '.line').css(
+	element.classList.add('content_box');
+	$('#background_circle_content' + x + '.content_box').css(
 		'animation',
-		'circleAnimate ' + time + 's linear infinite'
+		'rotateS ' + time + 's linear infinite'
 	);
 }
 function stopAnimation(x) {
-	$('#bg_circle_line' + x).css('animation', '');
-	let element = document.getElementById('bg_circle_line' + x);
-	element.classList.remove('line');
+	$('#background_circle_content' + x).css('animation', '');
+	let element = document.getElementById('background_circle_content' + x);
+	element.classList.remove('content_box');
 }
 
 function hideAlert() {
