@@ -241,11 +241,18 @@ function SettingOnClickReset() {
 }
 
 function OnClickReset(x) {
+	if (recording && x === inputRecorder) {
+		showAlert("You can't reset while recording!");
+		return;
+	}
 	//Reset button for recorder
 	for (let j = 0; j < looperList[x].recorderList.length; j++) {
 		if (!looperList[x].recorderList[j].instrument) {
 			looperList[x].recorderList[j].audio.pause();
 		}
+	}
+	if (looperList[x].tempPlaying) {
+		tempAudio.stop();
 	}
 	stopAnimation(x);
 	looperList[x].Reset();
@@ -260,7 +267,6 @@ function drag(ev, n, isDragAudio) {
 }
 
 function dragAudioEnd(ev, n) {
-	console.log('end');
 	dragAudio = false;
 }
 function drop(ev, n) {
