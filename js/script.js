@@ -70,6 +70,11 @@ const iPadSafari =
 	!userAgent.match(/FxiOS/i) && // Rule out Firefox
 	!userAgent.match(/FocusiOS/i); // Eliminate Firefox Focus as well!
 
+function is_touch_device() {
+	return 'ontouchstart' in window;
+}
+
+const isTouchDevice = is_touch_device();
 function iOS() {
 	if (userAgent.match(/ipad|iphone|ipod/i)) {
 		const iOS = {};

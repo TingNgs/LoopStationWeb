@@ -43,7 +43,9 @@ function RenderDrumSet() {
 	let drumNum = display_drum.length;
 	for (let i = 0; i < drumNum; i++) {
 		$('#drum-pad').append(
-			'<div class="drum_container"><div class="drum" onmousedown="DrumOnMouseDown(' +
+			'<div class="drum_container"><div class="drum" ' +
+				`${isTouchDevice ? 'ontouchstart' : 'onmousedown'}` +
+				'="DrumOnMouseDown(' +
 				i +
 				')"><div class="text">' +
 				display_drum[i].key +

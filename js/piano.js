@@ -114,9 +114,11 @@ function RenderPianoKey(i) {
 	return (
 		'<div class="key ' +
 		display_keys[i].type +
-		'" onmousedown="PianoKeyOnMouseDown(' +
+		'"' +
+		`${isTouchDevice ? 'ontouchstart' : 'onmousedown'}` +
+		'="PianoKeyOnMouseDown(' +
 		i +
-		')"></div>'
+		')" ></div>'
 	);
 }
 
