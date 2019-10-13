@@ -49,69 +49,61 @@ function MainButtonStartRecord(x) {
 			rec.record();
 		}, timeouttTime - 1000);
 		setTimeout(function() {
-			//Start record 2 temp audio
 			tempRec.record();
-			if (RecordingTime > maxDuration) {
-				maxDuration = RecordingTime;
-				console.log('Max update  ' + maxDuration);
-			}
 			StopRecording(x);
 			PlayRecording(x);
 		}, timeouttTime);
 	} else {
 		setTimeout(function() {
-			StartListening();
+			StartListening(x);
 		}, timeouttTime - 1000);
 	}
 }
 
-function StartListening() {
+function StartListening(x) {
 	startListenTime = new Date().getTime();
-	listIndex = looperList[inputRecorder].recorderList.length;
-	looperList[inputRecorder].recorded = true;
+	listIndex = looperList[x].recorderList.length;
 	let instrument = GetInstrumentType();
-	looperList[inputRecorder].recorderList.push({
+	looperList[x].recorderList.push({
 		audioList: [],
 		startingTime: 1,
 		instrument,
 		muted: false
 	});
-	if (RecordingTime > maxDuration) {
-		maxDuration = RecordingTime;
-		console.log('Max update  ' + maxDuration);
-	}
-	looperList[inputRecorder].looping = true;
+	setTimeout(() => {
+		looperList[x].recorded = true;
+		looperList[x].looping = true;
+	}, looperList[x].dur + 500);
 	setTimeout(function() {
-		ChangeMainButtonState(inputRecorder, RECORDER_STATE.LOOPING);
+		ChangeMainButtonState(x, RECORDER_STATE.LOOPING);
 		if (!anyLooping) {
-			if (RecordingTime < minDuration) {
-				minDuration = RecordingTime;
+			if (looperList[x].dur < minDuration) {
+				minDuration = looperList[x].dur;
 			}
-			LoopFunction();
 			StartLooping();
 		} else {
-			if (RecordingTime < minDuration) {
-				minDuration = RecordingTime;
-				setTimeout(() => {
-					clearInterval(loopFunction);
-					LoopFunction();
-					StartLooping();
-				}, RecordingTime);
-			} else {
-				playingDur = 0;
+			if (looperList[x].dur < minDuration) {
+				minDuration = looperList[x].dur;
+				clearInterval(loopFunction);
+				StartLooping(minDuration);
 			}
+		}
+		if (looperList[x].dur > maxDuration) {
+			maxDuration = looperList[x].dur;
+			clearInterval(loopFunction);
+			StartLooping();
 		}
 		setTimeout(() => {
 			recording = false;
 		}, 1000);
-	}, RecordingTime + 1000);
+	}, looperList[x].dur + 1000);
 }
 
 function SetCircleTime(timeouttTime, x) {
 	setAnimation(x, timeouttTime / 1000);
 
 	setTimeout(() => {
-		setAnimation(x, RecordingTime / 1000);
+		setAnimation(x, looperList[x].dur / 1000);
 		ChangeMainButtonState(x, RECORDER_STATE.RECORDING);
 	}, timeouttTime);
 }
@@ -122,53 +114,57 @@ function StopRecording(x) {
 		tempRec.stop();
 		tempRec.getBuffer(getTempBufferCallback);
 		tempRec.clear();
-		looperList[x].recorded = true;
-		looperList[x].looping = true;
-	}, RecordingTime);
+	}, looperList[x].dur);
 	setTimeout(function() {
 		rec.stop();
 		rec.exportWAV(PushRecordingList);
 		rec.clear();
 		recording = false;
-		console.log('asd');
-	}, RecordingTime + 1000);
+	}, looperList[x].dur + 1000);
 }
 
 function PlayRecording(x) {
 	//Play the first half audio
 	setTimeout(() => {
 		ChangeMainButtonState(x, RECORDER_STATE.LOOPING);
-		setAnimation(x, RecordingTime / 1000);
+		setAnimation(x, looperList[x].dur / 1000);
 		looperList[x].tempPlaying = true;
+		looperList[x].recorded = true;
+		looperList[x].looping = true;
+		setTimeout(() => {
+			looperList[x].tempPlaying = false;
+		}, looperList[x].dur);
+
 		if (anyLooping) {
-			if (RecordingTime < minDuration) {
-				minDuration = RecordingTime;
+			if (looperList[x].dur > maxDuration) {
+				maxDuration = looperList[x].dur;
+				console.log('Max update  ' + maxDuration);
 				setTimeout(() => {
 					clearInterval(loopFunction);
-					LoopFunction();
 					StartLooping();
-				}, RecordingTime);
-			} else {
-				playingDur = 0;
+				}, looperList[x].dur);
+			}
+			if (looperList[x].dur < minDuration) {
+				setTimeout(() => {
+					minDuration = looperList[x].dur;
+					clearInterval(loopFunction);
+					StartLooping(minDuration * 2);
+				}, looperList[x].dur);
 			}
 		} else {
-			if (RecordingTime < minDuration) minDuration = RecordingTime;
-			StartLooping();
-			playingDur += minDuration;
-			if (playingDur >= maxDuration) playingDur = 0;
+			if (looperList[x].dur > maxDuration) {
+				maxDuration = looperList[x].dur;
+				console.log('Max update  ' + maxDuration);
+			}
+			setTimeout(() => {
+				if (looperList[x].dur < minDuration) {
+					minDuration = looperList[x].dur;
+				}
+				StartLooping();
+			}, looperList[x].dur);
 		}
-	}, RecordingTime);
-
-	//Play the full audio
-	setTimeout(() => {
-		looperList[x].tempPlaying = false;
-		for (var i = 0; i < looperList[x].recorderList.length; i++) {
-			looperList[x].recorderList[i].audio.seek(
-				looperList[x].recorderList[i].startingTime
-			);
-			looperList[x].recorderList[i].audio.mute(false);
-		}
-	}, RecordingTime * 2);
+		anyLooping = true;
+	}, looperList[x].dur);
 }
 
 //Calculate the timeout time if any looping before record
@@ -193,7 +189,8 @@ function GetRecordTimeout() {
 		if (timeout < 1000) timeout += tempMax;
 	} else {
 		timeout = tempMax - (new Date().getTime() - loopStartTime);
-		if (isLoopingShorter) {
+		if (timeout < 1000) timeout += tempMax;
+		/*if (isLoopingShorter) {
 			if (timeout < 1000) timeout += tempMax;
 		} else {
 			if (timeout < 1000) timeout += RecordingTime;
@@ -202,7 +199,7 @@ function GetRecordTimeout() {
 					timeout -= RecordingTime;
 				}
 			}
-		}
+		}*/
 	}
 	return timeout;
 }

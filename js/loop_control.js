@@ -1,19 +1,19 @@
-function StartLooping() {
+function StartLooping(tempDur = 0) {
 	anyLooping = true;
+	playingDur = tempDur;
+	loopStartTime = new Date().getTime() - tempDur;
+	LoopFunction();
 	loopFunction = setInterval(() => {
 		LoopFunction();
 	}, minDuration);
 }
 function LoopFunction() {
+	if (playingDur >= maxDuration) playingDur = 0;
 	if (playingDur == 0) {
 		loopStartTime = new Date().getTime();
 	}
-
-	playingDur += minDuration;
-	if (playingDur >= maxDuration) playingDur = 0;
 	for (let i = 0; i < 6; i++) {
 		if (looperList[i].recorded && playingDur % looperList[i].dur == 0) {
-			console.log(playingDur);
 			setAnimation(i, looperList[i].dur / 1000);
 			if (looperList[i].looping) {
 				if (looperList[i].ending) {
@@ -112,6 +112,7 @@ function LoopFunction() {
 			}
 		}
 	}
+	playingDur += minDuration;
 }
 function MainButtonLoopControl(x) {
 	if (looperList[x].looping) {
@@ -127,7 +128,6 @@ function MainButtonLoopControl(x) {
 			}
 		}
 		if (!anyLooping) {
-			LoopFunction();
 			StartLooping();
 		}
 	}
