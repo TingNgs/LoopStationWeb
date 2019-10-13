@@ -2,7 +2,7 @@ const COPY_ICON = './svg/copy.svg';
 const DELETE_ICON = './svg/delete.svg';
 const DOWNLOAD_ICON = './svg/download.svg';
 const MUTE_ICON = './svg/mute.svg';
-const MUTED_ICON = './svg/MUTED.svg';
+const MUTED_ICON = './svg/muted.svg';
 const DRUM_ICON = './svg/drum.svg';
 const DRAG_ICON = './svg/drag.svg';
 
