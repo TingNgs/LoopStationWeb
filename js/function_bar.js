@@ -1,7 +1,7 @@
 var page = 2;
 var pageLoad = [false, false];
 function FunctionBarOnClick(n) {
-	if ((n === 2 || n === 3 || n === 4) && recording) {
+	if (n > 1 && recording) {
 		showAlert("You can't change page while recording");
 		return;
 	}
@@ -14,14 +14,14 @@ function FunctionBarOnClick(n) {
 		$('#full-screen-entry').addClass('hide');
 		$('#full-screen-exit').removeClass('hide');
 	}
-	$('#main-function').addClass('hide');
+	$('.main-function').addClass('hide');
 	$('#back-function').addClass('hide');
 	$('#timing-function').addClass('hide');
 	if (n == 1) {
 		$('#timing-function').removeClass('hide');
 		$('#back-function').removeClass('hide');
 	} else {
-		$('#main-function').removeClass('hide');
+		$('.main-function').removeClass('hide');
 	}
 	if (page == n) {
 		return;
@@ -39,6 +39,9 @@ function FunctionBarOnClick(n) {
 	if (n == 4) {
 		SetDrum();
 		page = n;
+	}
+	if (n == 5) {
+		ShowDownloadPage();
 	}
 }
 

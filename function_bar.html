@@ -21,7 +21,7 @@
 		</ul>
 	</div>
 
-	<div id="main-function" class="function">
+	<div class="main-function function">
 		<ul>
 			<li onclick="FunctionBarOnClick(1)">
 				<img src="./svg/time_btn.svg" alt="" />
@@ -38,11 +38,32 @@
 		</ul>
 	</div>
 	<div class="time_text">
-		<svg viewBox="-25 -15 40 40" width="100%">
-			<text id="textid" x="0" y="0">5</text>
+		<svg
+			viewBox="-20 -20 30 30"
+			width="100%"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<defs>
+				<style>
+					@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i');
+				</style>
+			</defs>
+			<style>
+				<![CDATA[svg text{stroke:none}]]>
+			</style>
+
+			<text id="textid" font-family="Roboto" x="0" y="0">
+				3
+			</text>
 		</svg>
 	</div>
-
+	<div class="main-function function">
+		<ul>
+			<li onclick="FunctionBarOnClick(5)">
+				<img src="./svg/download.svg" alt="" />
+			</li>
+		</ul>
+	</div>
 	<div id="timing-function" class="function hide">
 		<ul>
 			<li onclick="OnClickTimingFunction(2)">

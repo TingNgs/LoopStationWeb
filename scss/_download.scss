@@ -1,0 +1,57 @@
+@import './_color';
+
+#recorder_download {
+	.recorder_download_container {
+		width: 90%;
+		height: 80%;
+		background-color: $controller_bg;
+		border-radius: 8px;
+		padding: 20px;
+		overflow: auto;
+	}
+	.download_top_button_container {
+		width: 100%;
+		display: flex;
+		flex-direction: row-reverse;
+		margin-bottom: 20px;
+		.recorder_download_button {
+			height: fit-content;
+			padding: 10px 0;
+			width: 20%;
+			border-radius: 5px;
+			background-color: $button-st2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: white;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	}
+	.download_record_row {
+		width: 100%;
+		height: $wave_height/2;
+		display: flex;
+		p {
+			color: $function_button;
+			font-size: 1.5em;
+			padding: 10px 0;
+		}
+		.download_wave {
+			flex-grow: 1;
+			pointer-events: none;
+		}
+		.download_button_container {
+			height: 100%;
+			width: $wave_height/2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			img {
+				width: 60%;
+				height: 60%;
+				cursor: pointer;
+			}
+		}
+	}
+}

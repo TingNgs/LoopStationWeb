@@ -1,12 +1,12 @@
 const COPY_ICON = './svg/copy.svg';
 const DELETE_ICON = './svg/delete.svg';
-const DOWNLOAD_ICON = './svg/download.svg';
+
 const MUTE_ICON = './svg/mute.svg';
 const MUTED_ICON = './svg/muted.svg';
 const DRUM_ICON = './svg/drum.svg';
 const DRAG_ICON = './svg/drag.svg';
 
-async function OnClickSetting(x) {
+function OnClickSetting(x) {
 	$('#recorder_setting').removeClass('hide');
 	$('#record_control').addClass('setting');
 	$('#recorder' + x).addClass('setting');
@@ -232,17 +232,6 @@ function MuteRecording(x, index) {
 				looperList[x].recorderList[index].muted
 			);
 		}
-	}
-}
-
-function DownloadRecording(x, index) {
-	if (!looperList[x].recorderList[index].instrument) {
-		var a = document.createElement('a');
-		var url = looperList[x].recorderList[index].audio._src;
-		var filename = 'myfile.wav';
-		a.href = url;
-		a.download = filename;
-		a.click();
 	}
 }
 
