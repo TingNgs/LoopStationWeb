@@ -12,100 +12,71 @@ function LoopFunction() {
 	if (playingDur == 0) {
 		loopStartTime = new Date().getTime();
 	}
+	CheckEndLoop();
 	for (let i = 0; i < 6; i++) {
 		if (looperList[i].recorded && playingDur % looperList[i].dur == 0) {
-			setAnimation(i, looperList[i].dur / 1000);
 			if (looperList[i].looping) {
-				if (looperList[i].ending) {
-					for (
-						let j = 0;
-						j < looperList[i].recorderList.length;
-						j++
-					) {
-						if (!looperList[i].recorderList[j].instrument) {
-							looperList[i].recorderList[j].audio.stop();
-						}
-					}
-					looperList[i].looping = false;
-					looperList[i].ending = false;
-					ChangeMainButtonState(i, RECORDER_STATE.RECORDED);
-					CheckEndLoop();
-				} else {
-					ChangeMainButtonState(i, RECORDER_STATE.LOOPING);
-					for (
-						let j = 0;
-						j < looperList[i].recorderList.length;
-						j++
-					) {
-						if (looperList[i].recorderList[j].instrument) {
-							for (
-								let k = 0;
-								k <
-								looperList[i].recorderList[j].audioList.length;
-								k++
-							) {
-								if (
-									looperList[i].recorderList[j].audioList[k]
-										.time >
-										looperList[i].recorderList[j]
-											.startingTime *
-											1000 &&
-									looperList[i].recorderList[j].audioList[k]
-										.time <
-										looperList[i].recorderList[j]
-											.startingTime *
-											1000 +
-											looperList[i].dur
-								) {
-									setTimeout(() => {
-										looperList[i].recorderList[j].audioList[
-											k
-										].audio.seek(0);
-										looperList[i].recorderList[j].audioList[
-											k
-										].audio.play();
-									}, looperList[i].recorderList[j].audioList[k].time - looperList[i].recorderList[j].startingTime * 1000);
-								}
-							}
-						} else {
+				setAnimation(i, looperList[i].dur / 1000);
+				ChangeMainButtonState(i, RECORDER_STATE.LOOPING);
+				for (let j = 0; j < looperList[i].recorderList.length; j++) {
+					if (looperList[i].recorderList[j].instrument) {
+						for (
+							let k = 0;
+							k < looperList[i].recorderList[j].audioList.length;
+							k++
+						) {
 							if (
-								looperList[i].recorderList[j].startingTime < 0
+								looperList[i].recorderList[j].audioList[k]
+									.time >
+									looperList[i].recorderList[j].startingTime *
+										1000 &&
+								looperList[i].recorderList[j].audioList[k]
+									.time <
+									looperList[i].recorderList[j].startingTime *
+										1000 +
+										looperList[i].dur
 							) {
-								if (
-									looperList[i].recorderList[j]
-										.startingTime !=
-									-looperList[i].dur / 1000
-								) {
-									let timeout =
-										looperList[i].recorderList[j]
-											.startingTime * 1000;
+								setTimeout(() => {
+									looperList[i].recorderList[j].audioList[
+										k
+									].audio.seek(0);
+									looperList[i].recorderList[j].audioList[
+										k
+									].audio.play();
+								}, looperList[i].recorderList[j].audioList[k].time - looperList[i].recorderList[j].startingTime * 1000);
+							}
+						}
+					} else {
+						if (looperList[i].recorderList[j].startingTime < 0) {
+							if (
+								looperList[i].recorderList[j].startingTime !=
+								-looperList[i].dur / 1000
+							) {
+								let timeout =
+									looperList[i].recorderList[j].startingTime *
+									1000;
+								setTimeout(() => {
+									looperList[i].recorderList[j].audio.mute(
+										looperList[i].recorderList[j].muted
+									);
+									looperList[i].recorderList[j].audio.seek(0);
 									setTimeout(() => {
 										looperList[i].recorderList[
 											j
-										].audio.mute(
-											looperList[i].recorderList[j].muted
-										);
-										looperList[i].recorderList[
-											j
-										].audio.seek(0);
-										setTimeout(() => {
-											looperList[i].recorderList[
-												j
-											].audio.mute(true);
-										}, looperList[i].dur + timeout);
-									}, -timeout);
-								}
-							} else if (
-								looperList[i].recorderList[j].startingTime !=
-								looperList[i].dur / 1000 + 2
-							) {
-								looperList[i].recorderList[j].audio.mute(
-									looperList[i].recorderList[j].muted
-								);
-								looperList[i].recorderList[j].audio.seek(
-									looperList[i].recorderList[j].startingTime
-								);
+										].audio.mute(true);
+									}, looperList[i].dur + timeout);
+								}, -timeout);
 							}
+						} else if (
+							looperList[i].recorderList[j].startingTime !=
+							looperList[i].dur / 1000 + 2
+						) {
+							looperList[i].recorderList[j].audio.mute(
+								looperList[i].recorderList[j].muted
+							);
+							looperList[i].recorderList[j].audio.seek(
+								looperList[i].recorderList[j].startingTime
+							);
 						}
 					}
 				}
@@ -116,7 +87,18 @@ function LoopFunction() {
 }
 function MainButtonLoopControl(x) {
 	if (looperList[x].looping) {
-		looperList[x].ending = true;
+		if (looperList[x].tempPlaying) {
+			tempAudio.stop();
+			looperList[x].tempPlaying = false;
+		}
+		for (let j = 0; j < looperList[x].recorderList.length; j++) {
+			if (!looperList[x].recorderList[j].instrument) {
+				looperList[x].recorderList[j].audio.stop();
+			}
+		}
+		looperList[x].looping = false;
+		ChangeMainButtonState(x, RECORDER_STATE.RECORDED);
+		CheckEndLoop();
 	} else {
 		looperList[x].looping = true;
 		if (!looperList[x].instrument) {

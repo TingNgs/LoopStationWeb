@@ -115,7 +115,7 @@ function RenderPianoKey(i) {
 		'<div class="key ' +
 		display_keys[i].type +
 		'"' +
-		`${isTouchDevice ? 'ontouchstart' : 'onmousedown'}` +
+		`${'onclick'}` +
 		'="PianoKeyOnMouseDown(' +
 		i +
 		')" ></div>'
@@ -140,7 +140,7 @@ function RenderPianoKeySet() {
 
 function PianoKeyOnMouseDown(i) {
 	PianoAudioList[i].seek(0);
-	PianoAudioList[i].load();
+
 	PianoAudioList[i].play();
 	if (recording) {
 		let time = new Date().getTime() - startListenTime;

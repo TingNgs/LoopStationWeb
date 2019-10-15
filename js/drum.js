@@ -44,7 +44,7 @@ function RenderDrumSet() {
 	for (let i = 0; i < drumNum; i++) {
 		$('#drum-pad').append(
 			'<div class="drum_container"><div class="drum" ' +
-				`${isTouchDevice ? 'ontouchstart' : 'onmousedown'}` +
+				`${'onclick'}` +
 				'="DrumOnMouseDown(' +
 				i +
 				')"><div class="text">' +
@@ -58,7 +58,7 @@ function RenderDrumSet() {
 
 function DrumOnMouseDown(i) {
 	DrumAudioList[i].seek(0);
-	DrumAudioList[i].load();
+
 	DrumAudioList[i].play();
 	if (recording) {
 		let time = new Date().getTime() - startListenTime;
