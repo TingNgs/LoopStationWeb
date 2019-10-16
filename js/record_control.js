@@ -3,6 +3,12 @@ function OnClickTimingFunction(n) {
 		showAlert("You can't set time while recording");
 		return;
 	}
+	for (let i = 0; i < 6; i++) {
+		if (looperList[i].recorded && (n == 0 || n == 1)) {
+			showAlert('You can only times or divide after recorded');
+			return;
+		}
+	}
 	let temp;
 	if (n == 0) temp = RecordingTime + 100;
 	if (n == 1) temp = RecordingTime - 100;
