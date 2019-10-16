@@ -1,86 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<link
+			rel="shortcut icon"
+			type="image/x-icon"
+			href="./images/icons/icon.png"
+		/>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Sound Looper</title>
+		<link rel="stylesheet" href="src/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<!-- CODELAB: Add iOS meta tags and icons -->
 
-<head>
-	<link rel="shortcut icon" type="image/x-icon" href="./images/icons/icon.png" />
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="viewport" content="width=device-width,user-scalable=no" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Sound Looper</title>
-	<link rel="stylesheet" href="src/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<!-- CODELAB: Add iOS meta tags and icons -->
+		<!-- CODELAB: Add description here -->
+		<meta name="description" content="SoundLooper app" />
+		<!-- CODELAB: Add meta theme-color -->
+		<meta name="theme-color" content="#2196f3" />
+	</head>
 
-	<!-- CODELAB: Add description here -->
-	<meta name="description" content="SoundLooper app" />
-	<!-- CODELAB: Add meta theme-color -->
-	<meta name="theme-color" content="#2196f3" />
-</head>
+	<body>
+		<style data="waveform_data" type="text/css"></style>
 
-<body>
-	<style data="waveform_data" type="text/css"></style>
-
-	<div id="controller" class="container-fluid">
-		<div id="alert" class="hide"></div>
-		<div id="recorder_setting" class="fixed_center hide">
-			<div class="recorder_setting_bg">
-				<div class="recorder_setting_container">
-					<div class="setting_top_button_container">
-						<span class="recorder_setting_button" onclick="SettingOnClickReset()">RESET</span>
-						<span class="recorder_setting_button" onclick="OnClickSettingCross()">CLOSE</span>
-					</div>
-					<div id="setting_record_container"></div>
-				</div>
-			</div>
-		</div>
-		<div id="tips" class="fixed_center hide"></div>
-		<div id="tips-icon">
-			<img onclick="OnClickToggleTips()" src="./svg/tip.svg" alt="" />
-		</div>
-		<div id="recorder_download" class="fixed_center hide">
-			<div class="recorder_download_container">
-				<div class="download_top_button_container">
-					<span class="recorder_download_button" onclick="OnClickDownloadCross()">CLOSE</span>
-				</div>
-				<div id="download_record_container"></div>
-			</div>
-		</div>
-		<div id="loading_spinner" class="lds-ring fixed_center hide">
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-		</div>
-		<div id="controller_row" class="row">
-			<div id="function_bar" class="col-1"></div>
-			<div class="col-11">
-				<div id="main">
-					<div id="instrument"></div>
-					<div id="record_control">
-						<div id="recorder_row"></div>
+		<div id="controller" class="container-fluid">
+			<div id="alert" class="hide"></div>
+			<div id="recorder_setting" class="fixed_center hide">
+				<div class="recorder_setting_bg">
+					<div class="recorder_setting_container">
+						<div class="setting_top_button_container">
+							<span
+								class="recorder_setting_button"
+								onclick="SettingOnClickReset()"
+								>RESET</span
+							>
+							<span
+								class="recorder_setting_button"
+								onclick="OnClickSettingCross()"
+								>CLOSE</span
+							>
+						</div>
+						<div id="setting_record_container"></div>
 					</div>
 				</div>
 			</div>
+			<div id="tips" class="fixed_center hide"></div>
+			<div id="tips-icon">
+				<img onclick="OnClickToggleTips()" src="./svg/tip.svg" alt="" />
+			</div>
+			<div id="recorder_download" class="fixed_center hide">
+				<div class="recorder_download_container">
+					<div class="download_top_button_container">
+						<span
+							class="recorder_download_button"
+							onclick="OnClickDownloadCross()"
+							>CLOSE</span
+						>
+					</div>
+					<div id="download_record_container"></div>
+				</div>
+			</div>
+			<div id="loading_spinner" class="lds-ring fixed_center hide">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+			<div id="controller_row" class="row">
+				<div id="function_bar" class="col-1"></div>
+				<div class="col-11">
+					<div id="main">
+						<div id="instrument"></div>
+						<div id="record_control">
+							<div id="recorder_row"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-	<div id="audio_list" class="hide"></div>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"></script>
-<script src="src/wavesurfer.js"></script>
-<script src="src/jquery.js"></script>
-<script src="src/popper.min.js"></script>
-<script src="src/bootstrap.min.js"></script>
-<script src="src/recorder.js"></script>
-<script src="js/looper.js"></script>
-<script src="js/script.js"></script>
-<script src="js/loop_control.js"></script>
-<script src="js/record_control.js"></script>
-<script src="js/record_setting.js"></script>
-<script src="js/download.js"></script>
-<script src="js/function_bar.js"></script>
-<script src="js/piano.js"></script>
-<script src="js/drum.js"></script>
-<script src="js/tips.js"></script>
-
+		<div id="audio_list" class="hide"></div>
+	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"></script>
+	<script src="src/wavesurfer.js"></script>
+	<script src="src/jquery.js"></script>
+	<script src="src/popper.min.js"></script>
+	<script src="src/bootstrap.min.js"></script>
+	<script src="src/recorder.js"></script>
+	<script src="js/looper.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/loop_control.js"></script>
+	<script src="js/record_control.js"></script>
+	<script src="js/record_setting.js"></script>
+	<script src="js/download.js"></script>
+	<script src="js/function_bar.js"></script>
+	<script src="js/piano.js"></script>
+	<script src="js/drum.js"></script>
 </html>

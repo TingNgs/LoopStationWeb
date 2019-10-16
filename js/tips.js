@@ -1,46 +1,50 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function($) {
+	$('#checkbox').change(function() {
+		setInterval(function() {
+			moveRight();
+		}, 3000);
+	});
 
-    $('#checkbox').change(function () {
-        setInterval(function () {
-            moveRight();
-        }, 3000);
-    });
+	var slideCount = $('#slider ul li').length;
+	var slideWidth = $('#slider ul li').width();
+	var slideHeight = $('#slider ul li').height();
 
-    var slideCount = $('#slider ul li').length;
-    var slideWidth = $('#slider ul li').width();
-    var slideHeight = $('#slider ul li').height();
-    var sliderUlWidth = slideCount * slideWidth;
+	var sliderUlWidth = slideCount * slideWidth;
 
-    $('#slider').css({ width: slideWidth, height: slideHeight });
+	$('#slider ul li:last-child').prependTo('#slider ul');
 
-    $('#slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
+	function moveLeft() {
+		console.log($('#slider ul li').width());
+		$('#slider ul').animate(
+			{
+				left: +$('#slider ul li').width()
+			},
+			200,
+			function() {
+				$('#slider ul li:last-child').prependTo('#slider ul');
+				$('#slider ul').css('left', '');
+			}
+		);
+	}
 
-    $('#slider ul li:last-child').prependTo('#slider ul');
+	function moveRight() {
+		$('#slider ul').animate(
+			{
+				left: -$('#slider ul li').width()
+			},
+			200,
+			function() {
+				$('#slider ul li:first-child').appendTo('#slider ul');
+				$('#slider ul').css('left', '');
+			}
+		);
+	}
 
-    function moveLeft() {
-        $('#slider ul').animate({
-            left: + slideWidth
-        }, 200, function () {
-            $('#slider ul li:last-child').prependTo('#slider ul');
-            $('#slider ul').css('left', '');
-        });
-    };
+	$('a.control_prev').click(function() {
+		moveLeft();
+	});
 
-    function moveRight() {
-        $('#slider ul').animate({
-            left: - slideWidth
-        }, 200, function () {
-            $('#slider ul li:first-child').appendTo('#slider ul');
-            $('#slider ul').css('left', '');
-        });
-    };
-
-    $('a.control_prev').click(function () {
-        moveLeft();
-    });
-
-    $('a.control_next').click(function () {
-        moveRight();
-    });
-
+	$('a.control_next').click(function() {
+		moveRight();
+	});
 });

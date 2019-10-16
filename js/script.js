@@ -5,7 +5,9 @@ $(function() {
 
 		timingText.setAttribute('x', (timingText.textContent.length - 1) * 3);
 	});
-	$('#tips').load('tips.html');
+	$('#tips').load('tips.html', function() {
+		$.getScript('js/tips.js');
+	});
 	InitController();
 	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
 		audioContext = new AudioContext();
