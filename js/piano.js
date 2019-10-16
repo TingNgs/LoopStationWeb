@@ -115,11 +115,15 @@ function RenderPianoKey(i) {
 		'<div class="key ' +
 		display_keys[i].type +
 		'"' +
-		`${'onclick'}` +
+		`${isTouchDevice ? 'ontouchstart' : 'onclick'}` +
 		'="PianoKeyOnMouseDown(' +
 		i +
-		')" ></div>'
+		')"></div>'
 	);
+}
+
+function touchPreventDefault(e) {
+	e.preventDefault();
 }
 
 function RenderPianoKeySet() {
@@ -133,7 +137,11 @@ function RenderPianoKeySet() {
 			}
 		}
 		$('#piano_keyboard').append(
-			'<div class="key_set">' + keyElement + '</div>'
+			'<div class="key_set' +
+				`${isTouchDevice ? ' touch' : ''}` +
+				'">' +
+				keyElement +
+				'<div class="scrollTouch"></div></div>'
 		);
 	}
 }

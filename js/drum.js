@@ -44,7 +44,7 @@ function RenderDrumSet() {
 	for (let i = 0; i < drumNum; i++) {
 		$('#drum-pad').append(
 			'<div class="drum_container"><div class="drum" ' +
-				`${'onclick'}` +
+				`${isTouchDevice ? 'ontouchstart' : 'onclick'}` +
 				'="DrumOnMouseDown(' +
 				i +
 				')"><div class="text">' +
