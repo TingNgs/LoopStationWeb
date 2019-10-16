@@ -10,7 +10,10 @@ $(function() {
 	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
 		audioContext = new AudioContext();
 		input = audioContext.createMediaStreamSource(stream);
-		rec = new Recorder(input, { numChannels: 2 });
+		rec = [
+			new Recorder(input, { numChannels: 2 }),
+			new Recorder(input, { numChannels: 2 })
+		];
 		tempRec = new Recorder(input, { numChannels: 2 });
 		tempRec2 = new Recorder(input, { numChannels: 2 });
 	});
@@ -90,6 +93,7 @@ function iOS() {
 var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 var constraints = { audio: true, video: false };
 var rec;
+var useRecorder = 1;
 var tempRec, tempRec2;
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext; //audio context to help us record

@@ -42,11 +42,11 @@ function MainButtonStartRecord(x) {
 		timeouttTime = GetRecordTimeout();
 	}
 	SetCircleTime(timeouttTime, x);
-
+	useRecorder = useRecorder ? 0 : 1;
 	if (page == 2) {
 		//start record audio that will push to the list (add 1 second at the head and tail)
 		setTimeout(function() {
-			rec.record();
+			rec[useRecorder].record();
 		}, timeouttTime - 1000);
 		setTimeout(function() {
 			tempRec.record();
@@ -101,7 +101,6 @@ function StartListening(x) {
 
 function SetCircleTime(timeouttTime, x) {
 	setAnimation(x, timeouttTime / 1000);
-
 	setTimeout(() => {
 		setAnimation(x, looperList[x].dur / 1000);
 		ChangeMainButtonState(x, RECORDER_STATE.RECORDING);
@@ -116,9 +115,9 @@ function StopRecording(x) {
 		tempRec.clear();
 	}, looperList[x].dur);
 	setTimeout(function() {
-		rec.stop();
-		rec.exportWAV(PushRecordingList);
-		rec.clear();
+		rec[useRecorder].stop();
+		rec[useRecorder].exportWAV(blob => PushRecordingList(blob, x));
+		rec[useRecorder].clear();
 		recording = false;
 	}, looperList[x].dur + 1000);
 }
@@ -219,7 +218,7 @@ function getTempBufferCallback(buffers) {
 	tempAudio.start(0);
 }
 
-function PushRecordingList(blob) {
+function PushRecordingList(blob, x) {
 	recordingAudio = new Howl({
 		src: [URL.createObjectURL(blob)],
 		format: ['wav'],
@@ -227,18 +226,22 @@ function PushRecordingList(blob) {
 		autoplay: true,
 		mute: true
 	});
-	recordingAudio.on('end', () => {
-		recordingAudio.mute(true);
-	});
+
 	recordingAudio.play();
-	looperList[inputRecorder].startingLoop = true;
-	looperList[inputRecorder].recorderList.push({
-		audio: recordingAudio,
-		startingTime: 1,
-		instrument: false,
-		muted: false
+	let tempIndex =
+		looperList[x].recorderList.push({
+			audio: recordingAudio,
+			startingTime: 1,
+			instrument: false,
+			muted: false
+		}) - 1;
+	looperList[x].recorderList[tempIndex].audio.on('end', () => {
+		looperList[x].recorderList[tempIndex].audio.mute(true);
+		if (!looperList[x].looping) {
+			looperList[x].recorderList[tempIndex].audio.stop();
+		}
 	});
-	if (inputRecorder == settingRecorder) {
+	if (x == settingRecorder) {
 		loadSettingPage(settingRecorder);
 	}
 }

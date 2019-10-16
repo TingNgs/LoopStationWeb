@@ -1,4 +1,5 @@
 function StartLooping(tempDur = 0) {
+	if (CheckEndLoop()) return;
 	anyLooping = true;
 	playingDur = tempDur;
 	loopStartTime = new Date().getTime() - tempDur;
@@ -12,7 +13,6 @@ function LoopFunction() {
 	if (playingDur == 0) {
 		loopStartTime = new Date().getTime();
 	}
-	CheckEndLoop();
 	for (let i = 0; i < 6; i++) {
 		if (looperList[i].recorded && playingDur % looperList[i].dur == 0) {
 			if (looperList[i].looping) {
@@ -96,10 +96,12 @@ function MainButtonLoopControl(x) {
 				looperList[x].recorderList[j].audio.stop();
 			}
 		}
+		stopAnimation(x);
 		looperList[x].looping = false;
 		ChangeMainButtonState(x, RECORDER_STATE.RECORDED);
 		CheckEndLoop();
 	} else {
+		ChangeMainButtonState(x, RECORDER_STATE.WAITING);
 		looperList[x].looping = true;
 		if (!looperList[x].instrument) {
 			for (let j = 0; j < looperList[x].recorderList.length; j++) {
@@ -122,11 +124,10 @@ function CheckEndLoop() {
 	}
 	if (endLoop) {
 		anyLooping = false;
-		for (let i = 0; i < looperList.length; i++) {
-			stopAnimation(i);
-		}
 		clearInterval(loopFunction);
+		return true;
 	}
+	return false;
 }
 
 //Calculate the timeout time if any looping before record
