@@ -2,14 +2,13 @@ jQuery(document).ready(function ($) {
     var slideCount = $('#slider ul li').length;
     var slideWidth = $('#slider ul li').width();
     var slideHeight = $('#slider ul li').height();
-    var index = 0, total = slideCount;
+
     var sliderUlWidth = slideCount * slideWidth;
 
-
     $('#slider ul li:first-child').prependTo('#slider ul');
-
+    $('#slider ul li:first-child').prependTo('#slider ul');
     function moveLeft() {
-
+        console.log($('#slider ul li').width());
         $('#slider ul').animate(
             {
                 left: +$('#slider ul li').width()
@@ -35,27 +34,11 @@ jQuery(document).ready(function ($) {
         );
     }
 
-    page = 1;
-    document.querySelector('.counter').innerHTML = (page) + ' of ' + total;
     $('a.control_prev').click(function () {
         moveLeft();
-        page--;
-        if (page == 0) {
-            page = 10;
-        }
-        document.querySelector('.counter').innerHTML = (page) + ' of ' + total;
-
     });
 
     $('a.control_next').click(function () {
         moveRight();
-        page++;
-        if (page == 11) {
-            page = 1;
-        }
-        document.querySelector('.counter').innerHTML = (page) + ' of ' + total;
     });
-
-
-
 });
