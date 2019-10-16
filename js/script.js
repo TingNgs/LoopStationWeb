@@ -5,6 +5,7 @@ $(function() {
 
 		timingText.setAttribute('x', (timingText.textContent.length - 1) * 3);
 	});
+	$('#tips').load('tips.html');
 	InitController();
 	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
 		audioContext = new AudioContext();
@@ -167,4 +168,8 @@ function showAlert(alertMessage) {
 	$('#alert').html(alertMessage);
 	$('#alert').removeClass('hide');
 	setTimeout(hideAlert, 3000);
+}
+
+function OnClickToggleTips() {
+	$('#tips').toggleClass('hide');
 }
