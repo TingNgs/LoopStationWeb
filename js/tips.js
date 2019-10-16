@@ -6,7 +6,7 @@ jQuery(document).ready(function ($) {
     var sliderUlWidth = slideCount * slideWidth;
 
     $('#slider ul li:first-child').prependTo('#slider ul');
-
+    $('#slider ul li:first-child').prependTo('#slider ul');
     function moveLeft() {
         console.log($('#slider ul li').width());
         $('#slider ul').animate(

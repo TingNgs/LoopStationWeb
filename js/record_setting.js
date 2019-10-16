@@ -254,10 +254,28 @@ function OnClickReset(x) {
 	if (looperList[x].tempPlaying) {
 		tempAudio.stop();
 	}
+	if (looperList[x].dur == minDuration) {
+		updateMin = true;
+	}
+	if (looperList[x].dur == maxDuration) {
+		updateMax = true;
+	}
+	console.log(looperList[x].dur, minDuration);
 	stopAnimation(x);
 	looperList[x].Reset();
 	ChangeMainButtonState(x, RECORDER_STATE.EMPTY);
-	CheckEndLoop();
+
+	if (CheckEndLoop()) {
+		console.log(updateMin);
+		if (updateMin) {
+			minDuration = findMinDur();
+			updateMin = false;
+		}
+		if (updateMax) {
+			maxDuration = findMaxDur();
+			updateMax = false;
+		}
+	}
 }
 
 function drag(ev, n, isDragAudio) {
