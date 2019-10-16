@@ -49,7 +49,7 @@ function MainButtonStartRecord(x) {
 			rec[useRecorder].record();
 		}, timeouttTime - 1000);
 		setTimeout(function() {
-			tempRec.record();
+			tempRec[useRecorder].record();
 			StopRecording(x);
 			PlayRecording(x);
 		}, timeouttTime);
@@ -110,9 +110,9 @@ function SetCircleTime(timeouttTime, x) {
 function StopRecording(x) {
 	//Stop record of each audio
 	setTimeout(() => {
-		tempRec.stop();
-		tempRec.getBuffer(getTempBufferCallback);
-		tempRec.clear();
+		tempRec[useRecorder].stop();
+		tempRec[useRecorder].getBuffer(getTempBufferCallback);
+		tempRec[useRecorder].clear();
 	}, looperList[x].dur);
 	setTimeout(function() {
 		rec[useRecorder].stop();
@@ -139,12 +139,14 @@ function PlayRecording(x) {
 				maxDuration = looperList[x].dur;
 				console.log('Max update  ' + maxDuration);
 				setTimeout(() => {
+					if (!looperList[x].recorded) return;
 					clearInterval(loopFunction);
 					StartLooping();
 				}, looperList[x].dur);
 			}
 			if (looperList[x].dur < minDuration) {
 				setTimeout(() => {
+					if (!looperList[x].recorded) return;
 					minDuration = looperList[x].dur;
 					clearInterval(loopFunction);
 					StartLooping(minDuration * 2);
@@ -156,6 +158,7 @@ function PlayRecording(x) {
 				console.log('Max update  ' + maxDuration);
 			}
 			setTimeout(() => {
+				if (!looperList[x].recorded) return;
 				if (looperList[x].dur < minDuration) {
 					minDuration = looperList[x].dur;
 				}
@@ -219,7 +222,7 @@ function getTempBufferCallback(buffers) {
 }
 
 function PushRecordingList(blob, x) {
-	recordingAudio = new Howl({
+	let recordingAudio = new Howl({
 		src: [URL.createObjectURL(blob)],
 		format: ['wav'],
 		loop: true,

@@ -16,8 +16,10 @@ $(function() {
 			new Recorder(input, { numChannels: 2 }),
 			new Recorder(input, { numChannels: 2 })
 		];
-		tempRec = new Recorder(input, { numChannels: 2 });
-		tempRec2 = new Recorder(input, { numChannels: 2 });
+		tempRec = [
+			new Recorder(input, { numChannels: 2 }),
+			new Recorder(input, { numChannels: 2 })
+		];
 	});
 });
 const _toggleFullScreen = function _toggleFullScreen() {
@@ -96,7 +98,7 @@ var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 var constraints = { audio: true, video: false };
 var rec;
 var useRecorder = 1;
-var tempRec, tempRec2;
+var tempRec;
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext; //audio context to help us record
 
@@ -111,7 +113,6 @@ var RecordingTime = 3000;
 
 var tempAudio;
 var tempAudio2;
-var recordingAudio;
 var startListenTime;
 var listIndex;
 var loopFunction; // For setInterval and clear interval
@@ -120,6 +121,9 @@ var looperList = [];
 var dragIndex;
 var settingRecorder;
 var dragAudio = false;
+
+var updateMin;
+var updateMax;
 
 var wavefromStyle = document.querySelector('[data="waveform_data"]');
 var timingText;

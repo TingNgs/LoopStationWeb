@@ -8,9 +8,41 @@ function StartLooping(tempDur = 0) {
 		LoopFunction();
 	}, minDuration);
 }
+
+function findMinDur() {
+	let tempMin = 999999;
+	for (let i = 0; i < 6; i++) {
+		if (looperList[i].recorded && looperList[i].dur < tempMin)
+			tempMin = looperList[i].dur;
+	}
+	console.log('update min :' + tempMin);
+	return tempMin;
+}
+
+function findMaxDur() {
+	let tempMax = 0;
+	for (let i = 0; i < 6; i++) {
+		if (looperList[i].recorded && looperList[i].dur > tempMax)
+			tempMax = looperList[i].dur;
+	}
+	console.log('update max :' + tempMax);
+	return tempMax;
+}
+
 function LoopFunction() {
 	if (playingDur >= maxDuration) playingDur = 0;
 	if (playingDur == 0) {
+		if (updateMin || updateMax) {
+			minDuration = findMinDur();
+			maxDuration = findMaxDur();
+			updateMin = false;
+			updateMax = false;
+			if (!CheckEndLoop()) {
+				clearInterval(loopFunction);
+				StartLooping();
+				return;
+			}
+		}
 		loopStartTime = new Date().getTime();
 	}
 	for (let i = 0; i < 6; i++) {
