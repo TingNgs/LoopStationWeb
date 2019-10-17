@@ -1035,14 +1035,14 @@ body {
 #drum-machine #drum-pad .drum_container .drum {
     width: 40%;
     padding-bottom: 40%;
-    background-color: rgb(61, 184, 241);
+    background-color: #4d85aad0;
     color: white;
     border-radius: 10%;
     position: relative
 }
 
 #drum-machine #drum-pad .drum_container .drum:active {
-    background-color: rgb(165, 205, 247);
+    background-color: #557ab18c
 }
 
 #drum-machine #drum-pad .drum_container .drum .text {
@@ -1058,6 +1058,10 @@ body {
 h1, h6 {
     color: white;
     font-family: Helvetica, sans-serif
+}
+
+#tips {
+    z-index: 30 !important
 }
 
 #tips-icon {
