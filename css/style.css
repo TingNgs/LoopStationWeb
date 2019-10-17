@@ -1499,4 +1499,8 @@ html, body {
     height: 100vh
 }
 
+#tips {
+    z-index: 999;
+}
+
 /*# sourceMappingURL=style.css.map */
