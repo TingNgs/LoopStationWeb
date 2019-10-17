@@ -1,4 +1,5 @@
 function StartLooping(tempDur = 0) {
+	console.log('loop start');
 	if (CheckEndLoop()) return;
 	anyLooping = true;
 	playingDur = tempDur;
@@ -39,6 +40,7 @@ function LoopFunction() {
 			updateMax = false;
 			if (!CheckEndLoop()) {
 				clearInterval(loopFunction);
+				console.log('start 7');
 				StartLooping();
 				return;
 			}
@@ -144,6 +146,7 @@ function MainButtonLoopControl(x) {
 			}
 		}
 		if (!anyLooping) {
+			console.log('start 8');
 			StartLooping();
 		}
 	}

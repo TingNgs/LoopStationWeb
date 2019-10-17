@@ -3,6 +3,12 @@ function OnClickTimingFunction(n) {
 		showAlert("You can't set time while recording");
 		return;
 	}
+	for (let i = 0; i < 6; i++) {
+		if (looperList[i].recorded && (n == 0 || n == 1)) {
+			showAlert('You can only times or divide after recorded');
+			return;
+		}
+	}
 	let temp;
 	if (n == 0) temp = RecordingTime + 100;
 	if (n == 1) temp = RecordingTime - 100;
@@ -80,17 +86,20 @@ function StartListening(x) {
 			if (looperList[x].dur < minDuration) {
 				minDuration = looperList[x].dur;
 			}
+			console.log('start 4');
 			StartLooping();
 		} else {
 			if (looperList[x].dur < minDuration) {
 				minDuration = looperList[x].dur;
 				clearInterval(loopFunction);
+				console.log('start 5');
 				StartLooping(minDuration);
 			}
 		}
 		if (looperList[x].dur > maxDuration) {
 			maxDuration = looperList[x].dur;
 			clearInterval(loopFunction);
+			console.log('start 6');
 			StartLooping();
 		}
 		setTimeout(() => {
@@ -141,6 +150,7 @@ function PlayRecording(x) {
 				setTimeout(() => {
 					if (!looperList[x].recorded) return;
 					clearInterval(loopFunction);
+					console.log('start 1');
 					StartLooping();
 				}, looperList[x].dur);
 			}
@@ -149,6 +159,7 @@ function PlayRecording(x) {
 					if (!looperList[x].recorded) return;
 					minDuration = looperList[x].dur;
 					clearInterval(loopFunction);
+					console.log('start 2');
 					StartLooping(minDuration * 2);
 				}, looperList[x].dur);
 			}
@@ -162,6 +173,7 @@ function PlayRecording(x) {
 				if (looperList[x].dur < minDuration) {
 					minDuration = looperList[x].dur;
 				}
+				console.log('start 3');
 				StartLooping();
 			}, looperList[x].dur);
 		}
