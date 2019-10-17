@@ -71,12 +71,14 @@ function LoopFunction() {
 										looperList[i].dur
 							) {
 								setTimeout(() => {
-									looperList[i].recorderList[j].audioList[
-										k
-									].audio.seek(0);
-									looperList[i].recorderList[j].audioList[
-										k
-									].audio.play();
+									if (looperList[i].looping) {
+										looperList[i].recorderList[j].audioList[
+											k
+										].audio.seek(0);
+										looperList[i].recorderList[j].audioList[
+											k
+										].audio.play();
+									}
 								}, looperList[i].recorderList[j].audioList[k].time - looperList[i].recorderList[j].startingTime * 1000);
 							}
 						}
