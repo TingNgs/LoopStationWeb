@@ -1,151 +1,152 @@
 h1,
 h6 {
-    color: white;
-    font-family: Helvetica,
-        sans-serif;
+	color: white;
+	font-family: Helvetica, sans-serif;
 }
-
+#tips {
+	z-index: 30 !important;
+}
 #tips-icon {
-    width: 80px;
-    height: 80px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 99px;
-    border: 1px solid $function_button;
-    background-color: $controller_bg;
+	width: 80px;
+	height: 80px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 99px;
+	border: 1px solid $function_button;
+	background-color: $controller_bg;
 
-    img {
-        width: 60%;
-        height: 60%;
-        cursor: pointer;
-    }
+	img {
+		width: 60%;
+		height: 60%;
+		cursor: pointer;
+	}
 }
 
 .tips_container {
-    width: 55%;
-    height: 80%;
-    background-color: $controller_bg;
-    border-radius: 8px;
-    padding: 20px;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
+	width: 55%;
+	height: 80%;
+	background-color: $controller_bg;
+	border-radius: 8px;
+	padding: 20px;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
 
-    .tips_top_button_container {
-        width: 100%;
-        display: flex;
-        flex-direction: row-reverse;
-        margin-bottom: 20px;
+	.tips_top_button_container {
+		width: 100%;
+		display: flex;
+		flex-direction: row-reverse;
+		margin-bottom: 20px;
 
-        .close_button {
-            height: fit-content;
-            padding: 10px 0;
-            width: 20%;
-            border-radius: 5px;
-            background-color: $button-st2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    }
+		.close_button {
+			height: fit-content;
+			padding: 10px 0;
+			width: 20%;
+			border-radius: 5px;
+			background-color: $button-st2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: white;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	}
 
-    #tips_content_container {
-        flex-grow: 1;
-        overflow: hidden;
-        height: 100%;
+	#tips_content_container {
+		flex-grow: 1;
+		overflow: hidden;
+		height: 100%;
 
-        .tutorial_sentence {
-            text-align: center;
-            color: white;
-            margin-top: 2%;
-        }
+		.tutorial_sentence {
+			text-align: center;
+			color: white;
+			margin-top: 2%;
+		}
 
-        #slider {
-            position: relative;
-            height: 100%;
-            border-radius: 4px;
-            width: 100%;
-        }
+		#slider {
+			position: relative;
+			height: 100%;
+			border-radius: 4px;
+			width: 100%;
+		}
 
-        #slider ul {
-            position: relative;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            list-style: none;
-        }
+		#slider ul {
+			position: relative;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			list-style: none;
+		}
 
-        #slider ul li {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            float: left;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            line-height: 300px;
-        }
+		#slider ul li {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			float: left;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			line-height: 300px;
+		}
 
-        a.control_prev,
-        a.control_next {
-            position: absolute;
-            top: 50%;
-            z-index: 999;
-            display: block;
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            line-height: 25px;
-            transform: translateY(-50%);
-            background: black;
-            border: 1px #fff solid;
-            border-radius: 100%;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-            opacity: 0.8;
-            cursor: pointer;
-        }
+		a.control_prev,
+		a.control_next {
+			position: absolute;
+			top: 50%;
+			z-index: 999;
+			display: block;
+			width: 30px;
+			height: 30px;
+			text-align: center;
+			line-height: 25px;
+			transform: translateY(-50%);
+			background: black;
+			border: 1px #fff solid;
+			border-radius: 100%;
+			color: #fff;
+			text-decoration: none;
+			font-weight: 600;
+			font-size: 18px;
+			opacity: 0.8;
+			cursor: pointer;
+		}
 
-        a.control_prev:hover,
-        a.control_next:hover {
-            opacity: 1;
-            -webkit-transition: all 0.2s ease;
-        }
+		a.control_prev:hover,
+		a.control_next:hover {
+			opacity: 1;
+			-webkit-transition: all 0.2s ease;
+		}
 
-        a.control_next {
-            right: 0;
-        }
+		a.control_next {
+			right: 0;
+		}
 
-        .slider_option {
-            position: relative;
-            margin: 10px auto;
-            width: 160px;
-            font-size: 18px;
-        }
+		.slider_option {
+			position: relative;
+			margin: 10px auto;
+			width: 160px;
+			font-size: 18px;
+		}
 
-        .counter {
-            text-align: center;
-            position: absolute;
-            width: 100%;
-            margin-top: -15px;
-            font-size: 10px;
-            font-family: Helvetica, sans-serif;
-            text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
-            color: #fff;
-        }
-    }
+		.counter {
+			text-align: center;
+			position: absolute;
+			width: 100%;
+			margin-top: -15px;
+			font-size: 10px;
+			font-family: Helvetica, sans-serif;
+			text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.2);
+			color: #fff;
+		}
+	}
 }
